@@ -36,7 +36,7 @@ The web interface uses Spring Security form-based authentication.
 **Request** (Form Data):
 ```
 username=admin
-password=admin123
+password=admin
 ```
 
 **Response**:

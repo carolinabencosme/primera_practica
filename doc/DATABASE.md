@@ -151,7 +151,7 @@ public class User {
 
 **Default Data:**
 - Username: `admin`
-- Password: `admin123` (stored as BCrypt hash)
+- Password: `admin` (stored as BCrypt hash)
 - Email: `admin@mockup.com`
 - Roles: `ROLE_ADMIN`, `ROLE_USER`
 

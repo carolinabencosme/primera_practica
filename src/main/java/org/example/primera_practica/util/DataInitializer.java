@@ -48,7 +48,7 @@ public class DataInitializer implements ApplicationRunner {
         if (!userRepository.findByUsername("admin").isPresent()) {
             User adminUser = new User();
             adminUser.setUsername("admin");
-            adminUser.setPassword(passwordEncoder.encode("admin123"));
+            adminUser.setPassword(passwordEncoder.encode("admin"));
             adminUser.setEmail("admin@mockapi.com");
             adminUser.setEnabled(true);
             

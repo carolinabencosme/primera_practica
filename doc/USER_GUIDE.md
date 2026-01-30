@@ -19,7 +19,7 @@ Welcome to the Mockup API Server User Guide! This document provides step-by-step
 
 Before you begin, ensure:
 1. The application is running (see [README.md](README.md) for installation)
-2. You have login credentials (default: `admin` / `admin123`)
+2. You have login credentials (default: `admin` / `admin`)
 3. A web browser (Chrome, Firefox, Safari, Edge)
 
 ### First Login
@@ -43,7 +43,7 @@ Navigate to http://localhost:8080/login
 
 **Default Admin Credentials:**
 - **Username**: `admin`
-- **Password**: `admin123`
+- **Password**: `admin`
 
 **⚠️ IMPORTANT**: Change the default password after first login!
 
@@ -640,7 +640,7 @@ A: Yes, delays use `Thread.sleep()`, which blocks the request thread. High delay
 
 **Solutions**:
 1. Verify application is running: `http://localhost:8080`
-2. Check credentials are correct: `admin` / `admin123`
+2. Check credentials are correct: `admin` / `admin`
 3. Check browser console for errors
 4. Try clearing browser cookies/cache
 5. Verify H2 database is initialized (check logs for `DataInitializer`)

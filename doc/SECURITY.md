@@ -324,7 +324,7 @@ public PasswordEncoder passwordEncoder() {
 **Encoding Strength:** 10 rounds (default)
 
 **Example:**
-- Plain text: `admin123`
+- Plain text: `admin`
 - BCrypt hash: `$2a$10$XVPGj7kL3...` (60 characters)
 
 ### Password Storage

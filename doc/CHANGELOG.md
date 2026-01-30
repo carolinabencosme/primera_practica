@@ -95,7 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Default Admin User**
   - Username: `admin`
-  - Password: `admin123`
+  - Password: `admin`
   - Roles: ROLE_ADMIN, ROLE_USER
   - Auto-initialized on startup via DataInitializer
 
