@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/}">
-                <i class="bi bi-cloud-fill"></i> Mockup API Server
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                <i class="bi bi-cloud-fill me-2"></i>
+                <span class="fw-bold">Mockup API Server</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
