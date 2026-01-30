@@ -1,4 +1,10 @@
-# Mockup API Server
+# Mockup API Server - Spring Boot
+
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.2-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://www.oracle.com/java/)
+[![License](https://img.shields.io/badge/License-Academic-blue.svg)]()
+
+Un servidor de APIs simuladas (mockup) desarrollado con Spring Boot para la práctica universitaria del curso de Programación Web Avanzada (ICC-354) de la Pontificia Universidad Católica Madre y Maestra.
 
 A powerful Spring Boot-based application for creating, managing, and executing mock API endpoints.
 
@@ -34,12 +40,16 @@ cd primera_practica
 
 ## 🔑 Key Features
 
-- **Mock API Management** - Create and manage mock endpoints with custom responses
-- **JWT Authentication** - Optional JWT protection for mock endpoints
-- **Response Configuration** - Custom status codes, headers, delays, and expiration
-- **User Management** - Role-based access control (Admin/User)
-- **Web Interface** - Intuitive UI for CRUD operations
-- **Dynamic Execution** - REST API for executing mock endpoints
+- ✅ **Mock API Management** - Create and manage mock endpoints with custom responses
+- ✅ **JWT Authentication** - Optional JWT protection for mock endpoints  
+- ✅ **Response Configuration** - Custom status codes, headers, delays, and expiration
+- ✅ **User Management** - Role-based access control (Admin/User)
+- ✅ **Project Organization** - Group endpoints by projects
+- ✅ **Web Interface** - Intuitive Bootstrap 5 UI for CRUD operations
+- ✅ **Dynamic Execution** - REST API for executing mock endpoints
+- ✅ **Internationalization** - Spanish and English support (i18n)
+- ✅ **H2 Database** - In-memory database with console access
+- ✅ **Complete Documentation** - 9 comprehensive documents
 
 ## 📖 Documentation Guide
 
@@ -55,14 +65,19 @@ cd primera_practica
 
 ## 🛠️ Technology Stack
 
-- Spring Boot 4.0.2
-- Java 25
-- Spring Security 6
-- JWT Authentication
-- JPA/Hibernate
-- H2 Database
-- Thymeleaf
+- **Spring Boot 4.0.2** - Application framework
+- **Java 25** - Programming language
+- **Spring Security 6.4** - Authentication and authorization
+- **JWT (JJWT 0.12.6)** - Token-based authentication
+- **JPA/Hibernate 7.2** - ORM persistence
+- **H2 Database 2.4** - In-memory database
+- **Thymeleaf 3.1** - Template engine
+- **Bootstrap 5.3** - CSS framework
+- **Lombok** - Boilerplate reduction
+- **Gradle 9.3** - Build tool
 
 ## 📄 License
 
-[Specify your license here]
+Este proyecto es una práctica académica para la Pontificia Universidad Católica Madre y Maestra (PUCMM).
+
+**Desarrollado con ❤️ como proyecto académico**
