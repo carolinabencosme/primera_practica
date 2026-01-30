@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Mockup API Server</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="~{layout/navbar :: navbar}"></div>
+    
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4">
+                    <i class="bi bi-cloud-fill text-primary"></i> Welcome to Mockup API Server
+                </h1>
+                <p class="lead mt-3">Create and manage mock API endpoints for your development and testing needs</p>
+            </div>
+        </div>
+        
+        <div class="row mt-5" sec:authorize="isAuthenticated()">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-folder-fill text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Projects</h5>
+                        <p class="card-text">Organize your mock endpoints into projects</p>
+                        <a th:href="@{/projects}" class="btn btn-primary">
+                            <i class="bi bi-arrow-right-circle"></i> View Projects
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-hdd-network-fill text-success" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Mock Endpoints</h5>
+                        <p class="card-text">Create and manage your mock API endpoints</p>
+                        <a th:href="@{/mocks}" class="btn btn-success">
+                            <i class="bi bi-arrow-right-circle"></i> View Mocks
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-people-fill text-warning" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Users</h5>
+                        <p class="card-text">Manage system users and permissions</p>
+                        <a th:href="@{/users}" class="btn btn-warning">
+                            <i class="bi bi-arrow-right-circle"></i> Manage Users
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5" sec:authorize="!isAuthenticated()">
+            <div class="col-md-12 text-center">
+                <p class="lead">Please <a th:href="@{/login}" class="btn btn-primary btn-lg">Login</a> to get started</p>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="bi bi-info-circle-fill"></i> Features</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle-fill text-success"></i> Create custom mock API endpoints</li>
+                            <li><i class="bi bi-check-circle-fill text-success"></i> Configure response status, headers, and body</li>
+                            <li><i class="bi bi-check-circle-fill text-success"></i> Support for all HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)</li>
+                            <li><i class="bi bi-check-circle-fill text-success"></i> JWT authentication support</li>
+                            <li><i class="bi bi-check-circle-fill text-success"></i> Response delay simulation</li>
+                            <li><i class="bi bi-check-circle-fill text-success"></i> Expiration date management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">Mockup API Server © 2024</span>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
