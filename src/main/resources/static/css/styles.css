@@ -275,6 +275,13 @@ pre code {
     backdrop-filter: blur(10px);
 }
 
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(10px)) {
+    .navbar {
+        background: var(--gradient-primary) !important;
+    }
+}
+
 .navbar-dark.bg-primary {
     background: var(--gradient-primary) !important;
 }
@@ -387,12 +394,19 @@ pre code {
 
 /* Main container enhancements */
 main.container {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 2rem;
     box-shadow: var(--shadow-lg);
     margin-bottom: 2rem;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(10px)) {
+    main.container {
+        background: rgba(255, 255, 255, 0.95);
+    }
 }
 
 /* Footer with gradient */
@@ -419,7 +433,6 @@ main.container {
 .form-control:focus, .form-select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    transform: translateY(-1px);
 }
 
 /* Table enhancements */
@@ -441,7 +454,6 @@ main.container {
 
 .table tbody tr:hover {
     background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-    transform: scale(1.01);
 }
 
 /* Headings with gradient text */
@@ -450,10 +462,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .display-4 {
+    color: var(--primary-color);
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* Fallback for browsers without background-clip support */
+@supports not (background-clip: text) or not (-webkit-background-clip: text) {
+    .display-4 {
+        color: var(--primary-color);
+    }
 }
 
 /* Lead text enhancement */
@@ -469,11 +489,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .list-unstyled li:hover {
-    transform: translateX(5px);
+    transform: translateX(3px);
 }
 
 /* Icon colors with gradients */
 .text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* Gradient text variant - use this class specifically for gradient text effects */
+.text-gradient-primary {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -504,20 +529,24 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-.card, .alert, main.container {
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* Pulse animation for icons */
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.8;
+@media (prefers-reduced-motion: no-preference) {
+    .card, .alert, main.container {
+        animation: fadeIn 0.5s ease-out;
     }
 }
 
-.bi-check-circle-fill {
-    animation: pulse 2s infinite;
+/* Pulse animation for icons - respects reduced motion preferences */
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.8;
+        }
+    }
+
+    .bi-check-circle-fill {
+        animation: pulse 2s infinite;
+    }
 }
