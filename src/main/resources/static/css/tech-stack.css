@@ -1,17 +1,5 @@
 /* Modern Tech Stack CSS - Velum Labs Inspired */
 
-:root {
-    --primary-color: #3b82f6;
-    --secondary-color: #7c3aed;
-    --background-subtle: #f9fafb;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --border-color: #e5e7eb;
-    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --card-shadow-hover: 0 10px 15px rgba(59, 130, 246, 0.2);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 * {
     box-sizing: border-box;
 }
@@ -94,11 +82,11 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 32px;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--card-shadow);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .tech-card::before {
@@ -111,12 +99,12 @@ body {
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     transform: scaleX(0);
     transform-origin: left;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tech-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--card-shadow-hover);
+    box-shadow: 0 10px 15px rgba(59, 130, 246, 0.2);
     border-color: var(--primary-color);
 }
 
@@ -161,7 +149,7 @@ body {
     font-weight: 600;
     margin-bottom: 12px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tech-version:hover {
@@ -211,7 +199,7 @@ body {
 .philosophy-card {
     text-align: center;
     padding: 30px 20px;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .philosophy-card:hover {

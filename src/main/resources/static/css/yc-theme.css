@@ -12,7 +12,9 @@
     --border-color: #e5e7eb;         /* Subtle borders */
     --hover-bg: #f3f4f6;             /* Hover states */
     
-    /* Legacy compatibility (mapped to new colors) */
+    /* Legacy compatibility mapping - Maps old YC variables to new colors
+       to avoid breaking existing components that still reference yc-* variables.
+       This allows gradual migration without requiring all templates to be updated at once. */
     --yc-orange: #3b82f6;
     --yc-background: #f9fafb;
     --yc-gray: #6b7280;
