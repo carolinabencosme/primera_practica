@@ -1,0 +1,321 @@
+/* Y Combinator Theme - Official Color Palette and Typography */
+
+:root {
+    /* Y Combinator Official Colors */
+    --yc-orange: #FF6600;
+    --yc-background: #F6F6EF;
+    --yc-gray: #828282;
+    --yc-black: #000000;
+    --yc-white: #FFFFFF;
+    --yc-link: #0000EE;
+    
+    /* Extended YC-inspired palette */
+    --yc-orange-dark: #E65C00;
+    --yc-orange-light: #FF8533;
+    --yc-gray-light: #D3D3D3;
+    --yc-gray-dark: #666666;
+    --yc-border: #E0E0E0;
+    
+    /* Semantic colors using YC palette */
+    --yc-success: #28A745;
+    --yc-warning: #FFC107;
+    --yc-danger: #DC3545;
+    --yc-info: #17A2B8;
+    
+    /* Shadows - subtle and minimal */
+    --yc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --yc-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --yc-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.12);
+    
+    /* Spacing */
+    --yc-spacing-xs: 0.25rem;
+    --yc-spacing-sm: 0.5rem;
+    --yc-spacing-md: 1rem;
+    --yc-spacing-lg: 1.5rem;
+    --yc-spacing-xl: 2rem;
+    
+    /* Border radius - minimal */
+    --yc-radius-sm: 2px;
+    --yc-radius-md: 3px;
+    --yc-radius-lg: 4px;
+}
+
+/* Y Combinator Typography */
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--yc-black);
+    background-color: var(--yc-background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    color: var(--yc-black);
+}
+
+h1 {
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+/* Links - YC style */
+a {
+    color: var(--yc-black);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.yc-link {
+    color: var(--yc-link);
+}
+
+a.yc-link:visited {
+    color: #551A8B;
+}
+
+/* Code blocks - monospace */
+code, pre {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+}
+
+/* YC-style buttons */
+.yc-btn {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 13px;
+    padding: 4px 8px;
+    border: 1px solid var(--yc-border);
+    background-color: var(--yc-white);
+    color: var(--yc-black);
+    cursor: pointer;
+    border-radius: var(--yc-radius-sm);
+    transition: all 0.2s ease;
+}
+
+.yc-btn:hover {
+    background-color: var(--yc-background);
+    border-color: var(--yc-gray);
+}
+
+.yc-btn-primary {
+    background-color: var(--yc-orange);
+    color: var(--yc-white);
+    border-color: var(--yc-orange);
+}
+
+.yc-btn-primary:hover {
+    background-color: var(--yc-orange-dark);
+    border-color: var(--yc-orange-dark);
+    text-decoration: none;
+}
+
+/* YC-style cards */
+.yc-card {
+    background-color: var(--yc-white);
+    border: 1px solid var(--yc-border);
+    border-radius: var(--yc-radius-md);
+    padding: var(--yc-spacing-lg);
+    margin-bottom: var(--yc-spacing-md);
+    box-shadow: var(--yc-shadow-sm);
+}
+
+.yc-card:hover {
+    box-shadow: var(--yc-shadow-md);
+}
+
+/* YC-style table */
+.yc-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--yc-white);
+    font-size: 13px;
+}
+
+.yc-table th {
+    background-color: var(--yc-background);
+    padding: 8px;
+    text-align: left;
+    border-bottom: 2px solid var(--yc-border);
+    font-weight: bold;
+}
+
+.yc-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--yc-border);
+}
+
+.yc-table tr:hover {
+    background-color: var(--yc-background);
+}
+
+/* YC-style badges */
+.yc-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 11px;
+    border-radius: var(--yc-radius-sm);
+    background-color: var(--yc-gray-light);
+    color: var(--yc-black);
+}
+
+.yc-badge-orange {
+    background-color: var(--yc-orange);
+    color: var(--yc-white);
+}
+
+.yc-badge-success {
+    background-color: var(--yc-success);
+    color: var(--yc-white);
+}
+
+.yc-badge-warning {
+    background-color: var(--yc-warning);
+    color: var(--yc-black);
+}
+
+.yc-badge-danger {
+    background-color: var(--yc-danger);
+    color: var(--yc-white);
+}
+
+/* YC-style alerts */
+.yc-alert {
+    padding: var(--yc-spacing-md);
+    margin-bottom: var(--yc-spacing-md);
+    border: 1px solid var(--yc-border);
+    border-radius: var(--yc-radius-md);
+    background-color: var(--yc-white);
+}
+
+.yc-alert-info {
+    background-color: #E7F3FF;
+    border-color: var(--yc-info);
+}
+
+.yc-alert-success {
+    background-color: #D4EDDA;
+    border-color: var(--yc-success);
+}
+
+.yc-alert-warning {
+    background-color: #FFF3CD;
+    border-color: var(--yc-warning);
+}
+
+.yc-alert-danger {
+    background-color: #F8D7DA;
+    border-color: var(--yc-danger);
+}
+
+/* YC-style navbar */
+.yc-navbar {
+    background-color: var(--yc-orange);
+    color: var(--yc-white);
+    padding: 4px 8px;
+    font-size: 13px;
+}
+
+.yc-navbar a {
+    color: var(--yc-white);
+    padding: 4px 8px;
+    text-decoration: none;
+}
+
+.yc-navbar a:hover {
+    text-decoration: underline;
+}
+
+/* YC-style forms */
+.yc-form-control {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 13px;
+    padding: 4px 6px;
+    border: 1px solid var(--yc-border);
+    border-radius: var(--yc-radius-sm);
+    background-color: var(--yc-white);
+}
+
+.yc-form-control:focus {
+    outline: none;
+    border-color: var(--yc-orange);
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.1);
+}
+
+/* YC-style empty states */
+.yc-empty-state {
+    text-align: center;
+    padding: var(--yc-spacing-xl);
+    background-color: var(--yc-white);
+    border: 1px solid var(--yc-border);
+    border-radius: var(--yc-radius-md);
+}
+
+.yc-empty-state-icon {
+    font-size: 48px;
+    color: var(--yc-gray);
+    margin-bottom: var(--yc-spacing-md);
+}
+
+.yc-empty-state-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: var(--yc-spacing-sm);
+    color: var(--yc-black);
+}
+
+.yc-empty-state-text {
+    color: var(--yc-gray);
+    margin-bottom: var(--yc-spacing-lg);
+}
+
+/* Utility classes */
+.yc-text-orange {
+    color: var(--yc-orange);
+}
+
+.yc-text-gray {
+    color: var(--yc-gray);
+}
+
+.yc-bg-white {
+    background-color: var(--yc-white);
+}
+
+.yc-bg-gray {
+    background-color: var(--yc-background);
+}
+
+.yc-border {
+    border: 1px solid var(--yc-border);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+    }
+    
+    h1 {
+        font-size: 16px;
+    }
+    
+    h2 {
+        font-size: 14px;
+    }
+    
+    .yc-card {
+        padding: var(--yc-spacing-md);
+    }
+}
