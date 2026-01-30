@@ -1,32 +1,22 @@
-/* Y Combinator Style Tech Stack CSS */
-
-:root {
-    --yc-orange: #FF6600;
-    --yc-background: #F6F6EF;
-    --yc-gray: #828282;
-    --yc-black: #000000;
-    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --card-shadow-hover: 0 8px 24px rgba(255, 102, 0, 0.2);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* Modern Tech Stack CSS - Velum Labs Inspired */
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--yc-background);
+    background-color: var(--background-subtle);
 }
 
 /* Hero Section */
 .tech-hero {
-    background: linear-gradient(135deg, #ffffff 0%, var(--yc-background) 100%);
-    padding: 80px 0 60px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--background-subtle) 100%);
+    padding: 120px 0 80px;
     text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .hero-content {
@@ -35,23 +25,23 @@ body {
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: 48px;
     font-weight: 700;
-    color: var(--yc-black);
-    margin-bottom: 20px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
     letter-spacing: -0.02em;
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--yc-gray);
+    font-size: 20px;
+    color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 0;
 }
 
 /* Tech Grid Section */
 .tech-grid-section {
-    padding: 60px 0;
+    padding: 80px 0;
     background-color: #ffffff;
 }
 
@@ -60,10 +50,10 @@ body {
 }
 
 .category-title {
-    font-size: 2rem;
+    font-size: 36px;
     font-weight: 700;
-    color: var(--yc-black);
-    margin-bottom: 30px;
+    color: var(--text-primary);
+    margin-bottom: 32px;
     position: relative;
     padding-bottom: 15px;
 }
@@ -75,27 +65,28 @@ body {
     left: 0;
     width: 60px;
     height: 4px;
-    background: linear-gradient(90deg, var(--yc-orange), transparent);
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
 }
 
 /* Tech Grid */
 .tech-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    gap: 32px;
     margin-top: 30px;
 }
 
 /* Tech Cards */
 .tech-card {
     background: #ffffff;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 30px;
-    transition: var(--transition);
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .tech-card::before {
@@ -105,16 +96,16 @@ body {
     left: 0;
     right: 0;
     height: 4px;
-    background: var(--yc-orange);
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     transform: scaleX(0);
     transform-origin: left;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tech-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--card-shadow-hover);
-    border-color: var(--yc-orange);
+    box-shadow: 0 10px 15px rgba(59, 130, 246, 0.2);
+    border-color: var(--primary-color);
 }
 
 .tech-card:hover::before {
@@ -142,44 +133,44 @@ body {
 }
 
 .tech-name {
-    font-size: 1.25rem;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--yc-black);
+    color: var(--text-primary);
     margin-bottom: 8px;
 }
 
 .tech-version {
     display: inline-block;
-    background: linear-gradient(135deg, var(--yc-orange), #ff8533);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: #ffffff;
     padding: 4px 12px;
     border-radius: 12px;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 12px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tech-version:hover {
     transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(255, 102, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .tech-description {
-    font-size: 0.938rem;
-    color: var(--yc-gray);
+    font-size: 16px;
+    color: var(--text-secondary);
     margin-bottom: 12px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .tech-badge {
     display: inline-block;
-    background-color: var(--yc-background);
-    color: var(--yc-gray);
+    background-color: var(--background-subtle);
+    color: var(--text-secondary);
     padding: 4px 10px;
     border-radius: 8px;
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -187,9 +178,9 @@ body {
 
 /* Philosophy Section */
 .tech-philosophy {
-    background: linear-gradient(135deg, var(--yc-background) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--background-subtle) 0%, #ffffff 100%);
     padding: 80px 0;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--border-color);
 }
 
 .philosophy-content {
@@ -198,9 +189,9 @@ body {
 }
 
 .philosophy-title {
-    font-size: 2.5rem;
+    font-size: 36px;
     font-weight: 700;
-    color: var(--yc-black);
+    color: var(--text-primary);
     text-align: center;
     margin-bottom: 50px;
 }
@@ -208,7 +199,7 @@ body {
 .philosophy-card {
     text-align: center;
     padding: 30px 20px;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .philosophy-card:hover {
@@ -216,21 +207,24 @@ body {
 }
 
 .philosophy-icon {
-    font-size: 3rem;
-    color: var(--yc-orange);
+    font-size: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 20px;
 }
 
 .philosophy-card h3 {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--yc-black);
+    color: var(--text-primary);
     margin-bottom: 15px;
 }
 
 .philosophy-card p {
-    font-size: 1rem;
-    color: var(--yc-gray);
+    font-size: 16px;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
@@ -260,12 +254,12 @@ body {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: var(--yc-orange);
+    background: var(--primary-color);
     color: #ffffff;
     padding: 15px 25px;
     border-radius: 8px;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     z-index: 1000;
     animation: slideInUp 0.3s ease-out;
 }
@@ -284,33 +278,33 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 2rem;
+        font-size: 32px;
     }
 
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 16px;
     }
 
     .tech-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 24px;
     }
 
     .category-title {
-        font-size: 1.5rem;
+        font-size: 28px;
     }
 
     .philosophy-title {
-        font-size: 1.75rem;
+        font-size: 28px;
     }
 
     .tech-hero {
-        padding: 50px 0 40px;
+        padding: 60px 0 40px;
     }
 
     .tech-grid-section,
     .tech-philosophy {
-        padding: 40px 0;
+        padding: 60px 0;
     }
 }
 
@@ -333,19 +327,19 @@ html {
 
 /* Selection styling */
 ::selection {
-    background-color: var(--yc-orange);
+    background-color: var(--primary-color);
     color: #ffffff;
 }
 
 ::-moz-selection {
-    background-color: var(--yc-orange);
+    background-color: var(--primary-color);
     color: #ffffff;
 }
 
 /* Focus styles for accessibility */
 .tech-card:focus,
 .tech-version:focus {
-    outline: 2px solid var(--yc-orange);
+    outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
 

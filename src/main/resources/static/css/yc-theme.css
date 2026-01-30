@@ -1,31 +1,49 @@
-/* Y Combinator Theme - Official Color Palette and Typography */
+/* Velum Labs Inspired Theme - Modern Color Palette and Typography */
 
 :root {
-    /* Y Combinator Official Colors */
-    --yc-orange: #FF6600;
-    --yc-background: #F6F6EF;
-    --yc-gray: #828282;
-    --yc-black: #000000;
-    --yc-white: #FFFFFF;
-    --yc-link: #0000EE;
+    /* Velum Labs Modern Colors */
+    --primary-color: #3b82f6;        /* Blue primary */
+    --secondary-color: #7c3aed;      /* Purple accent */
+    --dark-bg: #0a0a0a;              /* Dark background */
+    --light-bg: #ffffff;             /* Light background */
+    --background-subtle: #f9fafb;    /* Subtle background */
+    --text-primary: #1f2937;         /* Primary text */
+    --text-secondary: #6b7280;       /* Secondary text */
+    --border-color: #e5e7eb;         /* Subtle borders */
+    --hover-bg: #f3f4f6;             /* Hover states */
     
-    /* Extended YC-inspired palette */
-    --yc-orange-dark: #E65C00;
-    --yc-orange-light: #FF8533;
-    --yc-gray-light: #D3D3D3;
-    --yc-gray-dark: #666666;
-    --yc-border: #E0E0E0;
+    /* Legacy compatibility mapping - Maps old YC variables to new colors
+       to avoid breaking existing components that still reference yc-* variables.
+       This allows gradual migration without requiring all templates to be updated at once. */
+    --yc-orange: #3b82f6;
+    --yc-background: #f9fafb;
+    --yc-gray: #6b7280;
+    --yc-black: #1f2937;
+    --yc-white: #ffffff;
+    --yc-link: #3b82f6;
+    --yc-orange-dark: #2563eb;
+    --yc-orange-light: #60a5fa;
+    --yc-gray-light: #d1d5db;
+    --yc-gray-dark: #4b5563;
+    --yc-border: #e5e7eb;
     
-    /* Semantic colors using YC palette */
+    /* Semantic colors */
     --yc-success: #28A745;
+    --success-color: #28A745;
     --yc-warning: #FFC107;
+    --warning-color: #FFC107;
     --yc-danger: #DC3545;
-    --yc-info: #17A2B8;
+    --danger-color: #DC3545;
+    --yc-info: #3b82f6;
+    --info-color: #3b82f6;
     
-    /* Shadows - subtle and minimal */
-    --yc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --yc-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.1);
-    --yc-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.12);
+    /* Shadows - modern and subtle */
+    --yc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --yc-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --yc-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     
     /* Spacing */
     --yc-spacing-xs: 0.25rem;
@@ -34,55 +52,62 @@
     --yc-spacing-lg: 1.5rem;
     --yc-spacing-xl: 2rem;
     
-    /* Border radius - minimal */
-    --yc-radius-sm: 2px;
-    --yc-radius-md: 3px;
-    --yc-radius-lg: 4px;
+    /* Border radius - modern */
+    --yc-radius-sm: 6px;
+    --yc-radius-md: 8px;
+    --yc-radius-lg: 12px;
 }
 
-/* Y Combinator Typography */
+/* Modern Typography */
 body {
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--yc-black);
-    background-color: var(--yc-background);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--background-subtle);
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Verdana, Geneva, sans-serif;
-    font-weight: bold;
-    color: var(--yc-black);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 h1 {
-    font-size: 18px;
+    font-size: 48px;
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 36px;
 }
 
 h3 {
-    font-size: 14px;
+    font-size: 24px;
 }
 
-/* Links - YC style */
+h4 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Links - Modern style */
 a {
-    color: var(--yc-black);
+    color: var(--primary-color);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: var(--secondary-color);
+    text-decoration: none;
 }
 
 a.yc-link {
-    color: var(--yc-link);
+    color: var(--primary-color);
 }
 
 a.yc-link:visited {
-    color: #551A8B;
+    color: var(--secondary-color);
 }
 
 /* Code blocks - monospace */
@@ -91,48 +116,52 @@ code, pre {
     font-size: 12px;
 }
 
-/* YC-style buttons */
+/* Modern buttons */
 .yc-btn {
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 13px;
-    padding: 4px 8px;
-    border: 1px solid var(--yc-border);
-    background-color: var(--yc-white);
-    color: var(--yc-black);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: 1px solid var(--border-color);
+    background-color: var(--light-bg);
+    color: var(--text-primary);
     cursor: pointer;
-    border-radius: var(--yc-radius-sm);
+    border-radius: 8px;
+    font-weight: 500;
     transition: all 0.2s ease;
 }
 
 .yc-btn:hover {
-    background-color: var(--yc-background);
-    border-color: var(--yc-gray);
+    background-color: var(--hover-bg);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 .yc-btn-primary {
-    background-color: var(--yc-orange);
-    color: var(--yc-white);
-    border-color: var(--yc-orange);
+    background-color: var(--primary-color);
+    color: var(--light-bg);
+    border-color: var(--primary-color);
 }
 
 .yc-btn-primary:hover {
-    background-color: var(--yc-orange-dark);
-    border-color: var(--yc-orange-dark);
+    filter: brightness(110%);
+    transform: translateY(-2px);
     text-decoration: none;
 }
 
-/* YC-style cards */
+/* Modern cards */
 .yc-card {
-    background-color: var(--yc-white);
-    border: 1px solid var(--yc-border);
-    border-radius: var(--yc-radius-md);
-    padding: var(--yc-spacing-lg);
+    background-color: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 32px;
     margin-bottom: var(--yc-spacing-md);
-    box-shadow: var(--yc-shadow-sm);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
 }
 
 .yc-card:hover {
-    box-shadow: var(--yc-shadow-md);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
 }
 
 /* YC-style table */
