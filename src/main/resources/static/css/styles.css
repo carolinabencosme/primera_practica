@@ -1,22 +1,33 @@
-/* Custom styles for Mockup API Server - Enhanced Visual Design */
+/* Custom styles for Mockup API Server - Velum Labs Inspired Professional Design */
 
 :root {
-    --primary-color: #667eea;
-    --primary-dark: #5a67d8;
-    --secondary-color: #764ba2;
-    --success-color: #48bb78;
-    --success-dark: #38a169;
-    --warning-color: #f6ad55;
-    --warning-dark: #ed8936;
-    --danger-color: #fc8181;
-    --danger-dark: #f56565;
-    --info-color: #4299e1;
-    --info-dark: #3182ce;
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-success: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-    --gradient-warning: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
-    --gradient-info: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-    --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    /* Velum Labs Inspired Color Palette */
+    --primary-color: #7c3aed;
+    --primary-dark: #6d28d9;
+    --secondary-color: #3b82f6;
+    --success-color: #10b981;
+    --success-dark: #059669;
+    --warning-color: #f59e0b;
+    --warning-dark: #d97706;
+    --danger-color: #ef4444;
+    --danger-dark: #dc2626;
+    --info-color: #06b6d4;
+    --info-dark: #0891b2;
+    
+    /* Dark theme colors */
+    --dark-bg: #0a0a0a;
+    --dark-bg-secondary: #1f2937;
+    --text-light: #e0e0e0;
+    --text-muted: #9ca3af;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+    --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --gradient-info: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --gradient-bg: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    
+    /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -29,7 +40,9 @@ body {
     flex-direction: column;
     background: var(--gradient-bg);
     background-attachment: fixed;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 main {
@@ -269,27 +282,40 @@ pre code {
     margin-top: 0;
 }
 
-/* Navbar improvements with gradient */
+/* Navbar improvements with modern dark design */
 .navbar {
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
+    background: rgba(10, 10, 10, 0.95) !important;
+    transition: all 0.3s ease;
+}
+
+.navbar.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
 }
 
 /* Fallback for browsers without backdrop-filter support */
 @supports not (backdrop-filter: blur(10px)) {
     .navbar {
-        background: var(--gradient-primary) !important;
+        background: #0a0a0a !important;
     }
 }
 
-.navbar-dark.bg-primary {
-    background: var(--gradient-primary) !important;
+.navbar-dark.bg-dark {
+    background: rgba(10, 10, 10, 0.95) !important;
 }
 
 .navbar-brand {
     font-weight: 700;
     font-size: 1.4rem;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
 }
 
 .navbar-text {
@@ -300,11 +326,16 @@ pre code {
     transition: all 0.3s ease;
     border-radius: 8px;
     margin: 0 0.25rem;
+    padding: 0.5rem 1rem;
 }
 
 .nav-link:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(124, 58, 237, 0.2);
     transform: translateY(-1px);
+}
+
+.nav-link:active {
+    background: rgba(124, 58, 237, 0.3);
 }
 
 /* Card headers with enhanced design */
@@ -409,16 +440,21 @@ main.container {
     }
 }
 
-/* Footer with gradient */
+/* Footer with dark theme */
 .footer {
-    background: var(--gradient-primary) !important;
+    background: #0a0a0a !important;
     color: white;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
 }
 
 .footer .text-muted {
-    color: rgba(255, 255, 255, 0.9) !important;
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 400;
+}
+
+.footer span {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Form inputs with enhanced styling */
@@ -456,9 +492,16 @@ main.container {
     background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
 }
 
-/* Headings with gradient text */
+/* Headings with modern typography */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
+}
+
+/* Hero titles use serif font */
+.hero-title,
+.display-1,
+.display-2 {
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .display-4 {
@@ -467,6 +510,7 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-weight: 500;
 }
 
 /* Fallback for browsers without background-clip support */

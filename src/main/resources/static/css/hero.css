@@ -1,0 +1,309 @@
+/* Hero Section Styles - Velum Labs Inspired */
+
+:root {
+    --hero-dark-bg: #0a0a0a;
+    --hero-text-light: #e0e0e0;
+    --hero-accent-purple: #7c3aed;
+    --hero-accent-blue: #3b82f6;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--hero-dark-bg);
+    overflow: hidden;
+    padding: 80px 20px;
+}
+
+/* Matrix Background Canvas */
+#matrix-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 1000px;
+    padding: 0 20px;
+}
+
+/* Hero Title */
+.hero-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 4rem;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(124, 58, 237, 0.3);
+}
+
+.hero-title br {
+    display: block;
+}
+
+/* Hero Subtitle */
+.hero-subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    font-size: 1.25rem;
+    color: var(--hero-text-light);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+
+/* Hero CTA Buttons */
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-cta .btn-hero-primary {
+    background: linear-gradient(135deg, var(--hero-accent-purple), var(--hero-accent-blue));
+    color: #ffffff;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.4);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hero-cta .btn-hero-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(124, 58, 237, 0.6);
+}
+
+.hero-cta .btn-hero-secondary {
+    background: transparent;
+    color: #ffffff;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hero-cta .btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    animation: bounce 2s infinite;
+}
+
+.scroll-indicator i {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* Fade-in Animation */
+.fade-in-up {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        min-height: 80vh;
+        padding: 60px 20px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .hero-cta .btn-hero-primary,
+    .hero-cta .btn-hero-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+}
+
+/* Feature Cards Section (below hero) */
+.features-section {
+    background: #ffffff;
+    padding: 80px 20px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
+    border-color: var(--hero-accent-purple);
+}
+
+.feature-card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--hero-accent-purple), var(--hero-accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+}
+
+.feature-card p {
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.feature-card .btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1.25rem;
+}
+
+/* Info Section */
+.info-section {
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    padding: 60px 20px;
+}
+
+.info-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.info-card .card-header {
+    background: linear-gradient(135deg, var(--hero-accent-purple), var(--hero-accent-blue));
+    color: #ffffff;
+    border: none;
+    padding: 1.25rem 1.5rem;
+}
+
+.info-card .card-body {
+    padding: 2rem;
+}
+
+.info-card .list-unstyled li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.info-card .list-unstyled li:last-child {
+    border-bottom: none;
+}
+
+.info-card .bi-check-circle-fill {
+    margin-right: 0.5rem;
+}
+
+/* Dark mode support for content sections */
+@media (prefers-color-scheme: dark) {
+    .features-section {
+        background: #1f2937;
+    }
+    
+    .feature-card {
+        background: #374151;
+        border-color: #4b5563;
+    }
+    
+    .feature-card h3 {
+        color: #f9fafb;
+    }
+    
+    .feature-card p {
+        color: #d1d5db;
+    }
+}
