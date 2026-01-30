@@ -4,6 +4,12 @@
  */
 
 class MatrixBackground {
+    // Configuration constants
+    static FADE_OPACITY = 0.05;
+    static RESIZE_DEBOUNCE_MS = 250;
+    static DROP_RESET_PROBABILITY = 0.975;
+    static INITIAL_DROP_OFFSET_RANGE = 100;
+    
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         if (!this.canvas) {
@@ -26,16 +32,22 @@ class MatrixBackground {
     }
     
     init() {
+        if (!this.canvas) return;
         this.resizeCanvas();
         this.initDrops();
         this.animate();
     }
     
     resizeCanvas() {
+        if (!this.canvas) return;
+        
         // Set canvas size to fill parent container
         const parent = this.canvas.parentElement;
         this.canvas.width = parent.offsetWidth;
         this.canvas.height = parent.offsetHeight;
+        
+        // Clear canvas for clean resize
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
         // Recalculate columns
         this.columns = Math.floor(this.canvas.width / this.fontSize);
@@ -47,23 +59,27 @@ class MatrixBackground {
         this.drops = [];
         for (let i = 0; i < this.columns; i++) {
             // Randomize initial positions for a more dynamic start
-            this.drops[i] = Math.random() * -100;
+            this.drops[i] = Math.random() * -MatrixBackground.INITIAL_DROP_OFFSET_RANGE;
         }
     }
     
     setupResizeListener() {
+        if (!this.canvas) return;
+        
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 this.resizeCanvas();
-            }, 250);
+            }, MatrixBackground.RESIZE_DEBOUNCE_MS);
         });
     }
     
     draw() {
+        if (!this.canvas || !this.ctx) return;
+        
         // Create fade effect by drawing semi-transparent black rectangle
-        this.ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+        this.ctx.fillStyle = `rgba(10, 10, 10, ${MatrixBackground.FADE_OPACITY})`;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         // Set text style
@@ -78,11 +94,11 @@ class MatrixBackground {
             const x = i * this.fontSize;
             const y = this.drops[i] * this.fontSize;
             
-            // Use different colors based on position for variety
-            const colorChoice = Math.random();
-            if (colorChoice < 0.3) {
+            // Use different colors based on column for variety (reduces random calls)
+            const colorIndex = i % 3;
+            if (colorIndex === 0) {
                 this.ctx.fillStyle = '#7c3aed'; // Purple
-            } else if (colorChoice < 0.6) {
+            } else if (colorIndex === 1) {
                 this.ctx.fillStyle = '#3b82f6'; // Blue
             } else {
                 this.ctx.fillStyle = '#06b6d4'; // Cyan
@@ -92,7 +108,7 @@ class MatrixBackground {
             this.ctx.fillText(char, x, y);
             
             // Reset drop to top randomly
-            if (y > this.canvas.height && Math.random() > 0.975) {
+            if (y > this.canvas.height && Math.random() > MatrixBackground.DROP_RESET_PROBABILITY) {
                 this.drops[i] = 0;
             }
             
@@ -102,18 +118,27 @@ class MatrixBackground {
     }
     
     animate() {
+        if (!this.canvas) return;
         this.draw();
         this.animationId = requestAnimationFrame(() => this.animate());
     }
     
+    /**
+     * Stop the matrix animation
+     */
     stop() {
+        if (!this.canvas) return;
         if (this.animationId) {
             cancelAnimationFrame(this.animationId);
             this.animationId = null;
         }
     }
     
+    /**
+     * Start or resume the matrix animation
+     */
     start() {
+        if (!this.canvas) return;
         if (!this.animationId) {
             this.animate();
         }
