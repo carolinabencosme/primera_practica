@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${user.id != null ? 'Edit User' : 'New User'} + ' - Mockup API Server'">User Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="~{layout/navbar :: navbar}"></div>
+    
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-warning">
+                        <h4>
+                            <i class="bi bi-person-fill"></i>
+                            <span th:text="${user.id != null ? 'Edit User' : 'New User'}">User Form</span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="${user.id != null ? '/users/' + user.id : '/users'}" 
+                              th:object="${user}" method="post">
+                            
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="username" th:field="*{username}" 
+                                       placeholder="Enter username" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" th:field="*{email}" 
+                                       placeholder="Enter email" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Roles <span class="text-danger">*</span></label>
+                                <div th:each="roleType : ${roleTypes}" class="form-check">
+                                    <input class="form-check-input" type="checkbox" 
+                                           th:id="'role_' + ${roleType}" 
+                                           th:field="*{roles}" 
+                                           th:value="${roleType}">
+                                    <label class="form-check-label" th:for="'role_' + ${roleType}" th:text="${roleType}">
+                                        Role
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info" th:if="${user.id == null}">
+                                <i class="bi bi-info-circle-fill"></i> 
+                                Default password will be set to <strong>password123</strong>. User should change it after first login.
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <a th:href="@{/users}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> Cancel
+                                </a>
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="bi bi-save"></i>
+                                    <span th:text="${user.id != null ? 'Update' : 'Create'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">Mockup API Server © 2024</span>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
