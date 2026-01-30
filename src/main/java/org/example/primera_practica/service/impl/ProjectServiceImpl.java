@@ -18,11 +18,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public ProjectServiceImpl(ProjectRepository projectRepository, UserRepository userRepository) {
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public ProjectDTO createProject(ProjectDTO projectDTO, String username) {

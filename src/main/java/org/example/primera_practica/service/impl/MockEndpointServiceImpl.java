@@ -19,14 +19,17 @@ import java.util.stream.Collectors;
 @Transactional
 public class MockEndpointServiceImpl implements MockEndpointService {
 
-    @Autowired
-    private MockEndpointRepository mockEndpointRepository;
+    private final MockEndpointRepository mockEndpointRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public MockEndpointServiceImpl(MockEndpointRepository mockEndpointRepository, 
+                                   ProjectRepository projectRepository, 
+                                   UserRepository userRepository) {
+        this.mockEndpointRepository = mockEndpointRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public MockEndpointDTO createMockEndpoint(MockEndpointDTO mockEndpointDTO, String username) {

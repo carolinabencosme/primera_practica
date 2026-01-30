@@ -21,17 +21,25 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
+        if (userDTO == null || userDTO.getUsername() == null || userDTO.getUsername().trim().isEmpty()) {
+            throw new IllegalArgumentException("Username is required");
+        }
+        if (userDTO.getEmail() == null || userDTO.getEmail().trim().isEmpty()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+
         if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
             throw new DuplicateResourceException("Username already exists: " + userDTO.getUsername());
         }

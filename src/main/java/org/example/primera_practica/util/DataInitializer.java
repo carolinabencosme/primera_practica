@@ -17,14 +17,15 @@ import java.util.Set;
 @Component
 public class DataInitializer implements ApplicationRunner {
     
-    @Autowired
-    private RoleRepository roleRepository;
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public DataInitializer(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
     
     @Override
     public void run(ApplicationArguments args) {
