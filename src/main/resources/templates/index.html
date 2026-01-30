@@ -6,103 +6,202 @@
     <title>Home - Mockup API Server</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
     <link th:href="@{/css/styles.css}" rel="stylesheet">
-    <link th:href="@{/css/hero.css}" rel="stylesheet">
+    <style>
+        /* YC-style hero section */
+        .yc-hero {
+            background: white;
+            border-bottom: 1px solid var(--yc-border);
+            padding: 80px 0 60px;
+        }
+        
+        .yc-hero h1 {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--yc-black);
+            margin-bottom: 20px;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+        
+        .yc-hero p {
+            font-size: 16px;
+            color: var(--yc-gray);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .yc-features {
+            padding: 60px 0;
+            background: var(--yc-background);
+        }
+        
+        .yc-feature-card {
+            background: white;
+            border: 1px solid var(--yc-border);
+            border-radius: 3px;
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+        
+        .yc-feature-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--yc-orange);
+        }
+        
+        .yc-feature-card h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--yc-black);
+        }
+        
+        .yc-feature-card p {
+            font-size: 13px;
+            color: var(--yc-gray);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .yc-feature-icon {
+            font-size: 40px;
+            color: var(--yc-orange);
+            margin-bottom: 15px;
+        }
+        
+        .yc-info-section {
+            background: white;
+            padding: 60px 0;
+            border-top: 1px solid var(--yc-border);
+        }
+        
+        .yc-info-section h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: var(--yc-black);
+        }
+        
+        .yc-info-section ul {
+            font-size: 13px;
+            line-height: 2;
+        }
+        
+        .yc-info-section ul li {
+            color: var(--yc-black);
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="~{layout/navbar :: navbar}"></div>
     
-    <!-- Hero Section with Matrix Background -->
-    <section class="hero">
-        <canvas id="matrix-bg" aria-hidden="true"></canvas>
-        <div class="hero-content fade-in-up">
-            <h1 class="hero-title">The Mockup API Server<br/>for Modern Development</h1>
-            <p class="hero-subtitle">Create, manage, and deploy mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity.</p>
-            <div class="hero-cta">
-                <a th:href="@{/projects}" class="btn-hero-primary" sec:authorize="isAuthenticated()">
-                    <i class="bi bi-rocket-takeoff"></i> Explore Platform
+    <!-- YC-style Hero Section -->
+    <section class="yc-hero">
+        <div class="container text-center">
+            <h1>Mock API Server</h1>
+            <p>Create and manage mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity. Simple, fast, and efficient.</p>
+            <div class="mt-4">
+                <a th:href="@{/projects}" class="btn btn-primary btn-lg me-2" sec:authorize="isAuthenticated()">
+                    Get Started
                 </a>
-                <a th:href="@{/login}" class="btn-hero-primary" sec:authorize="!isAuthenticated()">
-                    <i class="bi bi-box-arrow-in-right"></i> Get Started
+                <a th:href="@{/login}" class="btn btn-primary btn-lg me-2" sec:authorize="!isAuthenticated()">
+                    Login
                 </a>
-                <a th:href="@{/tech-stack}" class="btn-hero-secondary">
-                    <i class="bi bi-stack"></i> View Tech Stack
+                <a th:href="@{/tech-stack}" class="btn btn-outline-secondary btn-lg">
+                    View Tech Stack
                 </a>
             </div>
-        </div>
-        <div class="scroll-indicator" aria-hidden="true">
-            <i class="bi bi-chevron-down"></i>
         </div>
     </section>
     
     <!-- Features Section -->
-    <section class="features-section" sec:authorize="isAuthenticated()">
+    <section class="yc-features" sec:authorize="isAuthenticated()">
         <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-card-icon">
-                        <i class="bi bi-folder-fill"></i>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="yc-feature-card text-center">
+                        <div class="yc-feature-icon">
+                            <i class="bi bi-folder-fill"></i>
+                        </div>
+                        <h3>Projects</h3>
+                        <p>Organize your mock endpoints into projects for better management and collaboration</p>
+                        <a th:href="@{/projects}" class="btn btn-primary btn-sm">
+                            View Projects →
+                        </a>
                     </div>
-                    <h3>Projects</h3>
-                    <p>Organize your mock endpoints into projects for better management and collaboration</p>
-                    <a th:href="@{/projects}" class="btn btn-primary">
-                        <i class="bi bi-arrow-right-circle"></i> View Projects
-                    </a>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-card-icon">
-                        <i class="bi bi-hdd-network-fill"></i>
+                <div class="col-md-4">
+                    <div class="yc-feature-card text-center">
+                        <div class="yc-feature-icon">
+                            <i class="bi bi-hdd-network-fill"></i>
+                        </div>
+                        <h3>Mock Endpoints</h3>
+                        <p>Create and manage your mock API endpoints with custom responses and behavior</p>
+                        <a th:href="@{/mocks}" class="btn btn-success btn-sm">
+                            View Mocks →
+                        </a>
                     </div>
-                    <h3>Mock Endpoints</h3>
-                    <p>Create and manage your mock API endpoints with custom responses and behavior</p>
-                    <a th:href="@{/mocks}" class="btn btn-success">
-                        <i class="bi bi-arrow-right-circle"></i> View Mocks
-                    </a>
                 </div>
                 
-                <div class="feature-card" sec:authorize="hasRole('ADMIN')">
-                    <div class="feature-card-icon">
-                        <i class="bi bi-people-fill"></i>
+                <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+                    <div class="yc-feature-card text-center">
+                        <div class="yc-feature-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h3>User Management</h3>
+                        <p>Manage system users and permissions with role-based access control</p>
+                        <a th:href="@{/users}" class="btn btn-warning btn-sm">
+                            Manage Users →
+                        </a>
                     </div>
-                    <h3>User Management</h3>
-                    <p>Manage system users and permissions with role-based access control</p>
-                    <a th:href="@{/users}" class="btn btn-warning">
-                        <i class="bi bi-arrow-right-circle"></i> Manage Users
-                    </a>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Info Section -->
-    <section class="info-section">
+    <section class="yc-info-section">
         <div class="container">
-            <div class="info-card">
-                <div class="card-header">
-                    <h5><i class="bi bi-info-circle-fill"></i> Powerful Features</h5>
-                </div>
-                <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h2 class="text-center">Powerful Features</h2>
                     <ul class="list-unstyled">
-                        <li><i class="bi bi-check-circle-fill text-success"></i> Create custom mock API endpoints</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i> Configure response status, headers, and body</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i> Support for all HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i> JWT authentication support</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i> Response delay simulation</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i> Expiration date management</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Create custom mock API endpoints</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Configure response status, headers, and body</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Support for all HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> JWT authentication support</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Response delay simulation</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Expiration date management</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Project-based organization</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Role-based access control</li>
                     </ul>
+                </div>
+            </div>
+            
+            <div class="row mt-5" sec:authorize="!isAuthenticated()">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <div class="yc-feature-card">
+                        <h3>Ready to get started?</h3>
+                        <p>Login to start creating your mock API endpoints</p>
+                        <a th:href="@{/login}" class="btn btn-primary">
+                            Login Now
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <footer class="footer mt-auto py-4 bg-dark text-white">
+    <footer class="footer mt-auto py-4">
         <div class="container text-center">
-            <span>Mockup API Server © 2024</span>
+            <span class="text-muted">Mockup API Server © 2024</span>
         </div>
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/js/matrix-background.js}"></script>
 </body>
 </html>
