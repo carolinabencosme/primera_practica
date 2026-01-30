@@ -122,7 +122,7 @@ The application will start on **http://localhost:8080**
 The application initializes with a default admin user:
 
 - **Username**: `admin`
-- **Password**: `admin123`
+- **Password**: `admin`
 - **Roles**: ROLE_ADMIN, ROLE_USER
 
 **⚠️ IMPORTANT**: Change the default password immediately after first login, especially in production environments.
@@ -182,7 +182,7 @@ Comprehensive documentation is available in the `doc/` directory:
 
 Navigate to http://localhost:8080 and login with:
 - Username: `admin`
-- Password: `admin123`
+- Password: `admin`
 
 ### 3. Create a Project
 

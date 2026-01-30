@@ -35,7 +35,7 @@ cd primera_practica
 ./gradlew bootRun
 
 # Access at http://localhost:8080
-# Login: admin / admin123
+# Login: admin / admin
 ```
 
 ## 🔑 Key Features
