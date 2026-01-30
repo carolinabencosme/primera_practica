@@ -20,4 +20,9 @@ public class HomeController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/tech-stack")
+    public String techStack() {
+        return "tech-stack";
+    }
 }

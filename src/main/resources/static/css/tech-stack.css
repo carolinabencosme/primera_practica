@@ -1,0 +1,369 @@
+/* Y Combinator Style Tech Stack CSS */
+
+:root {
+    --yc-orange: #FF6600;
+    --yc-background: #F6F6EF;
+    --yc-gray: #828282;
+    --yc-black: #000000;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 8px 24px rgba(255, 102, 0, 0.2);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--yc-background);
+}
+
+/* Hero Section */
+.tech-hero {
+    background: linear-gradient(135deg, #ffffff 0%, var(--yc-background) 100%);
+    padding: 80px 0 60px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--yc-black);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--yc-gray);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Tech Grid Section */
+.tech-grid-section {
+    padding: 60px 0;
+    background-color: #ffffff;
+}
+
+.category-section {
+    margin-bottom: 80px;
+}
+
+.category-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--yc-black);
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--yc-orange), transparent);
+}
+
+/* Tech Grid */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+/* Tech Cards */
+.tech-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 30px;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--yc-orange);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: var(--transition);
+}
+
+.tech-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--yc-orange);
+}
+
+.tech-card:hover::before {
+    transform: scaleX(1);
+}
+
+.tech-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tech-icon img,
+.tech-icon svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.tech-info {
+    text-align: left;
+}
+
+.tech-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--yc-black);
+    margin-bottom: 8px;
+}
+
+.tech-version {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--yc-orange), #ff8533);
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tech-version:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(255, 102, 0, 0.3);
+}
+
+.tech-description {
+    font-size: 0.938rem;
+    color: var(--yc-gray);
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.tech-badge {
+    display: inline-block;
+    background-color: var(--yc-background);
+    color: var(--yc-gray);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Philosophy Section */
+.tech-philosophy {
+    background: linear-gradient(135deg, var(--yc-background) 0%, #ffffff 100%);
+    padding: 80px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.philosophy-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.philosophy-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--yc-black);
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.philosophy-card {
+    text-align: center;
+    padding: 30px 20px;
+    transition: var(--transition);
+}
+
+.philosophy-card:hover {
+    transform: translateY(-4px);
+}
+
+.philosophy-icon {
+    font-size: 3rem;
+    color: var(--yc-orange);
+    margin-bottom: 20px;
+}
+
+.philosophy-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--yc-black);
+    margin-bottom: 15px;
+}
+
+.philosophy-card p {
+    font-size: 1rem;
+    color: var(--yc-gray);
+    line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.fade-in-delayed {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Copy feedback */
+.copy-feedback {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--yc-orange);
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+    z-index: 1000;
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .tech-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+    }
+
+    .philosophy-title {
+        font-size: 1.75rem;
+    }
+
+    .tech-hero {
+        padding: 50px 0 40px;
+    }
+
+    .tech-grid-section,
+    .tech-philosophy {
+        padding: 40px 0;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+    background-color: var(--yc-orange);
+    color: #ffffff;
+}
+
+::-moz-selection {
+    background-color: var(--yc-orange);
+    color: #ffffff;
+}
+
+/* Focus styles for accessibility */
+.tech-card:focus,
+.tech-version:focus {
+    outline: 2px solid var(--yc-orange);
+    outline-offset: 2px;
+}
+
+/* Loading state */
+.tech-card.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Print styles */
+@media print {
+    .tech-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    
+    .tech-hero,
+    .tech-philosophy {
+        background: #ffffff !important;
+    }
+}
