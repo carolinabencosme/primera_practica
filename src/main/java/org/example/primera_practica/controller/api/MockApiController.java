@@ -107,8 +107,10 @@ public class MockApiController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("{\"error\": \"Invalid HTTP method\"}");
         } catch (Exception e) {
+            // Log error for debugging but don't expose details to client
+            System.err.println("Error processing mock request: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("{\"error\": \"Internal server error: " + e.getMessage() + "\"}");
+                .body("{\"error\": \"Internal server error\"}");
         }
     }
 }
