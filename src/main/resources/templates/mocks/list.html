@@ -9,7 +9,7 @@
 <body>
     <div data-role="content">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="page-header">
                 <h2><i class="bi bi-hdd-network-fill text-success"></i> Mock Endpoints</h2>
                 <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn btn-primary" th:if="${projectId != null}">
                     <i class="bi bi-plus-circle"></i> New Mock Endpoint
@@ -97,24 +97,24 @@
                                 th:classappend="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())} ? 'table-danger'">
                                 <td>
                                     <a th:href="@{/mocks/{id}(id=${mock.id})}" th:text="${mock.name}" class="text-decoration-none fw-bold"></a>
-                                    <span th:if="${mock.requiresJwt}" class="badge bg-warning ms-1" title="Requires JWT">
+                                    <span th:if="${mock.requiresJwt}" class="badge badge--warning ms-1" title="Requires JWT">
                                         <i class="bi bi-shield-lock"></i> JWT
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge" th:classappend="${mock.method.name() == 'GET' ? 'bg-primary' :
-                                                                          mock.method.name() == 'POST' ? 'bg-success' :
-                                                                          mock.method.name() == 'PUT' ? 'bg-warning text-dark' :
-                                                                          mock.method.name() == 'DELETE' ? 'bg-danger' : 'bg-secondary'}"
+                                    <span class="badge" th:classappend="${mock.method.name() == 'GET' ? 'badge--brand' :
+                                                                          mock.method.name() == 'POST' ? 'badge--success' :
+                                                                          mock.method.name() == 'PUT' ? 'badge--warning' :
+                                                                          mock.method.name() == 'DELETE' ? 'badge--danger' : 'badge--muted'}"
                                           th:text="${mock.method}">Method</span>
                                 </td>
                                 <td><code th:text="${mock.path}" style="font-size: 12px;">Path</code></td>
-                                <td><span class="badge bg-info" th:text="${mock.httpStatusCode}">200</span></td>
+                                <td><span class="badge badge--muted" th:text="${mock.httpStatusCode}">200</span></td>
                                 <td th:text="${mock.projectName}">Project</td>
                                 <td>
                                     <small th:text="${#temporals.format(mock.expirationDate, 'yyyy-MM-dd')}">Expiration</small>
                                     <span th:if="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}"
-                                          class="badge bg-danger ms-1">EXPIRED</span>
+                                          class="badge badge--danger ms-1">EXPIRED</span>
                                 </td>
                                 <td>
                                     <div class="d-flex gap-1">
