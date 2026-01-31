@@ -10,20 +10,27 @@
     <div data-role="content">
         <div class="container">
             <div class="page-header">
-                <h2><i class="bi bi-people-fill text-info"></i> Users</h2>
-                <a th:href="@{/users/new}" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> New User
-                </a>
+                <div>
+                    <h2 class="page-header__title">
+                        <i class="bi bi-people-fill text-info"></i> Users
+                    </h2>
+                    <p class="page-header__subtitle">Manage system users and their access permissions.</p>
+                </div>
+                <div class="page-header__actions">
+                    <a th:href="@{/users/new}" class="btn-clean btn-brand">
+                        <i class="bi bi-plus-circle"></i> New User
+                    </a>
+                </div>
             </div>
 
             <!-- Professional Empty State -->
             <div th:if="${users.empty}" class="empty-state">
-                <div class="empty-state-icon">
+                <div class="empty-state__icon">
                     <i class="bi bi-people"></i>
                 </div>
-                <h3>No Users Found</h3>
-                <p>Add users to manage access to the Mockup API Server.</p>
-                <a th:href="@{/users/new}" class="btn btn-primary btn-lg">
+                <h3 class="empty-state__title">No Users Found</h3>
+                <p class="empty-state__description">Add users to manage access to the Mockup API Server.</p>
+                <a th:href="@{/users/new}" class="btn-clean btn-brand btn-lg">
                     <i class="bi bi-plus-circle"></i> Add First User
                 </a>
             </div>
