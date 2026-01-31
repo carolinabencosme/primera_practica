@@ -305,6 +305,28 @@ main {
     background: var(--hover-bg);
 }
 
+.btn-ghost.btn-info {
+    color: var(--info-color);
+}
+
+.btn-ghost.btn-warning {
+    color: var(--warning-dark);
+}
+
+.btn-ghost.btn-danger {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.btn-ghost.btn-info:hover,
+.btn-ghost.btn-warning:hover {
+    background: var(--hover-bg);
+}
+
+.btn-ghost.btn-danger:hover {
+    background: rgba(220, 53, 69, 0.12);
+}
+
 .btn:hover {
     transform: translateY(-2px);
 }
@@ -355,15 +377,15 @@ main {
 }
 
 .btn-danger {
-    background: var(--danger-color);
-    color: white;
+    background: transparent;
+    color: var(--danger-color);
     border-color: var(--danger-color);
 }
 
 .btn-danger:hover {
-    background: var(--danger-dark);
+    background: rgba(220, 53, 69, 0.12);
     border-color: var(--danger-dark);
-    color: white;
+    color: var(--danger-dark);
 }
 
 .btn-info {
