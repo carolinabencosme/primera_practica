@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/api/mock")
+@RequestMapping("/api")
 public class MockApiController {
 
     private final MockEndpointService mockEndpointService;
@@ -26,7 +26,7 @@ public class MockApiController {
     }
 
     @RequestMapping(
-        value = "/{projectName}/**",
+        value = "/mock/{projectName}/**",
         method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, 
                   RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.OPTIONS}
     )
@@ -47,57 +47,7 @@ public class MockApiController {
             // Get HTTP method
             httpMethod = HttpMethod.valueOf(request.getMethod());
 
-            // Find mock endpoint
-            MockEndpointDTO mockEndpoint = mockEndpointService
-                .findMockByProjectAndPathAndMethod(projectName, mockPath, httpMethod);
-
-            // Validate not expired
-            if (mockEndpoint.getExpirationDate().isBefore(LocalDateTime.now())) {
-                return ResponseEntity.status(HttpStatus.GONE)
-                    .body("{\"error\": \"Mock endpoint has expired\"}");
-            }
-
-            // Validate JWT if required
-            if (Boolean.TRUE.equals(mockEndpoint.getRequiresJwt())) {
-                if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body("{\"error\": \"JWT token is required\"}");
-                }
-
-                String token = authHeader.substring(7);
-                if (!jwtService.validateToken(token)) {
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body("{\"error\": \"Invalid or expired JWT token\"}");
-                }
-            }
-
-            // Apply delay if configured
-            if (mockEndpoint.getDelaySeconds() != null && mockEndpoint.getDelaySeconds() > 0) {
-                try {
-                    Thread.sleep(mockEndpoint.getDelaySeconds() * 1000L);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-
-            // Build response with configured headers, status, content-type, body
-            var responseBuilder = ResponseEntity.status(mockEndpoint.getHttpStatusCode());
-            
-            // Add content type header
-            responseBuilder.header("Content-Type", mockEndpoint.getContentType());
-            
-            // Add custom headers
-            if (mockEndpoint.getHeaders() != null) {
-                mockEndpoint.getHeaders().forEach(header -> 
-                    responseBuilder.header(header.getHeaderKey(), header.getHeaderValue())
-                );
-            }
-
-            // Return response with body
-            String responseBody = mockEndpoint.getResponseBody() != null ? 
-                mockEndpoint.getResponseBody() : "";
-            
-            return responseBuilder.body(responseBody);
+            return executeMockResponse(projectName, mockPath, httpMethod, authHeader);
 
         } catch (ResourceNotFoundException e) {
             String errorMessage = (httpMethod != null && mockPath != null)
@@ -114,5 +64,86 @@ public class MockApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("{\"error\": \"Internal server error\"}");
         }
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<String> executeUsersMock(
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        String mockPath = PathNormalizer.normalizePath("/api/users");
+        HttpMethod httpMethod = HttpMethod.GET;
+
+        try {
+            return executeMockResponse("Usuarios", mockPath, httpMethod, authHeader);
+        } catch (ResourceNotFoundException e) {
+            String errorMessage = "Mock endpoint not found for " + httpMethod + " " + mockPath;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("{\"error\": \"" + errorMessage + "\"}");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("{\"error\": \"Invalid HTTP method\"}");
+        } catch (Exception e) {
+            // Log error for debugging but don't expose details to client
+            System.err.println("Error processing mock request: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("{\"error\": \"Internal server error\"}");
+        }
+    }
+
+    private ResponseEntity<String> executeMockResponse(
+            String projectName,
+            String mockPath,
+            HttpMethod httpMethod,
+            String authHeader) {
+        // Find mock endpoint
+        MockEndpointDTO mockEndpoint = mockEndpointService
+            .findMockByProjectAndPathAndMethod(projectName, mockPath, httpMethod);
+
+        // Validate not expired
+        if (mockEndpoint.getExpirationDate().isBefore(LocalDateTime.now())) {
+            return ResponseEntity.status(HttpStatus.GONE)
+                .body("{\"error\": \"Mock endpoint has expired\"}");
+        }
+
+        // Validate JWT if required
+        if (Boolean.TRUE.equals(mockEndpoint.getRequiresJwt())) {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("{\"error\": \"JWT token is required\"}");
+            }
+
+            String token = authHeader.substring(7);
+            if (!jwtService.validateToken(token)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("{\"error\": \"Invalid or expired JWT token\"}");
+            }
+        }
+
+        // Apply delay if configured
+        if (mockEndpoint.getDelaySeconds() != null && mockEndpoint.getDelaySeconds() > 0) {
+            try {
+                Thread.sleep(mockEndpoint.getDelaySeconds() * 1000L);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // Build response with configured headers, status, content-type, body
+        var responseBuilder = ResponseEntity.status(mockEndpoint.getHttpStatusCode());
+        
+        // Add content type header
+        responseBuilder.header("Content-Type", mockEndpoint.getContentType());
+        
+        // Add custom headers
+        if (mockEndpoint.getHeaders() != null) {
+            mockEndpoint.getHeaders().forEach(header -> 
+                responseBuilder.header(header.getHeaderKey(), header.getHeaderValue())
+            );
+        }
+
+        // Return response with body
+        String responseBody = mockEndpoint.getResponseBody() != null ? 
+            mockEndpoint.getResponseBody() : "";
+        
+        return responseBuilder.body(responseBody);
     }
 }
