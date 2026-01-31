@@ -17,9 +17,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="card">
-                        <div class="card-header bg-success text-white">
-                            <h4>
-                                <i class="bi bi-hdd-network-fill"></i>
+                        <div class="card-header">
+                            <h4 class="mb-0">
+                                <i class="bi bi-hdd-network-fill text-success"></i>
                                 <span th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'}">Mock Form</span>
                             </h4>
                         </div>
@@ -161,7 +161,7 @@
                                     <a th:href="@{/mocks}" class="btn btn-secondary">
                                         <i class="bi bi-arrow-left"></i> Cancel
                                     </a>
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="submit" class="btn btn-primary">
                                         <i class="bi bi-save"></i>
                                         <span th:text="${mock.id != null ? 'Update' : 'Create'}">Save</span>
                                     </button>
