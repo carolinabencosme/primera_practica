@@ -85,8 +85,8 @@ body {
 }
 
 .tech-icon {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -94,12 +94,23 @@ body {
 }
 
 .tech-icon img,
-.tech-icon svg {
-    width: 100%;
-    height: 100%;
+.tech-icon svg,
+.tech-icon i {
+    width: 48px;
+    height: 48px;
     object-fit: contain;
 }
 
+.tech-icon img,
+.tech-icon svg {
+    filter: grayscale(100%) saturate(0);
+}
+
+.tech-icon-brand {
+    font-size: 48px;
+    line-height: 1;
+    color: var(--text-secondary);
+}
 .tech-info {
     text-align: left;
 }
