@@ -107,7 +107,9 @@
                             <dd class="col-sm-8">
                                 <code th:text="'/api/mock/' + ${mock.projectName} + ${mock.path}">URL</code>
                                 <button class="btn btn-sm btn-outline-secondary ms-1" 
-                                        th:onclick="'copyToClipboard(\'/api/mock/' + ${mock.projectName} + ${mock.path} + '\')'">
+                                        th:data-url="'/api/mock/' + ${mock.projectName} + ${mock.path}"
+                                        onclick="copyToClipboard(this.getAttribute('data-url'))"
+                                        aria-label="Copy API URL to clipboard">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
                             </dd>
