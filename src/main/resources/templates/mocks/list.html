@@ -10,32 +10,47 @@
     <div data-role="content">
         <div class="container">
             <div class="page-header">
-                <h2><i class="bi bi-hdd-network-fill text-success"></i> Mock Endpoints</h2>
-                <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn btn-primary" th:if="${projectId != null}">
-                    <i class="bi bi-plus-circle"></i> New Mock Endpoint
-                </a>
+                <div>
+                    <h2 class="page-header__title">
+                        <i class="bi bi-hdd-network-fill text-success"></i> Mock Endpoints
+                    </h2>
+                    <p class="page-header__subtitle" th:if="${projectId != null}">Manage mock API endpoints for testing and development.</p>
+                    <p class="page-header__subtitle" th:if="${projectId == null}">Select a project to view and manage its mock endpoints.</p>
+                </div>
+                <div class="page-header__actions" th:if="${projectId != null}">
+                    <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn-clean btn-brand">
+                        <i class="bi bi-plus-circle"></i> New Mock Endpoint
+                    </a>
+                </div>
             </div>
 
-            <!-- Project Selection (when no projectId) -->
+            <!-- Project Selection Toolbar (when no projectId) -->
             <div th:if="${projects != null}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
-                            <div class="d-flex align-items-center gap-2">
-                                <label for="projectSelect" class="mb-0 fw-semibold">Project</label>
-                                <select id="projectSelect" class="select"
-                                        onchange="if (this.value) { window.location.href = this.value; }">
-                                    <option value="">Select a project</option>
-                                    <option th:each="project : ${projects}"
-                                            th:value="@{/mocks(projectId=${project.id})}"
-                                            th:text="${project.name}">Project Name</option>
-                                </select>
-                            </div>
-                            <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn btn-primary"
-                               th:if="${projectId != null}">
-                                <i class="bi bi-plus-circle"></i> Create Mock Endpoint
-                            </a>
-                        </div>
+                <div class="mock-toolbar">
+                    <div class="mock-selector">
+                        <label for="projectSelect" class="form-label-clean">Select Project</label>
+                        <select id="projectSelect" class="form-select-clean"
+                                onchange="if (this.value) { window.location.href = this.value; }"
+                                aria-label="Select a project to view its mock endpoints">
+                            <option value="">Choose a project...</option>
+                            <option th:each="project : ${projects}"
+                                    th:value="@{/mocks(projectId=${project.id})}"
+                                    th:text="${project.name}"
+                                    th:selected="${projectId != null && projectId == project.id}">Project Name</option>
+                        </select>
+                    </div>
+                    <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn-clean btn-brand"
+                       th:if="${projectId != null}"
+                       aria-label="Create new mock endpoint">
+                        <i class="bi bi-plus-circle"></i> Create Endpoint
+                    </a>
+                </div>
+                
+                <!-- Project Cards Section -->
+                <div th:if="${projectId == null}" class="mt-4">
+                    <div class="page-header__subtitle mb-4">
+                        <p class="text-muted">Select a project above or choose one from the list below to view and manage mock endpoints.</p>
+                    </div>
                         <div th:if="${!projects.empty}" class="row row-cols-1 row-cols-md-2 g-3">
                             <div class="col" th:each="project : ${projects}">
                                 <a th:href="@{/mocks(projectId=${project.id})}" class="card h-100 text-decoration-none" style="transition: all 0.2s;">
@@ -54,13 +69,13 @@
                             </div>
                         </div>
                         <div th:if="${projects.empty}" class="empty-state">
-                            <div class="empty-state-icon">
+                            <div class="empty-state__icon">
                                 <i class="bi bi-folder-plus"></i>
                             </div>
-                            <h3>No Projects Found</h3>
-                            <p>Create a project first to start building mock endpoints.</p>
-                            <a th:href="@{/projects/new}" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Create Project
+                            <h3 class="empty-state__title">No Projects Found</h3>
+                            <p class="empty-state__description">Create a project first to start building mock endpoints.</p>
+                            <a th:href="@{/projects/new}" class="btn-clean btn-brand btn-lg">
+                                <i class="bi bi-plus-circle"></i> Create Your First Project
                             </a>
                         </div>
                     </div>
@@ -71,18 +86,17 @@
             <div th:if="${mocks != null}">
                 <!-- Professional Empty State -->
                 <div th:if="${mocks.empty}" class="empty-state">
-                    <div class="empty-state-icon">
+                    <div class="empty-state__icon">
                         <i class="bi bi-hdd-network"></i>
                     </div>
-                    <h3>No Mock Endpoints Yet</h3>
-                    <p>Create your first mock endpoint to start testing your APIs.<br>
-                       Mock endpoints allow you to simulate API responses without a real backend.</p>
-                    <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn btn-primary btn-lg">
+                    <h3 class="empty-state__title">No Mock Endpoints Yet</h3>
+                    <p class="empty-state__description">Create your first mock endpoint to start testing your APIs. Mock endpoints allow you to simulate API responses without a real backend.</p>
+                    <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn-clean btn-brand btn-lg">
                         <i class="bi bi-plus-circle"></i> Create Your First Mock Endpoint
                     </a>
-                    <div class="mt-4 text-start" style="max-width: 600px; margin-left: auto; margin-right: auto;">
-                        <h4 style="font-size: 14px; margin-bottom: 1rem;">What you can do:</h4>
-                        <ul style="font-size: 13px; color: var(--yc-gray); line-height: 1.8;">
+                    <div class="mt-5 text-start" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                        <h5 class="text-sm font-weight-semibold mb-3 text-muted">What you can do:</h5>
+                        <ul class="text-sm text-muted" style="line-height: 1.8;">
                             <li>Define custom HTTP methods (GET, POST, PUT, DELETE)</li>
                             <li>Set custom response data and status codes</li>
                             <li>Configure response headers and delays</li>

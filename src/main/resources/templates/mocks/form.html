@@ -1,169 +1,204 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'} + ' - Mockup API Server'">Mock Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <th:block data-role="styles"></th:block>
+    <th:block data-role="scripts">
+        <script th:inline="javascript">
+            // Initialize headers if editing
+            /*<![CDATA[*/
+            let headerCount = 0;
+            const existingHeaders = /*[[${mock.headers}]]*/ [];
+            
+            if (existingHeaders && existingHeaders.length > 0) {
+                existingHeaders.forEach((header, index) => {
+                    addHeader(header.headerKey, header.headerValue);
+                });
+            }
+            /*]]>*/
+        </script>
+    </th:block>
 </head>
-<body class="app-shell">
-    <div th:replace="~{layout/navbar :: navbar}"></div>
-    
-    <main class="page">
+<body>
+    <div data-role="content">
         <div class="container">
+            <div class="page-header">
+                <div>
+                    <h2 class="page-header__title">
+                        <i class="bi bi-hdd-network-fill text-success"></i>
+                        <span th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'}">Mock Form</span>
+                    </h2>
+                    <p class="page-header__subtitle">Configure your mock API endpoint with custom responses and behavior.</p>
+                </div>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="mb-0">
-                                <i class="bi bi-hdd-network-fill text-success"></i>
-                                <span th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'}">Mock Form</span>
-                            </h4>
-                        </div>
-                        <div class="card-body">
+                    <div class="card-clean">
+                        <div class="card-body-clean">
                             <form th:action="${mock.id != null ? '/mocks/' + mock.id : '/mocks'}"
                                   th:object="${mock}" method="post">
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control input" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
-                                               id="name" th:field="*{name}" placeholder="Enter endpoint name" required>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                                            Name error
+                                <!-- Section 1: Basic Info -->
+                                <div class="mock-form-section">
+                                    <h5><i class="bi bi-info-circle"></i> Basic Information</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="name" class="form-label-clean">Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                                   id="name" th:field="*{name}" placeholder="e.g., Get Users List" required>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                                Name error
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="projectId" class="form-label-clean">Project <span class="text-danger">*</span></label>
+                                            <select class="form-select-clean" th:classappend="${#fields.hasErrors('projectId')} ? 'is-invalid'"
+                                                    id="projectId" th:field="*{projectId}" required>
+                                                <option value="">Select a project</option>
+                                                <option th:each="project : ${projects}"
+                                                        th:value="${project.id}"
+                                                        th:text="${project.name}">Project</option>
+                                            </select>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('projectId')}" th:errors="*{projectId}">
+                                                Project error
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label for="projectId" class="form-label">Project <span class="text-danger">*</span></label>
-                                        <select class="form-select select" th:classappend="${#fields.hasErrors('projectId')} ? 'is-invalid'"
-                                                id="projectId" th:field="*{projectId}" required>
-                                            <option value="">Select a project</option>
-                                            <option th:each="project : ${projects}"
-                                                    th:value="${project.id}"
-                                                    th:text="${project.name}">Project</option>
-                                        </select>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('projectId')}" th:errors="*{projectId}">
-                                            Project error
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control textarea" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
-                                              id="description" th:field="*{description}" rows="2"
-                                              placeholder="Enter endpoint description"></textarea>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
-                                        Description error
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="path" class="form-label">Path <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control input" th:classappend="${#fields.hasErrors('path')} ? 'is-invalid'"
-                                               id="path" th:field="*{path}" placeholder="/api/users" required>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">
-                                            Path error
-                                        </div>
-                                        <small class="form-text text-muted">Example: /users, /users/:id, /products/*</small>
-                                    </div>
-
-                                    <div class="col-md-3 mb-3">
-                                        <label for="method" class="form-label">HTTP Method <span class="text-danger">*</span></label>
-                                        <select class="form-select select" th:classappend="${#fields.hasErrors('method')} ? 'is-invalid'"
-                                                id="method" th:field="*{method}" required>
-                                            <option value="">Select method</option>
-                                            <option th:each="httpMethod : ${httpMethods}"
-                                                    th:value="${httpMethod}"
-                                                    th:text="${httpMethod}">Method</option>
-                                        </select>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('method')}" th:errors="*{method}">
-                                            Method error
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 mb-3">
-                                        <label for="httpStatusCode" class="form-label">Status Code <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control input" th:classappend="${#fields.hasErrors('httpStatusCode')} ? 'is-invalid'"
-                                               id="httpStatusCode" th:field="*{httpStatusCode}" min="100" max="599" required>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('httpStatusCode')}" th:errors="*{httpStatusCode}">
-                                            Status code error
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label-clean">Description</label>
+                                        <textarea class="form-control-clean" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                                  id="description" th:field="*{description}" rows="2"
+                                                  placeholder="Brief description of what this endpoint does"></textarea>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                                            Description error
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="contentType" class="form-label">Content Type <span class="text-danger">*</span></label>
-                                        <select class="form-select select" th:classappend="${#fields.hasErrors('contentType')} ? 'is-invalid'"
-                                                id="contentType" th:field="*{contentType}" required>
-                                            <option value="application/json">application/json</option>
-                                            <option value="application/xml">application/xml</option>
-                                            <option value="text/plain">text/plain</option>
-                                            <option value="text/html">text/html</option>
-                                            <option value="text/csv">text/csv</option>
-                                        </select>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}">
-                                            Content type error
-                                        </div>
-                                    </div>
+                                <!-- Section 2: Request Configuration -->
+                                <div class="mock-form-section">
+                                    <h5><i class="bi bi-arrow-right-circle"></i> Request Configuration</h5>
 
-                                    <div class="col-md-3 mb-3">
-                                        <label for="delaySeconds" class="form-label">Delay (seconds)</label>
-                                        <input type="number" class="form-control input" th:classappend="${#fields.hasErrors('delaySeconds')} ? 'is-invalid'"
-                                               id="delaySeconds" th:field="*{delaySeconds}" min="0" placeholder="0">
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('delaySeconds')}" th:errors="*{delaySeconds}">
-                                            Delay error
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="path" class="form-label-clean">Path <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('path')} ? 'is-invalid'"
+                                                   id="path" th:field="*{path}" placeholder="/api/v1/users" required>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">
+                                                Path error
+                                            </div>
+                                            <small class="help-text">Example: /users, /users/:id, /products/*</small>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-3 mb-3">
-                                        <label for="expirationDate" class="form-label">Expiration Date <span class="text-danger">*</span></label>
-                                        <input type="datetime-local" class="form-control input" th:classappend="${#fields.hasErrors('expirationDate')} ? 'is-invalid'"
-                                               id="expirationDate" th:field="*{expirationDate}" required>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
-                                            Expiration date error
+                                        <div class="col-md-3 mb-3">
+                                            <label for="method" class="form-label-clean">HTTP Method <span class="text-danger">*</span></label>
+                                            <select class="form-select-clean" th:classappend="${#fields.hasErrors('method')} ? 'is-invalid'"
+                                                    id="method" th:field="*{method}" required>
+                                                <option value="">Select</option>
+                                                <option th:each="httpMethod : ${httpMethods}"
+                                                        th:value="${httpMethod}"
+                                                        th:text="${httpMethod}">Method</option>
+                                            </select>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('method')}" th:errors="*{method}">
+                                                Method error
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label for="httpStatusCode" class="form-label-clean">Status Code <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control-clean" th:classappend="${#fields.hasErrors('httpStatusCode')} ? 'is-invalid'"
+                                                   id="httpStatusCode" th:field="*{httpStatusCode}" min="100" max="599" placeholder="200" required>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('httpStatusCode')}" th:errors="*{httpStatusCode}">
+                                                Status code error
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="requiresJwt" th:field="*{requiresJwt}">
-                                        <label class="form-check-label" for="requiresJwt">
-                                            <i class="bi bi-shield-lock"></i> Requires JWT Authentication
-                                        </label>
+                                <!-- Section 3: Response Configuration -->
+                                <div class="mock-form-section">
+                                    <h5><i class="bi bi-arrow-left-circle"></i> Response Configuration</h5>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="contentType" class="form-label-clean">Content Type <span class="text-danger">*</span></label>
+                                            <select class="form-select-clean" th:classappend="${#fields.hasErrors('contentType')} ? 'is-invalid'"
+                                                    id="contentType" th:field="*{contentType}" required>
+                                                <option value="application/json">application/json</option>
+                                                <option value="application/xml">application/xml</option>
+                                                <option value="text/plain">text/plain</option>
+                                                <option value="text/html">text/html</option>
+                                                <option value="text/csv">text/csv</option>
+                                            </select>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}">
+                                                Content type error
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label for="delaySeconds" class="form-label-clean">Delay (seconds)</label>
+                                            <input type="number" class="form-control-clean" th:classappend="${#fields.hasErrors('delaySeconds')} ? 'is-invalid'"
+                                                   id="delaySeconds" th:field="*{delaySeconds}" min="0" placeholder="0">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('delaySeconds')}" th:errors="*{delaySeconds}">
+                                                Delay error
+                                            </div>
+                                            <small class="help-text">Simulate network latency</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label for="expirationDate" class="form-label-clean">Expires <span class="text-danger">*</span></label>
+                                            <input type="datetime-local" class="form-control-clean" th:classappend="${#fields.hasErrors('expirationDate')} ? 'is-invalid'"
+                                                   id="expirationDate" th:field="*{expirationDate}" required>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
+                                                Expiration date error
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="responseBody" class="form-label-clean">Response Body</label>
+                                        <textarea class="form-control-clean font-monospace" id="responseBody" th:field="*{responseBody}"
+                                                  rows="10" placeholder='{"message": "Success", "data": []}'></textarea>
+                                        <small class="help-text">JSON, XML, or plain text response</small>
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="responseBody" class="form-label">Response Body</label>
-                                    <textarea class="form-control textarea font-monospace" id="responseBody" th:field="*{responseBody}"
-                                              rows="8" placeholder='{"message": "Success"}'></textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Custom Headers</label>
-                                    <div id="headers-container">
+                                <!-- Section 4: Custom Headers -->
+                                <div class="mock-form-section">
+                                    <h5><i class="bi bi-list-ul"></i> Custom Headers (Optional)</h5>
+                                    <div id="headers-container" class="mb-3">
                                         <!-- Headers will be added dynamically -->
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addHeader()">
+                                    <button type="button" class="btn-clean btn-soft btn-sm add-header-btn" onclick="addHeader()">
                                         <i class="bi bi-plus-circle"></i> Add Header
                                     </button>
                                 </div>
 
-                                <div class="d-flex justify-content-between">
-                                    <a th:href="@{/mocks}" class="btn btn-secondary">
+                                <!-- Section 5: Security -->
+                                <div class="mock-form-section">
+                                    <h5><i class="bi bi-shield-lock"></i> Security</h5>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="requiresJwt" th:field="*{requiresJwt}">
+                                            <label class="form-check-label" for="requiresJwt">
+                                                <i class="bi bi-shield-lock text-warning"></i> Requires JWT Authentication
+                                            </label>
+                                        </div>
+                                        <small class="help-text">When enabled, requests must include a valid JWT token</small>
+                                    </div>
+                                </div>
+
+                                <!-- Form Actions -->
+                                <div class="d-flex justify-content-between pt-4 border-top">
+                                    <a th:href="@{/mocks}" class="btn-clean btn-soft">
                                         <i class="bi bi-arrow-left"></i> Cancel
                                     </a>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn-clean btn-brand">
                                         <i class="bi bi-save"></i>
-                                        <span th:text="${mock.id != null ? 'Update' : 'Create'}">Save</span>
+                                        <span th:text="${mock.id != null ? 'Update Endpoint' : 'Create Endpoint'}">Save</span>
                                     </button>
                                 </div>
                             </form>
@@ -172,28 +207,6 @@
                 </div>
             </div>
         </div>
-    </main>
-    
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">Mockup API Server © 2024</span>
-        </div>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/js/main.js}"></script>
-    <script th:inline="javascript">
-        // Initialize headers if editing
-        /*<![CDATA[*/
-        let headerCount = 0;
-        const existingHeaders = /*[[${mock.headers}]]*/ [];
-        
-        if (existingHeaders && existingHeaders.length > 0) {
-            existingHeaders.forEach((header, index) => {
-                addHeader(header.headerKey, header.headerValue);
-            });
-        }
-        /*]]>*/
-    </script>
+    </div>
 </body>
 </html>

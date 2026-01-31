@@ -10,26 +10,32 @@
     <div data-role="content">
         <div class="container">
             <div class="page-header">
-                <h2><i class="bi bi-folder-fill text-warning"></i> My Projects</h2>
-                <a th:href="@{/projects/new}" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> New Project
-                </a>
+                <div>
+                    <h2 class="page-header__title">
+                        <i class="bi bi-folder-fill text-warning"></i> My Projects
+                    </h2>
+                    <p class="page-header__subtitle">Organize your mock endpoints into projects for better management.</p>
+                </div>
+                <div class="page-header__actions">
+                    <a th:href="@{/projects/new}" class="btn-clean btn-brand">
+                        <i class="bi bi-plus-circle"></i> New Project
+                    </a>
+                </div>
             </div>
 
             <!-- Professional Empty State -->
             <div th:if="${projects.empty}" class="empty-state">
-                <div class="empty-state-icon">
+                <div class="empty-state__icon">
                     <i class="bi bi-folder-plus"></i>
                 </div>
-                <h3>No Projects Yet</h3>
-                <p>Create your first project to start building mock API endpoints.<br>
-                   Projects help you organize your mock endpoints and manage them efficiently.</p>
-                <a th:href="@{/projects/new}" class="btn btn-primary btn-lg">
+                <h3 class="empty-state__title">No Projects Yet</h3>
+                <p class="empty-state__description">Create your first project to start building mock API endpoints. Projects help you organize your mock endpoints and manage them efficiently.</p>
+                <a th:href="@{/projects/new}" class="btn-clean btn-brand btn-lg">
                     <i class="bi bi-plus-circle"></i> Create Your First Project
                 </a>
-                <div class="mt-4 text-start" style="max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <h4 style="font-size: 14px; margin-bottom: 1rem;">Getting Started:</h4>
-                    <ol style="font-size: 13px; color: var(--yc-gray); line-height: 1.8;">
+                <div class="mt-5 text-start" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <h5 class="text-sm font-weight-semibold mb-3 text-muted">Getting Started:</h5>
+                    <ol class="text-sm text-muted" style="line-height: 1.8;">
                         <li>Create a new project to organize your mock endpoints</li>
                         <li>Add mock endpoints with custom responses</li>
                         <li>Configure HTTP methods, headers, and response data</li>
