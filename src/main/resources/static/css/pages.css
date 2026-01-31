@@ -1,0 +1,337 @@
+/* YC-Level Page-Specific Styles - Overrides and Custom Layouts */
+/* This file contains page-specific styling that doesn't fit in components */
+
+/* === HOME PAGE SPECIFIC === */
+.home-hero {
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    padding: var(--space-20) 0;
+    text-align: center;
+}
+
+.home-features {
+    padding: var(--space-16) 0;
+}
+
+.home-feature-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-feature-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-feature-card .btn {
+    margin-top: auto;
+}
+
+/* === PROJECTS PAGE SPECIFIC === */
+.project-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+}
+
+.project-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card .card-footer {
+    margin-top: auto;
+}
+
+/* === MOCK ENDPOINTS PAGE SPECIFIC === */
+.mock-toolbar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--space-5) var(--space-6);
+    margin-bottom: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mock-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: 1;
+    min-width: 250px;
+}
+
+.mock-selector label {
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    white-space: nowrap;
+    margin: 0;
+}
+
+.mock-selector select {
+    flex: 1;
+    min-width: 200px;
+}
+
+.mock-list-item {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--transition-base);
+}
+
+.mock-list-item:hover {
+    background: var(--hover-surface);
+}
+
+.mock-list-item:last-child {
+    border-bottom: none;
+}
+
+.mock-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: var(--text-sm);
+    color: var(--muted);
+}
+
+.mock-path {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    background: var(--bg);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--r-sm);
+}
+
+/* === MOCK FORM SPECIFIC === */
+.mock-form-section {
+    margin-bottom: var(--space-8);
+}
+
+.mock-form-section h5 {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--border);
+}
+
+.header-repeater {
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-3);
+}
+
+.header-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: var(--space-3);
+    align-items: start;
+    margin-bottom: var(--space-3);
+}
+
+.header-row:last-child {
+    margin-bottom: 0;
+}
+
+.add-header-btn {
+    margin-top: var(--space-3);
+}
+
+/* === USERS PAGE SPECIFIC === */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--r-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--brand-bg);
+    color: var(--brand);
+    font-weight: var(--weight-semibold);
+}
+
+.user-role-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+}
+
+/* === TECH STACK PAGE SPECIFIC === */
+.tech-category {
+    margin-bottom: var(--space-16);
+}
+
+.tech-category-header {
+    margin-bottom: var(--space-6);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-6);
+}
+
+.tech-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--space-6);
+    transition: all var(--transition-slow);
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand), var(--info));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-slow);
+}
+
+.tech-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    border-color: var(--brand);
+}
+
+.tech-card:hover::before {
+    transform: scaleX(1);
+}
+
+.tech-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tech-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* === LOGIN PAGE SPECIFIC === */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-md);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.login-icon {
+    font-size: 3rem;
+    color: var(--brand);
+    margin-bottom: var(--space-4);
+}
+
+/* === ERROR PAGES SPECIFIC === */
+.error-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.error-code {
+    font-size: var(--text-6xl);
+    font-weight: var(--weight-bold);
+    color: var(--brand);
+    line-height: 1;
+    margin-bottom: var(--space-4);
+}
+
+.error-message {
+    font-size: var(--text-2xl);
+    color: var(--text);
+    margin-bottom: var(--space-3);
+}
+
+.error-description {
+    font-size: var(--text-lg);
+    color: var(--muted);
+    margin-bottom: var(--space-8);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* === RESPONSIVE OVERRIDES === */
+@media (max-width: 768px) {
+    .mock-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .mock-selector {
+        flex-direction: column;
+        align-items: stretch;
+        min-width: 100%;
+    }
+    
+    .mock-selector label {
+        margin-bottom: var(--space-2);
+    }
+    
+    .header-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === PRINT STYLES === */
+@media print {
+    .topnav-clean,
+    .page-header__actions,
+    .table-actions,
+    .btn {
+        display: none !important;
+    }
+    
+    .card-clean {
+        break-inside: avoid;
+        box-shadow: none;
+    }
+}
