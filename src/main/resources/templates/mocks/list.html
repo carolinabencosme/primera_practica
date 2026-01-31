@@ -92,62 +92,69 @@
                 </div>
 
                 <!-- Mocks Table -->
-                <div th:if="${!mocks.empty}" class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Method</th>
-                                <th>Path</th>
-                                <th>Status</th>
-                                <th>Project</th>
-                                <th>Expires</th>
-                                <th style="width: 160px;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="mock : ${mocks}"
-                                th:classappend="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())} ? 'table-danger'">
-                                <td>
-                                    <a th:href="@{/mocks/{id}(id=${mock.id})}" th:text="${mock.name}" class="text-decoration-none fw-bold"></a>
-                                    <span th:if="${mock.requiresJwt}" class="badge badge--warning ms-1" title="Requires JWT">
-                                        <i class="bi bi-shield-lock"></i> JWT
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge" th:classappend="${mock.method.name() == 'GET' ? 'badge--brand' :
-                                                                          mock.method.name() == 'POST' ? 'badge--success' :
-                                                                          mock.method.name() == 'PUT' ? 'badge--warning' :
-                                                                          mock.method.name() == 'DELETE' ? 'badge--danger' : 'badge--muted'}"
-                                          th:text="${mock.method}">Method</span>
-                                </td>
-                                <td><code th:text="${mock.path}" style="font-size: 12px;">Path</code></td>
-                                <td><span class="badge badge--muted" th:text="${mock.httpStatusCode}">200</span></td>
-                                <td th:text="${mock.projectName}">Project</td>
-                                <td>
-                                    <small th:text="${#temporals.format(mock.expirationDate, 'yyyy-MM-dd')}">Expiration</small>
-                                    <span th:if="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}"
-                                          class="badge badge--danger ms-1">EXPIRED</span>
-                                </td>
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <a th:href="@{/mocks/{id}(id=${mock.id})}" class="btn btn-sm btn-ghost btn-info" aria-label="View mock endpoint">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <a th:href="@{/mocks/{id}/edit(id=${mock.id})}" class="btn btn-sm btn-ghost btn-warning" aria-label="Edit mock endpoint">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <form th:action="@{/mocks/{id}/delete(id=${mock.id})}" method="post" class="d-inline"
-                                              onsubmit="return confirm('Are you sure you want to delete this mock endpoint?');">
-                                            <button type="submit" class="btn btn-sm btn-ghost btn-danger" aria-label="Delete mock endpoint">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div th:if="${!mocks.empty}" class="card">
+                    <div class="card-header">
+                        <strong>Mock Endpoints</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Method</th>
+                                        <th>Path</th>
+                                        <th>Status</th>
+                                        <th>Project</th>
+                                        <th>Expires</th>
+                                        <th style="width: 160px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="mock : ${mocks}"
+                                        th:classappend="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())} ? 'table-danger'">
+                                        <td>
+                                            <a th:href="@{/mocks/{id}(id=${mock.id})}" th:text="${mock.name}" class="text-decoration-none fw-bold"></a>
+                                            <span th:if="${mock.requiresJwt}" class="badge badge--warning ms-1" title="Requires JWT">
+                                                <i class="bi bi-shield-lock"></i> JWT
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge" th:classappend="${mock.method.name() == 'GET' ? 'badge--brand' :
+                                                                                  mock.method.name() == 'POST' ? 'badge--success' :
+                                                                                  mock.method.name() == 'PUT' ? 'badge--warning' :
+                                                                                  mock.method.name() == 'DELETE' ? 'badge--danger' : 'badge--muted'}"
+                                                  th:text="${mock.method}">Method</span>
+                                        </td>
+                                        <td><code th:text="${mock.path}" style="font-size: 12px;">Path</code></td>
+                                        <td><span class="badge badge--muted" th:text="${mock.httpStatusCode}">200</span></td>
+                                        <td th:text="${mock.projectName}">Project</td>
+                                        <td>
+                                            <small th:text="${#temporals.format(mock.expirationDate, 'yyyy-MM-dd')}">Expiration</small>
+                                            <span th:if="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}"
+                                                  class="badge badge--danger ms-1">EXPIRED</span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <a th:href="@{/mocks/{id}(id=${mock.id})}" class="btn btn-sm btn-ghost btn-info" aria-label="View mock endpoint">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a th:href="@{/mocks/{id}/edit(id=${mock.id})}" class="btn btn-sm btn-ghost btn-warning" aria-label="Edit mock endpoint">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form th:action="@{/mocks/{id}/delete(id=${mock.id})}" method="post" class="d-inline"
+                                                      onsubmit="return confirm('Are you sure you want to delete this mock endpoint?');">
+                                                    <button type="submit" class="btn btn-sm btn-ghost btn-danger" aria-label="Delete mock endpoint">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

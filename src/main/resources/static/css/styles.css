@@ -615,15 +615,25 @@ pre code {
 }
 
 .table tbody tr {
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: inset 0 -1px 0 var(--yc-border);
 }
 
 .table tbody tr:hover {
-    background: var(--yc-background);
+    background: rgba(15, 23, 42, 0.04);
+}
+
+.table th,
+.table td {
+    padding: 12px 18px;
 }
 
 .table td {
-    border-bottom: 1px solid var(--yc-border);
+    border-bottom: 1px solid transparent;
+}
+
+.table tbody tr:last-child {
+    box-shadow: none;
 }
 
 /* Headings */
