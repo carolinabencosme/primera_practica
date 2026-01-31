@@ -1,44 +1,5 @@
 /* Custom styles for Mockup API Server - Velum Labs Inspired Modern Design */
 
-:root {
-    /* Velum Labs Modern Colors */
-    --primary-color: #3b82f6;
-    --primary-dark: #2563eb;
-    --secondary-color: #7c3aed;
-    --success-color: #28A745;
-    --success-dark: #218838;
-    --warning-color: #FFC107;
-    --warning-dark: #E0A800;
-    --danger-color: #DC3545;
-    --danger-dark: #C82333;
-    --info-color: #3b82f6;
-    --info-dark: #2563eb;
-    
-    /* Modern theme colors */
-    --yc-orange: #3b82f6;
-    --yc-background: #f9fafb;
-    --yc-gray: #6b7280;
-    --yc-black: #1f2937;
-    --yc-white: #ffffff;
-    --yc-link: #3b82f6;
-    --yc-border: #e5e7eb;
-    
-    /* Additional modern colors */
-    --dark-bg: #0a0a0a;
-    --light-bg: #ffffff;
-    --background-subtle: #f9fafb;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --border-color: #e5e7eb;
-    --hover-bg: #f3f4f6;
-    
-    /* Shadows - modern and subtle */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-}
-
 body {
     min-height: 100vh;
     display: flex;
@@ -46,8 +7,8 @@ body {
     background: var(--background-subtle);
     background-attachment: fixed;
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -115,7 +76,7 @@ main {
     font-weight: 500;
     padding: 0.35em 0.65em;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 .badge.bg-primary {
@@ -186,7 +147,7 @@ main {
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
     border: 1px solid;
     padding: 12px 24px;
-    font-size: 16px;
+    font-size: var(--font-size-body);
 }
 
 .btn:hover {
@@ -289,7 +250,7 @@ code {
     color: #d63384;
     font-weight: normal;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 pre {
@@ -326,7 +287,7 @@ pre code {
 .navbar {
     box-shadow: var(--shadow-sm);
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-    font-size: 16px;
+    font-size: var(--font-size-body);
     background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
@@ -341,7 +302,7 @@ pre code {
 
 .navbar-brand {
     font-weight: 700;
-    font-size: 20px;
+    font-size: var(--font-size-h4);
 }
 
 .nav-link {
@@ -356,7 +317,7 @@ pre code {
 /* Card headers */
 .card-header {
     font-weight: bold;
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 /* Form inputs with modern styling */
@@ -367,7 +328,7 @@ pre code {
     transition: all 0.2s ease;
     background: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-    font-size: 16px;
+    font-size: var(--font-size-body);
 }
 
 .form-control:focus, .form-select:focus {
@@ -381,7 +342,7 @@ pre code {
     border-radius: 8px;
     overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-    font-size: 16px;
+    font-size: var(--font-size-body);
 }
 
 .table thead {
@@ -410,19 +371,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 48px;
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
 }
 
 h2 {
-    font-size: 36px;
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
 }
 
 h3 {
-    font-size: 24px;
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
 }
 
 h4 {
-    font-size: 20px;
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-h4);
     font-weight: 600;
 }
 
@@ -433,7 +398,7 @@ h4 {
     border-top: 1px solid var(--border-color);
     margin-top: auto;
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-    font-size: 16px;
+    font-size: var(--font-size-body);
     padding: 48px 0;
     text-align: center;
 }
@@ -479,13 +444,13 @@ main.container {
 }
 
 .empty-state-icon {
-    font-size: 64px;
+    font-size: var(--font-size-h1);
     color: var(--yc-gray);
     margin-bottom: 1rem;
 }
 
 .empty-state h3 {
-    font-size: 18px;
+    font-size: var(--font-size-h3);
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: var(--yc-black);
@@ -494,7 +459,7 @@ main.container {
 .empty-state p {
     color: var(--yc-gray);
     margin-bottom: 1.5rem;
-    font-size: 13px;
+    font-size: var(--font-size-small);
 }
 
 /* Links */
@@ -552,23 +517,27 @@ a:hover {
 /* Responsive improvements */
 @media (max-width: 768px) {
     body {
-        font-size: 12px;
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
     }
     
     h1 {
-        font-size: 16px;
+        font-size: var(--font-size-h1);
+        line-height: var(--line-height-h1);
     }
     
     h2 {
-        font-size: 14px;
+        font-size: var(--font-size-h2);
+        line-height: var(--line-height-h2);
     }
     
     h3 {
-        font-size: 13px;
+        font-size: var(--font-size-h3);
+        line-height: var(--line-height-h3);
     }
     
     .table {
-        font-size: 12px;
+        font-size: var(--font-size-small);
     }
     
     .btn-group {
