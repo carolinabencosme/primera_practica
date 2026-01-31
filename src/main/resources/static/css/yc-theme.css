@@ -12,6 +12,21 @@
     --text-secondary: #6b7280;       /* Secondary text */
     --border-color: #e5e7eb;         /* Subtle borders */
     --hover-bg: #f3f4f6;             /* Hover states */
+
+    /* App design tokens */
+    --bg: var(--background-subtle);
+    --surface: var(--light-bg);
+    --text: var(--text-primary);
+    --muted: var(--text-secondary);
+    --border: var(--border-color);
+    --brand: var(--primary-color);
+    --brand-600: var(--primary-dark);
+    --danger: var(--danger-color);
+    --warning: var(--warning-color);
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --container: 1200px;
     
     /* Legacy compatibility mapping - Maps old YC variables to new colors
        to avoid breaking existing components that still reference yc-* variables.

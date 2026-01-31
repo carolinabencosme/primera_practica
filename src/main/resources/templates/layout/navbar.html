@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-    <nav th:fragment="navbar" class="navbar navbar-expand-lg sticky-top">
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg sticky-top topnav">
         <div class="container container-max">
             <a class="navbar-brand navbar-brand-link d-flex align-items-center" th:href="@{/}">
                 <span class="navbar-brand-title">Mockup API Server</span>
@@ -12,22 +12,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link navbar-link" th:href="@{/projects}">
+                        <a class="nav-link navbar-link navlink" th:href="@{/projects}">
                             Projects
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link navbar-link" th:href="@{/mocks}">
+                        <a class="nav-link navbar-link navlink" th:href="@{/mocks}">
                             Mock Endpoints
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                        <a class="nav-link navbar-link" th:href="@{/users}">
+                        <a class="nav-link navbar-link navlink" th:href="@{/users}">
                             Users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link navbar-link" th:href="@{/tech-stack}">
+                        <a class="nav-link navbar-link navlink" th:href="@{/tech-stack}">
                             Tech Stack
                         </a>
                     </li>
