@@ -543,6 +543,25 @@ pre code {
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px var(--primary-color);
 }
 
+.navlink--active {
+    color: var(--primary-color);
+    font-weight: 600;
+    background: rgba(74, 108, 247, 0.12);
+    border-radius: 999px;
+    position: relative;
+}
+
+.navlink--active::after {
+    content: "";
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--primary-color);
+}
+
 /* Card headers */
 .card-header {
     font-weight: bold;
