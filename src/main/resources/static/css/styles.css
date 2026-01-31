@@ -158,6 +158,12 @@ main {
     transform: translateY(0);
 }
 
+.btn:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px var(--primary-color);
+}
+
 .btn-primary {
     background: var(--primary-color);
     color: white;
@@ -315,6 +321,12 @@ pre code {
     border-color: var(--border-color);
 }
 
+.navbar-toggler:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px var(--primary-color);
+}
+
 .navbar-logout-btn {
     background-color: var(--hover-bg);
     color: var(--text-primary);
@@ -346,6 +358,13 @@ pre code {
     opacity: 0.8;
 }
 
+.nav-link:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px var(--primary-color);
+}
+
 /* Card headers */
 .card-header {
     font-weight: bold;
@@ -366,6 +385,13 @@ pre code {
 .form-control:focus, .form-select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.1);
+}
+
+.form-control:focus-visible,
+.form-select:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px var(--primary-color);
 }
 
 /* Table enhancements */
@@ -505,6 +531,13 @@ a:hover {
     color: var(--secondary-color);
 }
 
+a:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px var(--primary-color);
+}
+
 .text-decoration-none {
     text-decoration: none !important;
 }
@@ -625,6 +658,22 @@ a:hover {
 
 .fade-in {
     animation: fadeIn 0.6s ease-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .btn:hover,
+    .btn-outline-light:hover,
+    .card:hover,
+    .marketing-card:hover {
+        transform: none !important;
+    }
 }
 
 /* Marketing sections */
