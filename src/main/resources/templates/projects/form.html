@@ -1,58 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${project.id != null ? 'Edit Project' : 'New Project'} + ' - Mockup API Server'">Project Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <th:block data-role="styles"></th:block>
+    <th:block data-role="scripts"></th:block>
 </head>
-<body class="app-shell">
-    <div th:replace="~{layout/navbar :: navbar}"></div>
-    
-    <main class="page">
+<body>
+    <div data-role="content">
         <div class="container">
+            <div class="page-header">
+                <div>
+                    <h2 class="page-header__title">
+                        <i class="bi bi-folder-fill text-warning"></i>
+                        <span th:text="${project.id != null ? 'Edit Project' : 'New Project'}">Project Form</span>
+                    </h2>
+                    <p class="page-header__subtitle">Organize your mock endpoints into projects for better management.</p>
+                </div>
+            </div>
+            
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="mb-0">
-                                <i class="bi bi-folder-fill text-primary"></i>
-                                <span th:text="${project.id != null ? 'Edit Project' : 'New Project'}">Project Form</span>
-                            </h4>
-                        </div>
-                        <div class="card-body">
+                    <div class="card-clean">
+                        <div class="card-body-clean">
                             <form th:action="${project.id != null ? '/projects/' + project.id : '/projects'}"
                                   th:object="${project}" method="post">
 
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control input" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
-                                           id="name" th:field="*{name}" placeholder="Enter project name" required>
+                                <div class="mb-4">
+                                    <label for="name" class="form-label-clean">Project Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                           id="name" th:field="*{name}" placeholder="e.g., Mobile App API" required autofocus>
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                         Name error
                                     </div>
+                                    <small class="help-text">Choose a descriptive name for your project</small>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control textarea" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                <div class="mb-4">
+                                    <label for="description" class="form-label-clean">Description</label>
+                                    <textarea class="form-control-clean" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
                                               id="description" th:field="*{description}" rows="4"
-                                              placeholder="Enter project description"></textarea>
+                                              placeholder="Describe the purpose of this project and what mock endpoints it will contain"></textarea>
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                                         Description error
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between">
-                                    <a th:href="@{/projects}" class="btn btn-secondary">
+                                <div class="d-flex justify-content-between pt-3 border-top">
+                                    <a th:href="@{/projects}" class="btn-clean btn-soft">
                                         <i class="bi bi-arrow-left"></i> Cancel
                                     </a>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn-clean btn-brand">
                                         <i class="bi bi-save"></i>
-                                        <span th:text="${project.id != null ? 'Update' : 'Create'}">Save</span>
+                                        <span th:text="${project.id != null ? 'Update Project' : 'Create Project'}">Save</span>
                                     </button>
                                 </div>
                             </form>
@@ -61,14 +61,6 @@
                 </div>
             </div>
         </div>
-    </main>
-    
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">Mockup API Server © 2024</span>
-        </div>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>
