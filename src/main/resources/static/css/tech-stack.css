@@ -11,34 +11,6 @@ body {
     background-color: var(--background-subtle);
 }
 
-/* Hero Section */
-.tech-hero {
-    background: linear-gradient(135deg, #ffffff 0%, var(--background-subtle) 100%);
-    padding: 120px 0 80px;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.hero-title {
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-}
-
-.hero-subtitle {
-    font-size: 20px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 0;
-}
-
 /* Tech Grid Section */
 .tech-grid-section {
     padding: 80px 0;
@@ -277,14 +249,6 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 32px;
-    }
-
-    .hero-subtitle {
-        font-size: 16px;
-    }
-
     .tech-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -296,10 +260,6 @@ body {
 
     .philosophy-title {
         font-size: 28px;
-    }
-
-    .tech-hero {
-        padding: 60px 0 40px;
     }
 
     .tech-grid-section,

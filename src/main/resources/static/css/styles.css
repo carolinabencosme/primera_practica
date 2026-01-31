@@ -294,6 +294,38 @@ pre code {
     padding: 16px 0;
 }
 
+.navbar-brand-link {
+    color: var(--text-primary);
+}
+
+.navbar-brand-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.navbar-link {
+    color: var(--text-primary);
+}
+
+.navbar-text {
+    color: var(--text-primary);
+}
+
+.navbar-toggler {
+    border-color: var(--border-color);
+}
+
+.navbar-logout-btn {
+    background-color: var(--hover-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.navbar-login-btn {
+    font-weight: 600;
+}
+
 .navbar.sticky-top {
     position: sticky;
     top: 0;
@@ -554,6 +586,18 @@ a:hover {
         padding: 1rem;
         margin-top: 1rem;
     }
+
+    .marketing-hero {
+        padding: 60px 0;
+    }
+
+    .marketing-hero-title {
+        font-size: 32px;
+    }
+
+    .marketing-hero-subtitle {
+        font-size: 16px;
+    }
 }
 
 /* Animations */
@@ -581,6 +625,119 @@ a:hover {
 
 .fade-in {
     animation: fadeIn 0.6s ease-in;
+}
+
+/* Marketing sections */
+.marketing-hero {
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    border-bottom: 1px solid var(--border-color);
+    padding: 120px 0;
+    text-align: center;
+}
+
+.marketing-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.marketing-hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.marketing-hero-subtitle {
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 40px;
+}
+
+.marketing-hero-subtitle:last-child {
+    margin-bottom: 0;
+}
+
+.marketing-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.marketing-button {
+    min-width: 160px;
+}
+
+.marketing-section {
+    padding: 80px 0;
+}
+
+.marketing-section--light {
+    background: var(--light-bg);
+}
+
+.marketing-section--subtle {
+    background: var(--background-subtle);
+    border-top: 1px solid var(--border-color);
+}
+
+.marketing-section-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+}
+
+.marketing-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.marketing-card:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+}
+
+.marketing-card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.marketing-card p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.marketing-icon {
+    font-size: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+}
+
+.marketing-list {
+    font-size: 16px;
+    line-height: 2;
+}
+
+.marketing-list li {
+    color: var(--text-primary);
+    margin-bottom: 12px;
 }
 
 .alert {
