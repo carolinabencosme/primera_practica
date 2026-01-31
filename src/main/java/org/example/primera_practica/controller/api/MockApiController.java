@@ -2,6 +2,7 @@ package org.example.primera_practica.controller.api;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.primera_practica.dto.MockEndpointDTO;
+import org.example.primera_practica.exception.ResourceNotFoundException;
 import org.example.primera_practica.model.HttpMethod;
 import org.example.primera_practica.service.JwtService;
 import org.example.primera_practica.service.MockEndpointService;
@@ -32,28 +33,25 @@ public class MockApiController {
             @PathVariable String projectName,
             HttpServletRequest request,
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
-        
+        String mockPath = null;
+        HttpMethod httpMethod = null;
+
         try {
             // Extract path after /api/mock/{projectName}/
             String fullPath = request.getRequestURI();
             String basePath = "/api/mock/" + projectName;
-            String mockPath = fullPath.substring(fullPath.indexOf(basePath) + basePath.length());
+            mockPath = fullPath.substring(fullPath.indexOf(basePath) + basePath.length());
             
             if (mockPath.isEmpty()) {
                 mockPath = "/";
             }
 
             // Get HTTP method
-            HttpMethod httpMethod = HttpMethod.valueOf(request.getMethod());
+            httpMethod = HttpMethod.valueOf(request.getMethod());
 
             // Find mock endpoint
             MockEndpointDTO mockEndpoint = mockEndpointService
                 .findMockByProjectAndPathAndMethod(projectName, mockPath, httpMethod);
-
-            if (mockEndpoint == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"error\": \"Mock endpoint not found for " + httpMethod + " " + mockPath + "\"}");
-            }
 
             // Validate not expired
             if (mockEndpoint.getExpirationDate().isBefore(LocalDateTime.now())) {
@@ -103,6 +101,12 @@ public class MockApiController {
             
             return responseBuilder.body(responseBody);
 
+        } catch (ResourceNotFoundException e) {
+            String errorMessage = (httpMethod != null && mockPath != null)
+                ? "Mock endpoint not found for " + httpMethod + " " + mockPath
+                : e.getMessage();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("{\"error\": \"" + errorMessage + "\"}");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("{\"error\": \"Invalid HTTP method\"}");
