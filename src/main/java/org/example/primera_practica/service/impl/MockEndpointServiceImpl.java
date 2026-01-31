@@ -8,6 +8,7 @@ import org.example.primera_practica.repository.MockEndpointRepository;
 import org.example.primera_practica.repository.ProjectRepository;
 import org.example.primera_practica.repository.UserRepository;
 import org.example.primera_practica.service.MockEndpointService;
+import org.example.primera_practica.util.PathNormalizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,7 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         MockEndpoint mockEndpoint = new MockEndpoint();
         mockEndpoint.setName(mockEndpointDTO.getName());
         mockEndpoint.setDescription(mockEndpointDTO.getDescription());
-        mockEndpoint.setPath(mockEndpointDTO.getPath());
+        mockEndpoint.setPath(PathNormalizer.normalizePath(mockEndpointDTO.getPath()));
         mockEndpoint.setMethod(mockEndpointDTO.getMethod());
         mockEndpoint.setHttpStatusCode(mockEndpointDTO.getHttpStatusCode());
         mockEndpoint.setContentType(mockEndpointDTO.getContentType());
@@ -101,7 +102,7 @@ public class MockEndpointServiceImpl implements MockEndpointService {
             mockEndpoint.setDescription(mockEndpointDTO.getDescription());
         }
         if (mockEndpointDTO.getPath() != null) {
-            mockEndpoint.setPath(mockEndpointDTO.getPath());
+            mockEndpoint.setPath(PathNormalizer.normalizePath(mockEndpointDTO.getPath()));
         }
         if (mockEndpointDTO.getMethod() != null) {
             mockEndpoint.setMethod(mockEndpointDTO.getMethod());

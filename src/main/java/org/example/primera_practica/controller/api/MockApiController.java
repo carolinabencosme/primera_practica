@@ -6,6 +6,7 @@ import org.example.primera_practica.exception.ResourceNotFoundException;
 import org.example.primera_practica.model.HttpMethod;
 import org.example.primera_practica.service.JwtService;
 import org.example.primera_practica.service.MockEndpointService;
+import org.example.primera_practica.util.PathNormalizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +42,7 @@ public class MockApiController {
             String fullPath = request.getRequestURI();
             String basePath = "/api/mock/" + projectName;
             mockPath = fullPath.substring(fullPath.indexOf(basePath) + basePath.length());
-            
-            if (mockPath.isEmpty()) {
-                mockPath = "/";
-            }
+            mockPath = PathNormalizer.normalizePath(mockPath);
 
             // Get HTTP method
             httpMethod = HttpMethod.valueOf(request.getMethod());
