@@ -48,6 +48,8 @@ public class MockEndpointDTO {
     private Integer delaySeconds;
     
     private Boolean requiresJwt = false;
+
+    private String generatedJwt;
     
     private String createdBy;
     
