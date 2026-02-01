@@ -41,6 +41,14 @@ public class UserServiceImpl implements UserService {
         if (userDTO.getEmail() == null || userDTO.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("Email is required");
         }
+        if (userDTO.getPassword() == null || userDTO.getPassword().trim().isEmpty()) {
+            throw new IllegalArgumentException("Password is required");
+        }
+        if (userDTO.getConfirmPassword() != null
+                && !userDTO.getConfirmPassword().trim().isEmpty()
+                && !userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+            throw new IllegalArgumentException("Password confirmation does not match");
+        }
 
         if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
             throw new DuplicateResourceException("Username already exists: " + userDTO.getUsername());
@@ -52,7 +60,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
 
         Role userRole = roleRepository.findByName(RoleType.ROLE_USER)
