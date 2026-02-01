@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    private static final String DEFAULT_PASSWORD = "password123";
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode("defaultPassword"));
+        user.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
         user.setEnabled(true);
 
         Role userRole = roleRepository.findByName(RoleType.ROLE_USER)
