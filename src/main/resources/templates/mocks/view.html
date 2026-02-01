@@ -45,7 +45,7 @@
             </div>
         
         <!-- Expiration Alert -->
-        <div th:if="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}" 
+        <div th:if="${mock.expirationDate != null and mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}" 
              class="alert alert-danger" role="alert">
             <i class="bi bi-exclamation-triangle-fill"></i> 
             <strong>This mock endpoint has expired!</strong> It will not respond to requests.
@@ -127,8 +127,10 @@
                             
                             <dt class="col-sm-4">Expires:</dt>
                             <dd class="col-sm-8">
-                                <span th:text="${#temporals.format(mock.expirationDate, 'yyyy-MM-dd HH:mm')}">Expiration</span>
-                                <span th:if="${mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}"
+                                <span th:if="${mock.expirationDate != null}"
+                                      th:text="${#temporals.format(mock.expirationDate, 'yyyy-MM-dd HH:mm')}">Expiration</span>
+                                <span th:unless="${mock.expirationDate != null}">No expiration</span>
+                                <span th:if="${mock.expirationDate != null and mock.expirationDate.isBefore(T(java.time.LocalDateTime).now())}"
                                       class="badge badge--danger ms-1">EXPIRED</span>
                             </dd>
                         </dl>
