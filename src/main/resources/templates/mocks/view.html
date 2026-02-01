@@ -139,7 +139,7 @@
             </div>
         </div>
 
-        <div th:if="${mock.requiresJwt and mock.generatedJwt}" class="card mb-4">
+        <div th:if="${mock.requiresJwt and #strings.isNotEmpty(mock.generatedJwt)}" class="card mb-4">
             <div class="card-header">
                 <h5 class="mb-0"><i class="bi bi-shield-lock text-primary"></i> JWT Authorization</h5>
             </div>
