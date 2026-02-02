@@ -137,20 +137,6 @@
     --z-tooltip: 1070;
 }
 
-/* Dark Mode Support (Optional) */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #111827;
-        --surface: #1f2937;
-        --hover-surface: #374151;
-        --text: #f9fafb;
-        --muted: #9ca3af;
-        --text-light: #6b7280;
-        --border: #374151;
-        --border-hover: #4b5563;
-    }
-}
-
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
     :root {
