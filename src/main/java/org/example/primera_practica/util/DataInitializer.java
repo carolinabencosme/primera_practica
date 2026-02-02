@@ -58,18 +58,18 @@ public class DataInitializer implements ApplicationRunner {
                 });
         
         User adminUser = userRepository.findByUsername("admin").orElseGet(() -> {
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("admin"));
-            user.setEmail("admin@mockapi.com");
-            user.setEnabled(true);
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("admin"));
+            admin.setEmail("admin@mockapi.com");
+            admin.setEnabled(true);
             
             Set<Role> roles = new HashSet<>();
             roles.add(adminRole);
             roles.add(userRole);
-            user.setRoles(roles);
+            admin.setRoles(roles);
             
-            return userRepository.save(user);
+            return userRepository.save(admin);
         });
 
         Project usuariosProject = projectRepository.findByName("Usuarios").orElseGet(() -> {
