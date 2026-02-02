@@ -66,11 +66,16 @@ public class MockApiController {
         }
     }
 
-    @GetMapping("/users")
+    @RequestMapping(
+        value = "/users",
+        method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+                  RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.OPTIONS}
+    )
     public ResponseEntity<String> executeUsersMock(
+            HttpServletRequest request,
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         String mockPath = PathNormalizer.normalizePath("/api/users");
-        HttpMethod httpMethod = HttpMethod.GET;
+        HttpMethod httpMethod = HttpMethod.valueOf(request.getMethod());
 
         try {
             return executeMockResponse("Usuarios", mockPath, httpMethod, authHeader);
