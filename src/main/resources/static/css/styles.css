@@ -156,6 +156,7 @@ main {
     background: var(--surface);
     border-top: 1px solid var(--border);
     color: var(--muted);
+    opacity: 0.5;
 }
 
 /* === SECTION LAYOUTS === */
