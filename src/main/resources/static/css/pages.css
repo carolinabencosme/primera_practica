@@ -106,6 +106,22 @@
     min-width: 250px;
 }
 
+.mock-select-field {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.mock-select-field i {
+    position: absolute;
+    left: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    pointer-events: none;
+}
+
 .mock-selector label {
     font-weight: var(--weight-semibold);
     color: var(--text);
@@ -116,6 +132,14 @@
 .mock-selector select {
     flex: 1;
     min-width: 200px;
+    height: 48px;
+    padding-left: calc(var(--space-3) * 2 + var(--space-2));
+}
+
+.mock-selector select:focus-visible {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .mock-list-item {
@@ -147,6 +171,71 @@
     background: var(--bg);
     padding: var(--space-1) var(--space-2);
     border-radius: var(--r-sm);
+}
+
+.project-select-card {
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    background: var(--surface);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.project-select-card:hover {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: var(--shadow-sm);
+}
+
+.project-select-card--active {
+    border-left-color: var(--brand);
+    box-shadow: var(--shadow-sm);
+}
+
+.project-select-card__body {
+    padding: var(--space-3) var(--space-4);
+}
+
+.project-select-card__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-4);
+    align-items: center;
+}
+
+.project-select-card__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-base);
+    margin-bottom: var(--space-2);
+    color: var(--text);
+}
+
+.project-select-card__description {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+}
+
+.project-select-card__meta {
+    text-align: right;
+    font-size: var(--text-sm);
+    color: var(--muted);
+    display: grid;
+    gap: var(--space-1);
+}
+
+.project-select-card__meta-label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+}
+
+.project-select-card__meta-value {
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    font-size: var(--text-sm);
 }
 
 /* === MOCK FORM SPECIFIC === */
