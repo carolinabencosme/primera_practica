@@ -28,15 +28,18 @@
             <div class="mock-toolbar">
                 <div class="mock-selector">
                     <label for="projectSelect" class="form-label-clean">Select Project</label>
-                    <select id="projectSelect" class="form-select-clean"
-                            onchange="if (this.value) { window.location.href = this.value; }"
-                            aria-label="Select a project to view its mock endpoints">
-                        <option value="">Choose a project...</option>
-                        <option th:each="project : ${projects}"
-                                th:value="@{/mocks(projectId=${project.id})}"
-                                th:text="${project.name}"
-                                th:selected="${projectId != null && projectId == project.id}">Project Name</option>
-                    </select>
+                    <div class="mock-select-field">
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                        <select id="projectSelect" class="form-select-clean"
+                                onchange="if (this.value) { window.location.href = this.value; }"
+                                aria-label="Select a project to view its mock endpoints">
+                            <option value="">Choose a project...</option>
+                            <option th:each="project : ${projects}"
+                                    th:value="@{/mocks(projectId=${project.id})}"
+                                    th:text="${project.name}"
+                                    th:selected="${projectId != null && projectId == project.id}">Project Name</option>
+                        </select>
+                    </div>
                 </div>
                 <a th:href="@{/mocks/new(projectId=${projectId})}" class="btn-clean btn-brand"
                    th:if="${projectId != null}"
@@ -48,21 +51,27 @@
             <!-- Project Cards Section -->
             <div th:if="${projectId == null}" class="mt-4">
                 <div class="page-header__subtitle mb-4">
-                    <p class="text-muted">Select a project above or choose one from the list below to view and manage mock endpoints.</p>
+                    <p class="text-muted">Start by selecting a workspace to manage your API definitions.</p>
                 </div>
                 <div th:if="${!projects.empty}" class="row row-cols-1 row-cols-md-2 g-3">
                     <div class="col" th:each="project : ${projects}">
-                        <a th:href="@{/mocks(projectId=${project.id})}" class="card h-100 text-decoration-none" style="transition: all 0.2s;">
-                            <div class="card-body">
-                                <h6 class="card-title mb-2">
-                                    <i class="bi bi-folder-fill text-warning"></i>
-                                    <span th:text="${project.name}">Project Name</span>
-                                </h6>
-                                <p class="card-text text-muted small mb-2" th:text="${project.description}">Description</p>
-                                <small class="text-muted">
-                                    <i class="bi bi-calendar"></i>
-                                    <span th:text="${#temporals.format(project.createdAt, 'yyyy-MM-dd')}">Created</span>
-                                </small>
+                        <a th:href="@{/mocks(projectId=${project.id})}"
+                           class="card project-select-card text-decoration-none"
+                           th:classappend="${projectId != null && projectId == project.id} ? 'project-select-card--active'">
+                            <div class="project-select-card__body">
+                                <div class="project-select-card__grid">
+                                    <div>
+                                        <h6 class="project-select-card__title">
+                                            <i class="bi bi-folder-fill text-warning"></i>
+                                            <span th:text="${project.name}">Project Name</span>
+                                        </h6>
+                                        <p class="project-select-card__description" th:text="${project.description}">Description</p>
+                                    </div>
+                                    <div class="project-select-card__meta">
+                                        <span class="project-select-card__meta-label">Created</span>
+                                        <span class="project-select-card__meta-value" th:text="${#temporals.format(project.createdAt, 'yyyy-MM-dd')}">2024-01-01</span>
+                                    </div>
+                                </div>
                             </div>
                         </a>
                     </div>
