@@ -1,94 +1,230 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${user.id != null ? 'Edit User' : 'New User'} + ' - Mockup API Server'">User Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <th:block data-role="styles">
+        <style>
+            .form-section {
+                margin-bottom: var(--space-8);
+            }
+
+            .form-section h5 {
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+                font-size: var(--text-lg);
+                font-weight: var(--weight-semibold);
+                color: var(--text);
+                margin-bottom: var(--space-4);
+                padding-bottom: var(--space-3);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .form-section h5 i {
+                color: var(--brand);
+            }
+
+            .form-group {
+                margin-bottom: var(--space-4);
+            }
+
+            .required-indicator {
+                color: var(--danger);
+                margin-left: var(--space-1);
+            }
+
+            .role-checkbox-group {
+                display: grid;
+                gap: var(--space-3);
+                padding: var(--space-4);
+                background: var(--surface-2);
+                border-radius: var(--r-md);
+                border: 1px solid var(--border);
+            }
+
+            .role-checkbox-item {
+                display: flex;
+                align-items: center;
+                gap: var(--space-3);
+                padding: var(--space-3);
+                background: var(--surface);
+                border-radius: var(--r-md);
+                border: 1px solid var(--border);
+                transition: all var(--transition-base);
+                cursor: pointer;
+            }
+
+            .role-checkbox-item:hover {
+                border-color: var(--brand);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .role-checkbox-item input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+                accent-color: var(--brand);
+            }
+
+            .role-checkbox-label {
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+                cursor: pointer;
+                font-weight: var(--weight-medium);
+                color: var(--text);
+                flex: 1;
+            }
+
+            .form-actions {
+                display: flex;
+                justify-content: space-between;
+                gap: var(--space-3);
+                padding-top: var(--space-6);
+                border-top: 1px solid var(--border);
+                margin-top: var(--space-6);
+            }
+
+            @media (max-width: 768px) {
+                .form-actions {
+                    flex-direction: column-reverse;
+                }
+
+                .form-actions a,
+                .form-actions button {
+                    width: 100%;
+                }
+            }
+        </style>
+    </th:block>
+    <th:block data-role="scripts"></th:block>
 </head>
-<body class="app-shell">
-    <div th:replace="~{layout/navbar :: navbar}"></div>
-    
-    <main class="page">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="mb-0">
-                                <i class="bi bi-person-fill text-primary"></i>
-                                <span th:text="${user.id != null ? 'Edit User' : 'New User'}">User Form</span>
-                            </h4>
-                        </div>
-                        <div class="card-body">
-                            <form th:action="${user.id != null ? '/users/' + user.id : '/users'}"
-                                  th:object="${user}" method="post">
-
-                                <div class="mb-3">
-                                    <label for="username" class="form-label-clean">Username <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control-clean" id="username" th:field="*{username}"
-                                           placeholder="Enter username" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label-clean">Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control-clean" id="email" th:field="*{email}"
-                                           placeholder="Enter email" required>
-                                </div>
-
-                                <div th:if="${user.id == null}">
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label-clean">Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control-clean" id="password" th:field="*{password}"
-                                               placeholder="Enter password" required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="confirmPassword" class="form-label-clean">Confirm Password</label>
-                                        <input type="password" class="form-control-clean" id="confirmPassword" th:field="*{confirmPassword}"
-                                               placeholder="Repeat password">
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label-clean">Roles <span class="text-danger">*</span></label>
-                                    <div th:each="roleType : ${roleTypes}" class="form-check">
-                                        <input class="form-check-input" type="checkbox"
-                                               th:id="'role_' + ${roleType}"
-                                               th:field="*{roles}"
-                                               th:value="${roleType}">
-                                        <label class="form-check-label" th:for="'role_' + ${roleType}" th:text="${roleType}">
-                                            Role
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-between">
-                                    <a th:href="@{/users}" class="btn btn-secondary">
-                                        <i class="bi bi-arrow-left"></i> Cancel
-                                    </a>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="bi bi-save"></i>
-                                        <span th:text="${user.id != null ? 'Update' : 'Create'}">Save</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<body>
+    <div data-role="content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h2 class="page-header__title">
+                    <i class="bi bi-person-fill"></i>
+                    <span th:text="${user.id != null ? 'Edit User' : 'Create New User'}">User Form</span>
+                </h2>
+                <p class="page-header__subtitle" th:text="${user.id != null ? 'Update user account information and permissions' : 'Add a new user to the system'}">Manage user details</p>
             </div>
         </div>
-    </main>
-    
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">Mockup API Server © 2024</span>
+
+        <!-- Form Card -->
+        <div class="card-clean" style="max-width: 800px;">
+            <div class="card-body-clean">
+                <form th:action="${user.id != null ? '/users/' + user.id : '/users'}"
+                      th:object="${user}" method="post">
+
+                    <!-- Account Information Section -->
+                    <div class="form-section">
+                        <h5>
+                            <i class="bi bi-person-badge"></i>
+                            Account Information
+                        </h5>
+
+                        <div class="form-group">
+                            <label for="username" class="form-label-clean">
+                                Username<span class="required-indicator">*</span>
+                            </label>
+                            <input type="text" 
+                                   class="form-control-clean" 
+                                   id="username" 
+                                   th:field="*{username}"
+                                   placeholder="Enter unique username" 
+                                   required>
+                            <span class="help-text">Choose a unique username for system login</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label-clean">
+                                Email Address<span class="required-indicator">*</span>
+                            </label>
+                            <input type="email" 
+                                   class="form-control-clean" 
+                                   id="email" 
+                                   th:field="*{email}"
+                                   placeholder="user@example.com" 
+                                   required>
+                            <span class="help-text">Primary email for notifications and account recovery</span>
+                        </div>
+                    </div>
+
+                    <!-- Password Section (only for new users) -->
+                    <div th:if="${user.id == null}" class="form-section">
+                        <h5>
+                            <i class="bi bi-shield-lock"></i>
+                            Security
+                        </h5>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label-clean">
+                                Password<span class="required-indicator">*</span>
+                            </label>
+                            <input type="password" 
+                                   class="form-control-clean" 
+                                   id="password" 
+                                   th:field="*{password}"
+                                   placeholder="Enter strong password" 
+                                   required>
+                            <span class="help-text">Minimum 8 characters recommended</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label-clean">
+                                Confirm Password<span class="required-indicator">*</span>
+                            </label>
+                            <input type="password" 
+                                   class="form-control-clean" 
+                                   id="confirmPassword" 
+                                   th:field="*{confirmPassword}"
+                                   placeholder="Re-enter password">
+                            <span class="help-text">Must match the password above</span>
+                        </div>
+                    </div>
+
+                    <!-- Roles Section -->
+                    <div class="form-section">
+                        <h5>
+                            <i class="bi bi-key"></i>
+                            Roles & Permissions
+                        </h5>
+
+                        <div class="form-group">
+                            <label class="form-label-clean">
+                                Assign Roles<span class="required-indicator">*</span>
+                            </label>
+                            <div class="role-checkbox-group">
+                                <div th:each="roleType : ${roleTypes}" class="role-checkbox-item">
+                                    <input type="checkbox"
+                                           th:id="'role_' + ${roleType}"
+                                           th:field="*{roles}"
+                                           th:value="${roleType}">
+                                    <label class="role-checkbox-label" th:for="'role_' + ${roleType}">
+                                        <span class="badge-clean badge-brand" th:text="${roleType}">Role</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <span class="help-text">Select one or more roles to define user access level</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <a th:href="@{/users}" class="btn-clean btn-soft">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn-clean btn-brand">
+                            <i class="bi bi-check-circle"></i>
+                            <span th:text="${user.id != null ? 'Update User' : 'Create User'}">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>
