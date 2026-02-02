@@ -147,16 +147,15 @@ main {
 
 /* === FOOTER === */
 .footer {
-    background: var(--background-subtle);
-    color: var(--text-secondary);
-    border-top: 1px solid var(--border-color);
     margin-top: auto;
     padding: var(--space-12) 0;
     text-align: center;
 }
 
-.footer .text-muted {
-    color: var(--text-secondary);
+.app-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    color: var(--muted);
 }
 
 /* === SECTION LAYOUTS === */
