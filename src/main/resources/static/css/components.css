@@ -58,6 +58,30 @@
     overflow: hidden;
 }
 
+/* Bootstrap card overrides for light mode */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.card-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+.card-body {
+    background: var(--surface);
+    color: var(--text);
+}
+
+.card-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    color: var(--text);
+}
+
 .card-clean:hover {
     box-shadow: var(--shadow-md);
 }
@@ -164,6 +188,81 @@
     background: var(--danger-bg);
     border-color: var(--danger-hover);
     color: var(--danger-hover);
+}
+
+.btn-danger-clean:hover {
+    background: var(--danger-bg);
+    border-color: var(--danger-hover);
+    color: var(--danger-hover);
+}
+
+/* Bootstrap button overrides for light mode */
+.btn {
+    border: 1px solid transparent;
+    font-weight: var(--weight-medium);
+    transition: all var(--transition-base);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    color: white;
+}
+
+.btn-info {
+    background: var(--primary-soft);
+    color: #1D4ED8;
+    border-color: rgba(37, 99, 235, 0.25);
+}
+
+.btn-info:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-warning {
+    background: var(--warning-soft);
+    color: #92400E;
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+.btn-warning:hover {
+    background: var(--warning);
+    color: white;
+    border-color: var(--warning);
+}
+
+.btn-danger {
+    background: var(--danger-soft);
+    color: #991B1B;
+    border-color: rgba(220, 38, 38, 0.25);
+}
+
+.btn-danger:hover {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+.btn-secondary,
+.btn-outline-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--border);
 }
 
 /* Button Sizes */
@@ -312,6 +411,44 @@
     border-collapse: collapse;
     background: var(--surface);
     font-size: var(--text-sm);
+}
+
+/* Bootstrap table overrides for light mode */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    color: var(--text);
+    font-size: var(--text-sm);
+}
+
+.table thead th {
+    background: var(--surface-2);
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    font-size: var(--text-sm);
+}
+
+.table tbody td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+.table tbody tr {
+    transition: background var(--transition-base);
+}
+
+.table tbody tr:hover,
+.table-hover tbody tr:hover {
+    background: var(--surface-2);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .table-clean thead th {
