@@ -29,7 +29,7 @@
                                     <label for="name" class="form-label-clean">Project Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
                                            id="name" th:field="*{name}" placeholder="e.g., Mobile App API" required autofocus>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                    <div class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                         Name error
                                     </div>
                                     <small class="help-text">Choose a descriptive name for your project</small>
@@ -40,7 +40,7 @@
                                     <textarea class="form-control-clean" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
                                               id="description" th:field="*{description}" rows="4"
                                               placeholder="Describe the purpose of this project and what mock endpoints it will contain"></textarea>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                                    <div class="error-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                                         Description error
                                     </div>
                                 </div>

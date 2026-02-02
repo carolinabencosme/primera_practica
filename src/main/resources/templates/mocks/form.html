@@ -46,7 +46,7 @@
                                             <label for="name" class="form-label-clean">Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
                                                    id="name" th:field="*{name}" placeholder="e.g., Get Users List" required>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                                 Name error
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                                                         th:value="${project.id}"
                                                         th:text="${project.name}">Project</option>
                                             </select>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('projectId')}" th:errors="*{projectId}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('projectId')}" th:errors="*{projectId}">
                                                 Project error
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                         <textarea class="form-control-clean" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
                                                   id="description" th:field="*{description}" rows="2"
                                                   placeholder="Brief description of what this endpoint does"></textarea>
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                                        <div class="error-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                                             Description error
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                             <label for="path" class="form-label-clean">Path <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('path')} ? 'is-invalid'"
                                                    id="path" th:field="*{path}" placeholder="/api/v1/users" required>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">
                                                 Path error
                                             </div>
                                             <small class="help-text">Example: /users, /users/:id, /products/*</small>
@@ -101,7 +101,7 @@
                                                         th:value="${httpMethod}"
                                                         th:text="${httpMethod}">Method</option>
                                             </select>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('method')}" th:errors="*{method}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('method')}" th:errors="*{method}">
                                                 Method error
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@
                                             <label for="httpStatusCode" class="form-label-clean">Status Code <span class="text-danger">*</span></label>
                                             <input type="number" class="form-control-clean" th:classappend="${#fields.hasErrors('httpStatusCode')} ? 'is-invalid'"
                                                    id="httpStatusCode" th:field="*{httpStatusCode}" min="100" max="599" placeholder="200" required>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('httpStatusCode')}" th:errors="*{httpStatusCode}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('httpStatusCode')}" th:errors="*{httpStatusCode}">
                                                 Status code error
                                             </div>
                                         </div>
@@ -132,7 +132,7 @@
                                                 <option value="text/html">text/html</option>
                                                 <option value="text/csv">text/csv</option>
                                             </select>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}">
                                                 Content type error
                                             </div>
                                         </div>
@@ -141,7 +141,7 @@
                                             <label for="delaySeconds" class="form-label-clean">Delay (seconds)</label>
                                             <input type="number" class="form-control-clean" th:classappend="${#fields.hasErrors('delaySeconds')} ? 'is-invalid'"
                                                    id="delaySeconds" th:field="*{delaySeconds}" min="0" placeholder="0">
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('delaySeconds')}" th:errors="*{delaySeconds}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('delaySeconds')}" th:errors="*{delaySeconds}">
                                                 Delay error
                                             </div>
                                             <small class="help-text">Simulate network latency</small>
@@ -151,7 +151,7 @@
                                             <label for="expirationDate" class="form-label-clean">Expires <span class="text-danger">*</span></label>
                                             <input type="datetime-local" class="form-control-clean" th:classappend="${#fields.hasErrors('expirationDate')} ? 'is-invalid'"
                                                    id="expirationDate" th:field="*{expirationDate}" required>
-                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
+                                            <div class="error-text" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
                                                 Expiration date error
                                             </div>
                                         </div>
