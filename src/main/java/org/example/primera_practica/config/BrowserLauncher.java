@@ -36,13 +36,13 @@ public class BrowserLauncher {
 
         try {
             if (!Desktop.isDesktopSupported()) {
-                logger.info("Desktop integration is not supported; skipping browser launch.");
+                logger.info("Desktop integration is not supported; open the app manually at {}.", baseUrl);
                 return;
             }
 
             Desktop desktop = Desktop.getDesktop();
             if (!desktop.isSupported(Desktop.Action.BROWSE)) {
-                logger.info("Desktop browse action is not supported; skipping browser launch.");
+                logger.info("Desktop browse action is not supported; open the app manually at {}.", baseUrl);
                 return;
             }
 
