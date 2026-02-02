@@ -11,11 +11,12 @@
         <!-- Modern Hero Section -->
         <section class="marketing-hero section">
             <div class="marketing-hero-content fade-in text-center">
-                <div class="section-header">
-                    <h1 class="marketing-hero-title">Mock API Server</h1>
-                    <p class="marketing-hero-subtitle">Create and manage mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity. Simple, fast, and efficient.</p>
-                </div>
-                <div class="marketing-hero-actions">
+                <div class="page-header text-center justify-content-center">
+                    <div>
+                        <h1 class="page-header__title marketing-hero-title justify-content-center">Mock API Server</h1>
+                        <p class="page-header__subtitle marketing-hero-subtitle">Create and manage mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity. Simple, fast, and efficient.</p>
+                    </div>
+                    <div class="page-header__actions marketing-hero-actions justify-content-center">
                     <a th:href="@{/projects}" class="btn btn-primary btn-lg marketing-button" sec:authorize="isAuthenticated()">
                         Get Started
                     </a>
@@ -25,6 +26,7 @@
                     <a th:href="@{/tech-stack}" class="btn btn-outline-secondary btn-lg marketing-button">
                         View Tech Stack
                     </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -69,8 +71,11 @@
         <section class="marketing-section marketing-section--subtle section">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <div class="section-header text-center">
-                        <h2 class="marketing-section-title">Powerful Features</h2>
+                    <div class="page-header text-center justify-content-center">
+                        <div>
+                            <h2 class="page-header__title marketing-section-title">Powerful Features</h2>
+                            <p class="page-header__subtitle">See what makes building, managing, and testing mock APIs feel effortless.</p>
+                        </div>
                     </div>
                     <ul class="list-unstyled marketing-list">
                         <li><i class="bi bi-check-circle-fill text-success me-2"></i> Create custom mock API endpoints</li>
