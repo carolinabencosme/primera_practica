@@ -27,6 +27,22 @@
                 color: var(--brand);
             }
 
+            .user-email-cell {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-1);
+            }
+
+            .user-email-cell .username {
+                color: var(--text);
+                font-weight: var(--weight-medium);
+            }
+
+            .user-email-cell .email {
+                color: var(--muted);
+                font-size: var(--text-sm);
+            }
+
             .roles-cell {
                 display: flex;
                 flex-wrap: wrap;
@@ -104,8 +120,10 @@
                                 </div>
                             </td>
                             <td>
-                                <div style="color: var(--text);" th:text="${user.username}">username</div>
-                                <div style="color: var(--muted); font-size: var(--text-sm);" th:text="${user.email}">email@example.com</div>
+                                <div class="user-email-cell">
+                                    <span class="username" th:text="${user.username}">username</span>
+                                    <span class="email" th:text="${user.email}">email@example.com</span>
+                                </div>
                             </td>
                             <td>
                                 <div class="roles-cell">
