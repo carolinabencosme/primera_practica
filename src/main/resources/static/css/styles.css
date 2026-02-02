@@ -192,30 +192,35 @@
     color: var(--muted);
 }
 
-/* Badge variants for consistency */
+/* Badge variants for light mode consistency */
 .badge--brand {
-    background: var(--primary);
-    color: white;
+    background: var(--primary-soft);
+    color: #1D4ED8;
+    border: 1px solid rgba(37, 99, 235, 0.25);
 }
 
 .badge--success {
-    background: var(--success);
-    color: white;
+    background: var(--success-soft);
+    color: #15803D;
+    border: 1px solid rgba(22, 163, 74, 0.25);
 }
 
 .badge--warning {
-    background: var(--warning);
-    color: var(--text);
+    background: var(--warning-soft);
+    color: #92400E;
+    border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
 .badge--danger {
-    background: var(--danger);
-    color: white;
+    background: var(--danger-soft);
+    color: #991B1B;
+    border: 1px solid rgba(220, 38, 38, 0.25);
 }
 
 .badge--muted {
     background: var(--surface-2);
     color: var(--muted);
+    border: 1px solid var(--border);
 }
 
 /* === RESPONSIVE OVERRIDES === */

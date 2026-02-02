@@ -100,6 +100,35 @@ pre code {
     color: inherit;
 }
 
+/* === FORM INPUTS & PLACEHOLDERS === */
+input,
+select,
+textarea {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: var(--font-sans);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--muted-2);
+    opacity: 1;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+label {
+    color: var(--text);
+    font-weight: var(--weight-semibold);
+}
+
 /* === LAYOUT FOUNDATION === */
 .app-shell {
     min-height: 100vh;

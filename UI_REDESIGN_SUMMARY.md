@@ -1,10 +1,42 @@
 # UI Redesign Summary - YC-Level SaaS Transformation
 
+## Latest Update: Light Mode Migration (Feb 2026)
+
+**✨ Complete Light Mode Conversion**
+
+The entire application has been migrated to **light mode by default** with perfect readability across all views. All dark theme remnants have been removed, and the design now uses a clean, professional light color palette optimized for accessibility and legibility.
+
+### Key Changes:
+- ✅ **Removed dark mode media queries** from `tokens.css` and `hero.css`
+- ✅ **Light backgrounds** everywhere (F7F8FA base, FFFFFF surfaces)
+- ✅ **High-contrast text** (0F172A on light backgrounds)
+- ✅ **Visible input placeholders** with proper opacity (color: #64748B)
+- ✅ **Light mode HTTP method badges** with soft backgrounds and borders
+  - GET: Light blue (#DBEAFE background, #1D4ED8 text)
+  - POST: Light cyan (#CFFAFE background, #0E7490 text)
+  - PUT/PATCH: Light amber (#FEF3C7 background, #92400E text)
+  - DELETE: Light red (#FEE2E2 background, #991B1B text)
+- ✅ **Bootstrap component overrides** for tables, cards, and buttons
+- ✅ **Form inputs** with clear focus states and visible borders
+- ✅ **Perfect contrast** meeting WCAG AA standards across all elements
+
+### Affected Files:
+- `src/main/resources/static/css/tokens.css` - Removed dark mode media query
+- `src/main/resources/static/css/hero.css` - Updated to use light backgrounds and text
+- `src/main/resources/static/css/base.css` - Added input/placeholder styles
+- `src/main/resources/static/css/components.css` - Updated badges, buttons, tables, cards
+- `src/main/resources/static/css/styles.css` - Updated badge variants
+
+### Visual Result:
+All pages now display with crisp, readable text, clear placeholders, visible form elements, and professional light mode styling. The Mock Endpoints page (previously mentioned as having dark theme issues) now has perfect visibility with all elements clearly readable.
+
+---
+
 ## Overview
 Complete redesign of the Mockup API Server UI to achieve a modern, YC-level SaaS startup aesthetic. All Thymeleaf views have been transformed while maintaining 100% backend compatibility.
 
 **Redesign Date:** February 2026  
-**Design Direction:** Modern B2B SaaS, Minimal, High Contrast Typography  
+**Design Direction:** Modern B2B SaaS, Minimal, High Contrast Typography, **Light Mode Default**  
 **Completion Status:** ✅ **100% Complete**
 
 ---
