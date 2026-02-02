@@ -10,95 +10,89 @@
     <div data-role="content">
         <!-- Modern Hero Section -->
         <section class="marketing-hero section">
-            <div class="container container-max text-center">
-                <div class="marketing-hero-content fade-in">
-                    <div class="section-header">
-                        <h1 class="marketing-hero-title">Mock API Server</h1>
-                        <p class="marketing-hero-subtitle">Create and manage mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity. Simple, fast, and efficient.</p>
-                    </div>
-                    <div class="marketing-hero-actions">
-                        <a th:href="@{/projects}" class="btn btn-primary btn-lg marketing-button" sec:authorize="isAuthenticated()">
-                            Get Started
-                        </a>
-                        <a th:href="@{/login}" class="btn btn-primary btn-lg marketing-button" sec:authorize="!isAuthenticated()">
-                            Login
-                        </a>
-                        <a th:href="@{/tech-stack}" class="btn btn-outline-secondary btn-lg marketing-button">
-                            View Tech Stack
-                        </a>
-                    </div>
+            <div class="marketing-hero-content fade-in text-center">
+                <div class="section-header">
+                    <h1 class="marketing-hero-title">Mock API Server</h1>
+                    <p class="marketing-hero-subtitle">Create and manage mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity. Simple, fast, and efficient.</p>
+                </div>
+                <div class="marketing-hero-actions">
+                    <a th:href="@{/projects}" class="btn btn-primary btn-lg marketing-button" sec:authorize="isAuthenticated()">
+                        Get Started
+                    </a>
+                    <a th:href="@{/login}" class="btn btn-primary btn-lg marketing-button" sec:authorize="!isAuthenticated()">
+                        Login
+                    </a>
+                    <a th:href="@{/tech-stack}" class="btn btn-outline-secondary btn-lg marketing-button">
+                        View Tech Stack
+                    </a>
                 </div>
             </div>
         </section>
         
         <!-- Features Section -->
         <section class="marketing-section marketing-section--light section" sec:authorize="isAuthenticated()">
-            <div class="container container-max">
-                <div class="section-grid">
-                    <div class="marketing-card text-center">
-                        <div class="marketing-icon">
-                            <i class="bi bi-folder-fill"></i>
-                        </div>
-                        <h3>Projects</h3>
-                        <p>Organize your mock endpoints into projects for better management and collaboration</p>
-                        <a th:href="@{/projects}" class="btn btn-primary marketing-button">
-                            View Projects →
-                        </a>
+            <div class="section-grid">
+                <div class="marketing-card text-center">
+                    <div class="marketing-icon">
+                        <i class="bi bi-folder-fill"></i>
                     </div>
-                    <div class="marketing-card text-center">
-                        <div class="marketing-icon">
-                            <i class="bi bi-hdd-network-fill"></i>
-                        </div>
-                        <h3>Mock Endpoints</h3>
-                        <p>Create and manage your mock API endpoints with custom responses and behavior</p>
-                        <a th:href="@{/mocks}" class="btn btn-secondary marketing-button">
-                            View Mocks →
-                        </a>
+                    <h3>Projects</h3>
+                    <p>Organize your mock endpoints into projects for better management and collaboration</p>
+                    <a th:href="@{/projects}" class="btn btn-primary marketing-button">
+                        View Projects →
+                    </a>
+                </div>
+                <div class="marketing-card text-center">
+                    <div class="marketing-icon">
+                        <i class="bi bi-hdd-network-fill"></i>
                     </div>
-                    <div class="marketing-card text-center" sec:authorize="hasRole('ADMIN')">
-                        <div class="marketing-icon">
-                            <i class="bi bi-people-fill"></i>
-                        </div>
-                        <h3>User Management</h3>
-                        <p>Manage system users and permissions with role-based access control</p>
-                        <a th:href="@{/users}" class="btn btn-ghost marketing-button">
-                            Manage Users →
-                        </a>
+                    <h3>Mock Endpoints</h3>
+                    <p>Create and manage your mock API endpoints with custom responses and behavior</p>
+                    <a th:href="@{/mocks}" class="btn btn-secondary marketing-button">
+                        View Mocks →
+                    </a>
+                </div>
+                <div class="marketing-card text-center" sec:authorize="hasRole('ADMIN')">
+                    <div class="marketing-icon">
+                        <i class="bi bi-people-fill"></i>
                     </div>
+                    <h3>User Management</h3>
+                    <p>Manage system users and permissions with role-based access control</p>
+                    <a th:href="@{/users}" class="btn btn-ghost marketing-button">
+                        Manage Users →
+                    </a>
                 </div>
             </div>
         </section>
         
         <!-- Info Section -->
         <section class="marketing-section marketing-section--subtle section">
-            <div class="container container-max">
-                <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <div class="section-header text-center">
-                            <h2 class="marketing-section-title">Powerful Features</h2>
-                        </div>
-                        <ul class="list-unstyled marketing-list">
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Create custom mock API endpoints</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Configure response status, headers, and body</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Support for all HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> JWT authentication support</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Response delay simulation</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Expiration date management</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Project-based organization</li>
-                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Role-based access control</li>
-                        </ul>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="section-header text-center">
+                        <h2 class="marketing-section-title">Powerful Features</h2>
                     </div>
+                    <ul class="list-unstyled marketing-list">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Create custom mock API endpoints</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Configure response status, headers, and body</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Support for all HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> JWT authentication support</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Response delay simulation</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Expiration date management</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Project-based organization</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Role-based access control</li>
+                    </ul>
                 </div>
-                
-                <div class="row mt-5" sec:authorize="!isAuthenticated()">
-                    <div class="col-md-6 offset-md-3 text-center">
-                        <div class="marketing-card">
-                            <h3>Ready to get started?</h3>
-                            <p>Login to start creating your mock API endpoints</p>
-                            <a th:href="@{/login}" class="btn btn-primary marketing-button">
-                                Login Now
-                            </a>
-                        </div>
+            </div>
+            
+            <div class="row mt-5" sec:authorize="!isAuthenticated()">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <div class="marketing-card">
+                        <h3>Ready to get started?</h3>
+                        <p>Login to start creating your mock API endpoints</p>
+                        <a th:href="@{/login}" class="btn btn-primary marketing-button">
+                            Login Now
+                        </a>
                     </div>
                 </div>
             </div>

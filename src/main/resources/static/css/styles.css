@@ -15,8 +15,8 @@ main {
 
 /* === PAGE CONTAINER === */
 .page {
-    padding: var(--space-8) 0 var(--space-16);
-    min-height: calc(100vh - 200px);
+    padding: 0;
+    min-height: auto;
 }
 
 .container {

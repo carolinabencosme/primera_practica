@@ -22,22 +22,21 @@
 </head>
 <body>
     <div data-role="content">
-        <div class="container">
-            <div class="page-header">
-                <div>
-                    <h2 class="page-header__title">
-                        <i class="bi bi-hdd-network-fill text-success"></i>
-                        <span th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'}">Mock Form</span>
-                    </h2>
-                    <p class="page-header__subtitle">Configure your mock API endpoint with custom responses and behavior.</p>
-                </div>
+        <div class="page-header">
+            <div>
+                <h2 class="page-header__title">
+                    <i class="bi bi-hdd-network-fill text-success"></i>
+                    <span th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'}">Mock Form</span>
+                </h2>
+                <p class="page-header__subtitle">Configure your mock API endpoint with custom responses and behavior.</p>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <div class="card-clean">
-                        <div class="card-body-clean">
-                            <form th:action="${mock.id != null ? '/mocks/' + mock.id : '/mocks'}"
-                                  th:object="${mock}" method="post">
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card-clean">
+                    <div class="card-body-clean">
+                        <form th:action="${mock.id != null ? '/mocks/' + mock.id : '/mocks'}"
+                              th:object="${mock}" method="post">
 
                                 <!-- Section 1: Basic Info -->
                                 <div class="mock-form-section">
@@ -201,8 +200,7 @@
                                         <span th:text="${mock.id != null ? 'Update Endpoint' : 'Create Endpoint'}">Save</span>
                                     </button>
                                 </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
