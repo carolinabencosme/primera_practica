@@ -116,6 +116,31 @@ Dynamically executes a configured mock endpoint.
 
 ---
 
+### Users Shortcut Endpoint
+
+The `/api/users` endpoint is a shortcut that proxies to the mock project configured via
+`mock.users.project-name` in `application.properties`.
+
+**Configuration**:
+
+```properties
+mock.users.project-name=Usuarios
+```
+
+**Example**:
+
+```bash
+curl -X GET http://localhost:8080/api/users
+```
+
+This is equivalent to:
+
+```bash
+curl -X GET http://localhost:8080/api/mock/Usuarios/api/users
+```
+
+---
+
 ### Examples
 
 #### Example 1: Simple GET Request

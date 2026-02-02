@@ -7,6 +7,7 @@ import org.example.primera_practica.model.HttpMethod;
 import org.example.primera_practica.service.JwtService;
 import org.example.primera_practica.service.MockEndpointService;
 import org.example.primera_practica.util.PathNormalizer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,15 @@ public class MockApiController {
 
     private final MockEndpointService mockEndpointService;
     private final JwtService jwtService;
+    private final String usersProjectName;
 
-    public MockApiController(MockEndpointService mockEndpointService, JwtService jwtService) {
+    public MockApiController(
+        MockEndpointService mockEndpointService,
+        JwtService jwtService,
+        @Value("${mock.users.project-name:Usuarios}") String usersProjectName) {
         this.mockEndpointService = mockEndpointService;
         this.jwtService = jwtService;
+        this.usersProjectName = usersProjectName;
     }
 
     @RequestMapping(
@@ -78,7 +84,7 @@ public class MockApiController {
         HttpMethod httpMethod = HttpMethod.valueOf(request.getMethod());
 
         try {
-            return executeMockResponse("Usuarios", mockPath, httpMethod, authHeader);
+            return executeMockResponse(usersProjectName, mockPath, httpMethod, authHeader);
         } catch (ResourceNotFoundException e) {
             String errorMessage = "Mock endpoint not found for " + httpMethod + " " + mockPath;
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
