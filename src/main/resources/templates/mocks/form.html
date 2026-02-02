@@ -37,6 +37,7 @@
                     <div class="card-body-clean">
                         <form th:action="${mock.id != null ? '/mocks/' + mock.id : '/mocks'}"
                               th:object="${mock}" method="post">
+                                <input type="hidden" th:field="*{generatedJwt}">
 
                                 <!-- Section 1: Basic Info -->
                                 <div class="mock-form-section">
@@ -187,6 +188,27 @@
                                             </label>
                                         </div>
                                         <small class="help-text">When enabled, requests must include a valid JWT token</small>
+                                    </div>
+                                    <div th:if="${mock.requiresJwt and #strings.isNotEmpty(mock.generatedJwt)}" class="jwt-block">
+                                        <div class="mb-3">
+                                            <label class="detail-label mb-2">JWT Token:</label>
+                                            <div class="jwt-code" th:text="${mock.generatedJwt}">token</div>
+                                            <button class="btn-clean btn-soft btn-sm mt-2"
+                                                    th:attr="data-copy=${mock.generatedJwt}, data-copy-message='JWT token copied!'"
+                                                    type="button">
+                                                <i class="bi bi-clipboard"></i> Copy Token
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <label class="detail-label mb-2">Authorization Header:</label>
+                                            <div class="jwt-code" th:text="'Authorization: Bearer ' + ${mock.generatedJwt}">Authorization</div>
+                                            <button class="btn-clean btn-soft btn-sm mt-2"
+                                                    th:attr="data-copy='Authorization: Bearer ' + ${mock.generatedJwt}, data-copy-message='Header copied!'"
+                                                    type="button">
+                                                <i class="bi bi-clipboard"></i> Copy Header
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
