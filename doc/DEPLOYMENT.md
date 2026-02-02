@@ -350,6 +350,11 @@ chmod +x run.sh
 
 ## Database Setup
 
+### Nota sobre H2
+
+- Con `jdbc:h2:mem:...` los datos se pierden en cada reinicio.
+- En plataformas con filesystem efímero, un `jdbc:h2:file:...` tampoco garantiza persistencia.
+
 ### PostgreSQL Setup
 
 **1. Install PostgreSQL:**
