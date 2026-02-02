@@ -3,102 +3,348 @@
       th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
     <title>Home - Mockup API Server</title>
-    <th:block data-role="styles"></th:block>
+    <th:block data-role="styles">
+        <style>
+            /* Hero Section */
+            .hero {
+                background: linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%);
+                padding: var(--space-20) 0;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            .hero-title {
+                font-size: var(--text-5xl);
+                font-weight: var(--weight-bold);
+                color: var(--text);
+                margin-bottom: var(--space-4);
+                letter-spacing: -0.02em;
+                line-height: var(--leading-tight);
+            }
+
+            .hero-subtitle {
+                font-size: var(--text-xl);
+                color: var(--muted);
+                margin-bottom: var(--space-8);
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+                line-height: var(--leading-relaxed);
+            }
+
+            .hero-actions {
+                display: flex;
+                gap: var(--space-4);
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero-illustration {
+                margin-top: var(--space-12);
+                padding: var(--space-8);
+                background: linear-gradient(135deg, var(--primary-soft) 0%, var(--accent-soft) 100%);
+                border-radius: var(--r-lg);
+                display: inline-block;
+            }
+
+            .hero-illustration i {
+                font-size: 6rem;
+                color: var(--primary);
+            }
+
+            /* Feature Grid */
+            .features {
+                padding: var(--space-20) 0;
+                background: var(--surface);
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: var(--space-8);
+                margin-top: var(--space-12);
+            }
+
+            .feature-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--r-lg);
+                padding: var(--space-8);
+                text-align: center;
+                transition: all 0.3s;
+            }
+
+            .feature-card:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--shadow-lg);
+                border-color: var(--primary);
+            }
+
+            .feature-icon {
+                width: 64px;
+                height: 64px;
+                background: var(--primary-soft);
+                border-radius: var(--r-lg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto var(--space-6);
+            }
+
+            .feature-icon i {
+                font-size: 2rem;
+                color: var(--primary);
+            }
+
+            .feature-card h3 {
+                font-size: var(--text-xl);
+                font-weight: var(--weight-semibold);
+                margin-bottom: var(--space-3);
+                color: var(--text);
+            }
+
+            .feature-card p {
+                font-size: var(--text-base);
+                color: var(--muted);
+                margin-bottom: 0;
+                line-height: var(--leading-relaxed);
+            }
+
+            /* How It Works Section */
+            .how-it-works {
+                padding: var(--space-20) 0;
+                background: var(--bg);
+            }
+
+            .section-title {
+                text-align: center;
+                font-size: var(--text-4xl);
+                font-weight: var(--weight-bold);
+                margin-bottom: var(--space-3);
+                color: var(--text);
+            }
+
+            .section-subtitle {
+                text-align: center;
+                font-size: var(--text-lg);
+                color: var(--muted);
+                margin-bottom: var(--space-12);
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: var(--space-8);
+                margin-top: var(--space-12);
+            }
+
+            .step {
+                text-align: center;
+            }
+
+            .step-number {
+                width: 56px;
+                height: 56px;
+                background: var(--primary);
+                color: white;
+                border-radius: var(--r-full);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: var(--text-2xl);
+                font-weight: var(--weight-bold);
+                margin: 0 auto var(--space-4);
+            }
+
+            .step h4 {
+                font-size: var(--text-lg);
+                font-weight: var(--weight-semibold);
+                margin-bottom: var(--space-2);
+                color: var(--text);
+            }
+
+            .step p {
+                font-size: var(--text-base);
+                color: var(--muted);
+                margin: 0;
+            }
+
+            /* CTA Section */
+            .cta {
+                padding: var(--space-20) 0;
+                background: var(--surface);
+                text-align: center;
+            }
+
+            .cta-card {
+                background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+                padding: var(--space-12);
+                border-radius: var(--r-lg);
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .cta-card h2 {
+                font-size: var(--text-3xl);
+                font-weight: var(--weight-bold);
+                color: white;
+                margin-bottom: var(--space-4);
+            }
+
+            .cta-card p {
+                font-size: var(--text-lg);
+                color: rgba(255, 255, 255, 0.9);
+                margin-bottom: var(--space-6);
+            }
+
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: var(--text-3xl);
+                }
+
+                .hero-subtitle {
+                    font-size: var(--text-base);
+                }
+
+                .hero-actions {
+                    flex-direction: column;
+                    width: 100%;
+                }
+
+                .hero-actions .btn-clean {
+                    width: 100%;
+                }
+            }
+        </style>
+    </th:block>
     <th:block data-role="scripts"></th:block>
 </head>
 <body>
     <div data-role="content">
-        <!-- Modern Hero Section -->
-        <section class="marketing-hero section">
-            <div class="marketing-hero-content fade-in text-center">
-                <div class="page-header text-center justify-content-center">
-                    <div>
-                        <h1 class="page-header__title marketing-hero-title justify-content-center">Mock API Server</h1>
-                        <p class="page-header__subtitle marketing-hero-subtitle">Create and manage mock API endpoints with ease. Built for developers who need reliable testing environments without the complexity. Simple, fast, and efficient.</p>
-                    </div>
-                    <div class="page-header__actions marketing-hero-actions justify-content-center">
-                    <a th:href="@{/projects}" class="btn btn-primary btn-lg marketing-button" sec:authorize="isAuthenticated()">
-                        Get Started
-                    </a>
-                    <a th:href="@{/login}" class="btn btn-primary btn-lg marketing-button" sec:authorize="!isAuthenticated()">
-                        Login
-                    </a>
-                    <a th:href="@{/tech-stack}" class="btn btn-outline-secondary btn-lg marketing-button">
-                        View Tech Stack
-                    </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Features Section -->
-        <section class="marketing-section marketing-section--light section" sec:authorize="isAuthenticated()">
-            <div class="section-grid">
-                <div class="marketing-card text-center">
-                    <div class="marketing-icon">
-                        <i class="bi bi-folder-fill"></i>
-                    </div>
-                    <h3>Projects</h3>
-                    <p>Organize your mock endpoints into projects for better management and collaboration</p>
-                    <a th:href="@{/projects}" class="btn btn-primary marketing-button">
-                        View Projects →
-                    </a>
-                </div>
-                <div class="marketing-card text-center">
-                    <div class="marketing-icon">
-                        <i class="bi bi-hdd-network-fill"></i>
-                    </div>
-                    <h3>Mock Endpoints</h3>
-                    <p>Create and manage your mock API endpoints with custom responses and behavior</p>
-                    <a th:href="@{/mocks}" class="btn btn-secondary marketing-button">
-                        View Mocks →
-                    </a>
-                </div>
-                <div class="marketing-card text-center" sec:authorize="hasRole('ADMIN')">
-                    <div class="marketing-icon">
-                        <i class="bi bi-people-fill"></i>
-                    </div>
-                    <h3>User Management</h3>
-                    <p>Manage system users and permissions with role-based access control</p>
-                    <a th:href="@{/users}" class="btn btn-ghost marketing-button">
-                        Manage Users →
-                    </a>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Info Section -->
-        <section class="marketing-section marketing-section--subtle section">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <div class="page-header text-center justify-content-center">
-                        <div>
-                            <h2 class="page-header__title marketing-section-title">Powerful Features</h2>
-                            <p class="page-header__subtitle">See what makes building, managing, and testing mock APIs feel effortless.</p>
-                        </div>
-                    </div>
-                    <ul class="list-unstyled marketing-list">
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Create custom mock API endpoints</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Configure response status, headers, and body</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Support for all HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> JWT authentication support</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Response delay simulation</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Expiration date management</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Project-based organization</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Role-based access control</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="row mt-5" sec:authorize="!isAuthenticated()">
-                <div class="col-md-6 offset-md-3 text-center">
-                    <div class="marketing-card">
-                        <h3>Ready to get started?</h3>
-                        <p>Login to start creating your mock API endpoints</p>
-                        <a th:href="@{/login}" class="btn btn-primary marketing-button">
-                            Login Now
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Mock API Endpoints Made Simple</h1>
+                    <p class="hero-subtitle">
+                        Build, test, and iterate faster with mock API endpoints. 
+                        No backend required. Perfect for frontend development and testing.
+                    </p>
+                    <div class="hero-actions">
+                        <a th:href="@{/mocks}" class="btn-clean btn-brand btn-lg" sec:authorize="isAuthenticated()">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Go to Mocks
+                        </a>
+                        <a th:href="@{/login}" class="btn-clean btn-brand btn-lg" sec:authorize="!isAuthenticated()">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Get Started
+                        </a>
+                        <a th:href="@{/tech-stack}" class="btn-clean btn-soft btn-lg">
+                            <i class="bi bi-stack me-2"></i>View Tech Stack
                         </a>
                     </div>
+                    <div class="hero-illustration">
+                        <i class="bi bi-server"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Everything you need</h2>
+                <p class="section-subtitle">
+                    Powerful features to help you build and test APIs efficiently
+                </p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <h3>Secure Authentication</h3>
+                        <p>Built-in JWT support and role-based access control to keep your mocks secure</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h3>User Roles</h3>
+                        <p>Manage team members with flexible role-based permissions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-hdd-network"></i>
+                        </div>
+                        <h3>Mock Endpoints</h3>
+                        <p>Create custom API endpoints with any response data, headers, and status codes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-folder"></i>
+                        </div>
+                        <h3>Project Organization</h3>
+                        <p>Organize your mocks into projects for better management and collaboration</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <h3>Response Delays</h3>
+                        <p>Simulate network latency with configurable response delays</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-code-slash"></i>
+                        </div>
+                        <h3>All HTTP Methods</h3>
+                        <p>Support for GET, POST, PUT, PATCH, DELETE, and OPTIONS methods</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How it works</h2>
+                <p class="section-subtitle">
+                    Get started with mock endpoints in three simple steps
+                </p>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Create a Project</h4>
+                        <p>Organize your mock endpoints by creating a project workspace</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Define Endpoints</h4>
+                        <p>Set up your mock API with custom paths, methods, and responses</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Start Testing</h4>
+                        <p>Use your mock endpoints in development and testing immediately</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta" sec:authorize="!isAuthenticated()">
+            <div class="container">
+                <div class="cta-card">
+                    <h2>Ready to get started?</h2>
+                    <p>Sign in to start creating your mock API endpoints today</p>
+                    <a th:href="@{/login}" class="btn-clean btn-soft btn-lg" style="background: white; color: var(--primary);">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In Now
+                    </a>
                 </div>
             </div>
         </section>
