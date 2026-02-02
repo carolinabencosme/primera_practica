@@ -3,18 +3,65 @@
       th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
     <title th:text="${project.id != null ? 'Edit Project' : 'New Project'} + ' - Mockup API Server'">Project Form</title>
-    <th:block data-role="styles"></th:block>
+    <th:block data-role="styles">
+        <style>
+            .form-section {
+                margin-bottom: var(--space-6);
+            }
+
+            .form-section-header {
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+                margin-bottom: var(--space-4);
+                padding-bottom: var(--space-3);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .form-section-header h5 {
+                margin: 0;
+                font-size: var(--text-lg);
+                font-weight: var(--weight-semibold);
+                color: var(--text);
+            }
+
+            .form-section-header i {
+                color: var(--brand);
+                font-size: var(--text-xl);
+            }
+
+            .form-actions {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: var(--space-4);
+                border-top: 1px solid var(--border);
+            }
+
+            @media (max-width: 768px) {
+                .form-actions {
+                    flex-direction: column;
+                    gap: var(--space-3);
+                }
+
+                .form-actions > * {
+                    width: 100%;
+                }
+            }
+        </style>
+    </th:block>
     <th:block data-role="scripts"></th:block>
 </head>
 <body>
     <div data-role="content">
+        <!-- Page Header -->
         <div class="page-header">
             <div>
                 <h2 class="page-header__title">
-                    <i class="bi bi-folder-fill text-warning"></i>
+                    <i class="bi bi-folder-fill"></i>
                     <span th:text="${project.id != null ? 'Edit Project' : 'New Project'}">Project Form</span>
                 </h2>
-                <p class="page-header__subtitle">Organize your mock endpoints into projects for better management.</p>
+                <p class="page-header__subtitle">Organize your mock endpoints into projects for better management</p>
             </div>
         </div>
         
@@ -25,10 +72,25 @@
                         <form th:action="${project.id != null ? '/projects/' + project.id : '/projects'}"
                               th:object="${project}" method="post">
 
+                            <!-- Project Information Section -->
+                            <div class="form-section">
+                                <div class="form-section-header">
+                                    <i class="bi bi-info-circle"></i>
+                                    <h5>Project Information</h5>
+                                </div>
+
                                 <div class="mb-4">
-                                    <label for="name" class="form-label-clean">Project Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
-                                           id="name" th:field="*{name}" placeholder="e.g., Mobile App API" required autofocus>
+                                    <label for="name" class="form-label-clean">
+                                        Project Name <span style="color: var(--danger);">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control-clean" 
+                                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                           id="name" 
+                                           th:field="*{name}" 
+                                           placeholder="e.g., Mobile App API" 
+                                           required 
+                                           autofocus>
                                     <div class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                         Name error
                                     </div>
@@ -37,23 +99,29 @@
 
                                 <div class="mb-4">
                                     <label for="description" class="form-label-clean">Description</label>
-                                    <textarea class="form-control-clean" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
-                                              id="description" th:field="*{description}" rows="4"
+                                    <textarea class="form-control-clean" 
+                                              th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                              id="description" 
+                                              th:field="*{description}" 
+                                              rows="4"
                                               placeholder="Describe the purpose of this project and what mock endpoints it will contain"></textarea>
                                     <div class="error-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                                         Description error
                                     </div>
+                                    <small class="help-text">Provide a brief description to help identify this project</small>
                                 </div>
+                            </div>
 
-                                <div class="d-flex justify-content-between pt-3 border-top">
-                                    <a th:href="@{/projects}" class="btn-clean btn-soft">
-                                        <i class="bi bi-arrow-left"></i> Cancel
-                                    </a>
-                                    <button type="submit" class="btn-clean btn-brand">
-                                        <i class="bi bi-save"></i>
-                                        <span th:text="${project.id != null ? 'Update Project' : 'Create Project'}">Save</span>
-                                    </button>
-                                </div>
+                            <!-- Form Actions -->
+                            <div class="form-actions">
+                                <a th:href="@{/projects}" class="btn-clean btn-soft">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </a>
+                                <button type="submit" class="btn-clean btn-brand">
+                                    <i class="bi bi-check-circle"></i>
+                                    <span th:text="${project.id != null ? 'Update Project' : 'Create Project'}">Save</span>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
