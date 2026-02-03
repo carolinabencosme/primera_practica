@@ -7,8 +7,9 @@ import org.example.primera_practica.model.*;
 import org.example.primera_practica.repository.MockEndpointRepository;
 import org.example.primera_practica.repository.ProjectRepository;
 import org.example.primera_practica.repository.UserRepository;
+import org.example.primera_practica.service.JwtService;
 import org.example.primera_practica.service.MockEndpointService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.primera_practica.util.PathNormalizer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +23,16 @@ public class MockEndpointServiceImpl implements MockEndpointService {
     private final MockEndpointRepository mockEndpointRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     public MockEndpointServiceImpl(MockEndpointRepository mockEndpointRepository, 
                                    ProjectRepository projectRepository, 
-                                   UserRepository userRepository) {
+                                   UserRepository userRepository,
+                                   JwtService jwtService) {
         this.mockEndpointRepository = mockEndpointRepository;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         MockEndpoint mockEndpoint = new MockEndpoint();
         mockEndpoint.setName(mockEndpointDTO.getName());
         mockEndpoint.setDescription(mockEndpointDTO.getDescription());
-        mockEndpoint.setPath(mockEndpointDTO.getPath());
+        mockEndpoint.setPath(PathNormalizer.normalizePath(mockEndpointDTO.getPath()));
         mockEndpoint.setMethod(mockEndpointDTO.getMethod());
         mockEndpoint.setHttpStatusCode(mockEndpointDTO.getHttpStatusCode());
         mockEndpoint.setContentType(mockEndpointDTO.getContentType());
@@ -52,6 +56,10 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         mockEndpoint.setRequiresJwt(mockEndpointDTO.getRequiresJwt());
         mockEndpoint.setCreatedBy(user);
         mockEndpoint.setProject(project);
+
+        if (Boolean.TRUE.equals(mockEndpointDTO.getRequiresJwt())) {
+            mockEndpoint.setGeneratedJwt(jwtService.generateToken(user.getUsername(), mockEndpointDTO.getExpirationDate()));
+        }
 
         if (mockEndpointDTO.getHeaders() != null && !mockEndpointDTO.getHeaders().isEmpty()) {
             List<MockHeader> headers = mockEndpointDTO.getHeaders().stream()
@@ -94,6 +102,8 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         MockEndpoint mockEndpoint = mockEndpointRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("MockEndpoint not found with id: " + id));
 
+        boolean shouldRegenerateToken = false;
+
         if (mockEndpointDTO.getName() != null) {
             mockEndpoint.setName(mockEndpointDTO.getName());
         }
@@ -101,7 +111,7 @@ public class MockEndpointServiceImpl implements MockEndpointService {
             mockEndpoint.setDescription(mockEndpointDTO.getDescription());
         }
         if (mockEndpointDTO.getPath() != null) {
-            mockEndpoint.setPath(mockEndpointDTO.getPath());
+            mockEndpoint.setPath(PathNormalizer.normalizePath(mockEndpointDTO.getPath()));
         }
         if (mockEndpointDTO.getMethod() != null) {
             mockEndpoint.setMethod(mockEndpointDTO.getMethod());
@@ -116,12 +126,18 @@ public class MockEndpointServiceImpl implements MockEndpointService {
             mockEndpoint.setResponseBody(mockEndpointDTO.getResponseBody());
         }
         if (mockEndpointDTO.getExpirationDate() != null) {
+            if (!mockEndpointDTO.getExpirationDate().equals(mockEndpoint.getExpirationDate())) {
+                shouldRegenerateToken = true;
+            }
             mockEndpoint.setExpirationDate(mockEndpointDTO.getExpirationDate());
         }
         if (mockEndpointDTO.getDelaySeconds() != null) {
             mockEndpoint.setDelaySeconds(mockEndpointDTO.getDelaySeconds());
         }
         if (mockEndpointDTO.getRequiresJwt() != null) {
+            if (!mockEndpointDTO.getRequiresJwt().equals(mockEndpoint.getRequiresJwt())) {
+                shouldRegenerateToken = true;
+            }
             mockEndpoint.setRequiresJwt(mockEndpointDTO.getRequiresJwt());
         }
 
@@ -137,6 +153,16 @@ public class MockEndpointServiceImpl implements MockEndpointService {
                     })
                     .collect(Collectors.toList());
             mockEndpoint.getHeaders().addAll(headers);
+        }
+
+        if (Boolean.TRUE.equals(mockEndpoint.getRequiresJwt())) {
+            if (shouldRegenerateToken || mockEndpoint.getGeneratedJwt() == null) {
+                mockEndpoint.setGeneratedJwt(jwtService.generateToken(
+                        mockEndpoint.getCreatedBy().getUsername(),
+                        mockEndpoint.getExpirationDate()));
+            }
+        } else {
+            mockEndpoint.setGeneratedJwt(null);
         }
 
         MockEndpoint updatedMockEndpoint = mockEndpointRepository.save(mockEndpoint);
@@ -173,6 +199,7 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         dto.setExpirationDate(mockEndpoint.getExpirationDate());
         dto.setDelaySeconds(mockEndpoint.getDelaySeconds());
         dto.setRequiresJwt(mockEndpoint.getRequiresJwt());
+        dto.setGeneratedJwt(mockEndpoint.getGeneratedJwt());
         dto.setCreatedBy(mockEndpoint.getCreatedBy().getUsername());
         dto.setProjectId(mockEndpoint.getProject().getId());
         dto.setProjectName(mockEndpoint.getProject().getName());

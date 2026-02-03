@@ -1,42 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Stack - Mockup API Server</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
-    <link th:href="@{/css/tech-stack.css}" rel="stylesheet">
+    <th:block data-role="styles">
+        <link th:href="@{/css/tech-stack.css}" rel="stylesheet">
+    </th:block>
+    <th:block data-role="scripts">
+        <script th:src="@{/js/tech-stack.js}"></script>
+    </th:block>
 </head>
 <body>
-    <div th:replace="~{layout/navbar :: navbar}"></div>
-    
+    <div data-role="content">
     <!-- Hero Section -->
-    <section class="tech-hero">
+    <section class="marketing-hero tech-hero section">
         <div class="container">
-            <div class="hero-content fade-in">
-                <h1 class="hero-title">Built with Modern Technology</h1>
-                <p class="hero-subtitle">
-                    A powerful stack combining enterprise-grade frameworks with modern best practices
-                    to deliver a robust, scalable mock API server solution.
-                </p>
+            <div class="marketing-hero-content fade-in">
+                <div class="page-header">
+                    <div>
+                        <h1 class="section-title">Built with Modern Technology</h1>
+                        <p class="section-subtitle">
+                            A powerful stack combining enterprise-grade frameworks with modern best practices
+                            to deliver a robust, scalable mock API server solution.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Tech Stack Grid -->
-    <section class="tech-grid-section">
+    <section class="marketing-section tech-grid-section section">
         <div class="container">
             
             <!-- Backend & Core -->
             <div class="category-section fade-in">
-                <h2 class="category-title">Backend & Core</h2>
-                <div class="tech-grid">
+                <div class="page-header">
+                    <div>
+                        <h2 class="section-title">Backend & Core</h2>
+                        <p class="section-subtitle">Frameworks and runtime foundations that power the API server.</p>
+                    </div>
+                </div>
+                <div class="tech-grid section-grid">
                     <div class="tech-card" data-category="backend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Spring Boot</h3>
@@ -48,7 +56,7 @@
 
                     <div class="tech-card" data-category="backend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Java</h3>
@@ -60,7 +68,7 @@
 
                     <div class="tech-card" data-category="backend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Security">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Security" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Spring Security</h3>
@@ -89,11 +97,16 @@
 
             <!-- Data & Persistence -->
             <div class="category-section fade-in">
-                <h2 class="category-title">Data & Persistence</h2>
-                <div class="tech-grid">
+                <div class="page-header">
+                    <div>
+                        <h2 class="section-title">Data & Persistence</h2>
+                        <p class="section-subtitle">Storage, ORM, and database tooling that keep data reliable.</p>
+                    </div>
+                </div>
+                <div class="tech-grid section-grid">
                     <div class="tech-card" data-category="data">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hibernate/hibernate-original.svg" alt="Hibernate">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hibernate/hibernate-original.svg" alt="Hibernate" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">JPA/Hibernate</h3>
@@ -120,7 +133,7 @@
 
                     <div class="tech-card" data-category="data">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Data">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Data" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Spring Data JPA</h3>
@@ -134,8 +147,13 @@
 
             <!-- Frontend & UI -->
             <div class="category-section fade-in">
-                <h2 class="category-title">Frontend & UI</h2>
-                <div class="tech-grid">
+                <div class="page-header">
+                    <div>
+                        <h2 class="section-title">Frontend & UI</h2>
+                        <p class="section-subtitle">Templates, styling, and client-side tools for the user experience.</p>
+                    </div>
+                </div>
+                <div class="tech-grid section-grid">
                     <div class="tech-card" data-category="frontend">
                         <div class="tech-icon">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -152,7 +170,7 @@
 
                     <div class="tech-card" data-category="frontend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Bootstrap</h3>
@@ -164,7 +182,7 @@
 
                     <div class="tech-card" data-category="frontend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">HTML5</h3>
@@ -176,7 +194,7 @@
 
                     <div class="tech-card" data-category="frontend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">CSS3</h3>
@@ -188,7 +206,7 @@
 
                     <div class="tech-card" data-category="frontend">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">JavaScript</h3>
@@ -202,11 +220,16 @@
 
             <!-- Development Tools -->
             <div class="category-section fade-in">
-                <h2 class="category-title">Development Tools</h2>
-                <div class="tech-grid">
+                <div class="page-header">
+                    <div>
+                        <h2 class="section-title">Development Tools</h2>
+                        <p class="section-subtitle">Build, productivity, and UI utilities that streamline delivery.</p>
+                    </div>
+                </div>
+                <div class="tech-grid section-grid">
                     <div class="tech-card" data-category="tools">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gradle/gradle-original.svg" alt="Gradle">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gradle/gradle-original.svg" alt="Gradle" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Gradle</h3>
@@ -233,7 +256,7 @@
 
                     <div class="tech-card" data-category="tools">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="DevTools">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="DevTools" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Spring DevTools</h3>
@@ -245,7 +268,7 @@
                     
                     <div class="tech-card" data-category="tools">
                         <div class="tech-icon">
-                            <i class="bi bi-bootstrap-fill" style="font-size: 64px; color: #7952B3;"></i>
+                            <i class="bi bi-bootstrap-fill tech-icon-brand"></i>
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Bootstrap Icons</h3>
@@ -259,8 +282,13 @@
             
             <!-- Testing -->
             <div class="category-section fade-in">
-                <h2 class="category-title">Testing</h2>
-                <div class="tech-grid">
+                <div class="page-header">
+                    <div>
+                        <h2 class="section-title">Testing</h2>
+                        <p class="section-subtitle">Automation frameworks that keep releases stable and secure.</p>
+                    </div>
+                </div>
+                <div class="tech-grid section-grid">
                     <div class="tech-card" data-category="testing">
                         <div class="tech-icon">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -277,7 +305,7 @@
 
                     <div class="tech-card" data-category="testing">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot Test">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot Test" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Spring Boot Test</h3>
@@ -289,7 +317,7 @@
 
                     <div class="tech-card" data-category="testing">
                         <div class="tech-icon">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Security Test">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Security Test" width="48" height="48">
                         </div>
                         <div class="tech-info">
                             <h3 class="tech-name">Spring Security Test</h3>
@@ -305,11 +333,16 @@
     </section>
 
     <!-- Why These Technologies -->
-    <section class="tech-philosophy">
+    <section class="marketing-section marketing-section--subtle tech-philosophy section">
         <div class="container">
             <div class="philosophy-content fade-in">
-                <h2 class="philosophy-title">Why These Technologies?</h2>
-                <div class="row mt-4">
+                <div class="page-header">
+                    <div>
+                        <h2 class="section-title">Why These Technologies?</h2>
+                        <p class="section-subtitle">We focus on reliability, security, and developer speed when choosing the stack.</p>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="philosophy-card">
                             <div class="philosophy-icon">
@@ -341,14 +374,6 @@
             </div>
         </div>
     </section>
-
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">Mockup API Server © 2024 | Built with ❤️</span>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/js/tech-stack.js}"></script>
+    </div>
 </body>
 </html>

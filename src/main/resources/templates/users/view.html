@@ -1,82 +1,304 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${user.username} + ' - Mockup API Server'">User Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <th:block data-role="styles">
+        <style>
+            .profile-header {
+                background: linear-gradient(135deg, var(--brand) 0%, var(--brand-hover) 100%);
+                border-radius: var(--r-lg);
+                padding: var(--space-8);
+                margin-bottom: var(--space-6);
+                color: white;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .profile-header__content {
+                display: flex;
+                align-items: center;
+                gap: var(--space-4);
+                flex-wrap: wrap;
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: var(--r-full);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2.5rem;
+                color: white;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .profile-info {
+                flex: 1;
+            }
+
+            .profile-name {
+                font-size: var(--text-3xl);
+                font-weight: var(--weight-bold);
+                margin: 0 0 var(--space-2) 0;
+                color: white;
+            }
+
+            .profile-email {
+                font-size: var(--text-base);
+                opacity: 0.9;
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+            }
+
+            .profile-roles {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-2);
+                margin-top: var(--space-3);
+            }
+
+            .role-badge-light {
+                background: rgba(255, 255, 255, 0.25);
+                color: white;
+                padding: var(--space-1) var(--space-3);
+                border-radius: var(--r-full);
+                font-size: var(--text-sm);
+                font-weight: var(--weight-medium);
+                display: inline-flex;
+                align-items: center;
+                gap: var(--space-1);
+                backdrop-filter: blur(10px);
+            }
+
+            .detail-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--r-lg);
+                padding: var(--space-6);
+                margin-bottom: var(--space-6);
+            }
+
+            .detail-card h3 {
+                font-size: var(--text-xl);
+                font-weight: var(--weight-semibold);
+                margin-bottom: var(--space-5);
+                color: var(--text);
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+                padding-bottom: var(--space-3);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .detail-row {
+                display: grid;
+                grid-template-columns: 180px 1fr;
+                gap: var(--space-4);
+                padding: var(--space-4) 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .detail-row:last-child {
+                border-bottom: none;
+            }
+
+            .detail-label {
+                font-weight: var(--weight-semibold);
+                color: var(--muted);
+                font-size: var(--text-sm);
+            }
+
+            .detail-value {
+                color: var(--text);
+                font-size: var(--text-base);
+            }
+
+            .detail-value code {
+                background: var(--surface-2);
+                padding: var(--space-1) var(--space-2);
+                border-radius: var(--r-sm);
+                font-family: var(--font-mono);
+                font-size: var(--text-sm);
+            }
+
+            @media (max-width: 768px) {
+                .profile-header {
+                    padding: var(--space-6);
+                }
+
+                .profile-avatar {
+                    width: 60px;
+                    height: 60px;
+                    font-size: 2rem;
+                }
+
+                .profile-name {
+                    font-size: var(--text-2xl);
+                }
+
+                .detail-row {
+                    grid-template-columns: 1fr;
+                    gap: var(--space-2);
+                }
+
+                .detail-label {
+                    font-weight: var(--weight-bold);
+                }
+            }
+        </style>
+    </th:block>
+    <th:block data-role="scripts"></th:block>
 </head>
 <body>
-    <div th:replace="~{layout/navbar :: navbar}"></div>
-    
-    <main class="container mt-4">
-        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="bi bi-check-circle-fill"></i> <span th:text="${successMessage}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        
-        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="bi bi-exclamation-triangle-fill"></i> <span th:text="${errorMessage}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="bi bi-person-fill"></i> <span th:text="${user.username}">Username</span></h2>
-            <div class="btn-group">
-                <a th:href="@{/users/{id}/edit(id=${user.id})}" class="btn btn-warning">
+    <div data-role="content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h2 class="page-header__title">
+                    <i class="bi bi-person-fill"></i>
+                    User Profile
+                </h2>
+                <p class="page-header__subtitle">View user account details and permissions</p>
+            </div>
+            <div class="page-header__actions">
+                <a th:href="@{/users}" class="btn-clean btn-ghost">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
+                <a th:href="@{/users/{id}/edit(id=${user.id})}" class="btn-clean btn-soft">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
-                <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post" class="d-inline"
+                <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post" style="display: inline;"
                       onsubmit="return confirm('Are you sure you want to delete this user?');">
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn-clean btn-danger-clean">
                         <i class="bi bi-trash"></i> Delete
                     </button>
                 </form>
             </div>
         </div>
-        
-        <div class="card">
-            <div class="card-header bg-warning">
-                <h5><i class="bi bi-info-circle"></i> User Details</h5>
+
+        <!-- Success/Error Messages -->
+        <div th:if="${successMessage}" class="alert-clean alert-success" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <span th:text="${successMessage}">Success message</span>
+        </div>
+
+        <div th:if="${errorMessage}" class="alert-clean alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span th:text="${errorMessage}">Error message</span>
+        </div>
+
+        <!-- Profile Header Card -->
+        <div class="profile-header">
+            <div class="profile-header__content">
+                <div class="profile-avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <div class="profile-info">
+                    <h1 class="profile-name" th:text="${user.username}">Username</h1>
+                    <div class="profile-email">
+                        <i class="bi bi-envelope"></i>
+                        <span th:text="${user.email}">email@example.com</span>
+                    </div>
+                    <div class="profile-roles">
+                        <span th:each="role : ${user.roles}" class="role-badge-light">
+                            <i class="bi bi-shield-check"></i>
+                            <span th:text="${role}">Role</span>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <dl class="row">
-                    <dt class="col-sm-3">ID:</dt>
-                    <dd class="col-sm-9" th:text="${user.id}">1</dd>
-                    
-                    <dt class="col-sm-3">Username:</dt>
-                    <dd class="col-sm-9" th:text="${user.username}">Username</dd>
-                    
-                    <dt class="col-sm-3">Email:</dt>
-                    <dd class="col-sm-9" th:text="${user.email}">Email</dd>
-                    
-                    <dt class="col-sm-3">Roles:</dt>
-                    <dd class="col-sm-9">
-                        <span th:each="role : ${user.roles}" class="badge bg-info me-1" th:text="${role}">Role</span>
-                    </dd>
-                    
-                    <dt class="col-sm-3">Created At:</dt>
-                    <dd class="col-sm-9" th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01</dd>
-                </dl>
+        </div>
+
+        <div class="row">
+            <!-- User Details Section -->
+            <div class="col-md-6">
+                <div class="detail-card">
+                    <h3>
+                        <i class="bi bi-info-circle" style="color: var(--brand);"></i>
+                        User Details
+                    </h3>
+                    <div class="detail-row">
+                        <div class="detail-label">User ID:</div>
+                        <div class="detail-value"><code th:text="${user.id}">1</code></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Username:</div>
+                        <div class="detail-value" th:text="${user.username}">username</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email Address:</div>
+                        <div class="detail-value" th:text="${user.email}">email@example.com</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Account Created:</div>
+                        <div class="detail-value" th:text="${#temporals.format(user.createdAt, 'MMMM dd, yyyy HH:mm')}">January 01, 2024 12:00</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Account Status:</div>
+                        <div class="detail-value">
+                            <span class="badge-clean badge-success">
+                                <i class="bi bi-check-circle"></i> Active
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roles & Permissions Section -->
+            <div class="col-md-6">
+                <div class="detail-card">
+                    <h3>
+                        <i class="bi bi-key" style="color: var(--brand);"></i>
+                        Roles & Permissions
+                    </h3>
+                    <div class="detail-row">
+                        <div class="detail-label">Assigned Roles:</div>
+                        <div class="detail-value">
+                            <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                                <span th:each="role : ${user.roles}" class="badge-clean badge-brand" th:text="${role}">Role</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Total Roles:</div>
+                        <div class="detail-value" th:text="${user.roles.size()} + ' role(s)'">1 role(s)</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Access Level:</div>
+                        <div class="detail-value">
+                            <span th:if="${user.roles.contains('ADMIN')}" class="badge-clean badge-danger">
+                                <i class="bi bi-shield-fill-exclamation"></i> Administrator
+                            </span>
+                            <span th:unless="${user.roles.contains('ADMIN')}" class="badge-clean badge-neutral">
+                                <i class="bi bi-person-badge"></i> Standard User
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="mt-4">
-            <a th:href="@{/users}" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Back to Users
-            </a>
+
+        <!-- Additional Information (if needed in future) -->
+        <div class="detail-card">
+            <h3>
+                <i class="bi bi-clock-history" style="color: var(--brand);"></i>
+                Activity Information
+            </h3>
+            <div class="detail-row">
+                <div class="detail-label">Member Since:</div>
+                <div class="detail-value" th:text="${#temporals.format(user.createdAt, 'MMMM dd, yyyy')}">January 01, 2024</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Account Age:</div>
+                <div class="detail-value">
+                    <span th:with="days=${T(java.time.temporal.ChronoUnit).DAYS.between(user.createdAt, T(java.time.LocalDateTime).now())}" 
+                          th:text="${days} + ' day(s)'">0 day(s)</span>
+                </div>
+            </div>
         </div>
-    </main>
-    
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">Mockup API Server © 2024</span>
-        </div>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>

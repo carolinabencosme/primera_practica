@@ -1,12 +1,5 @@
 /* Hero Section Styles - Velum Labs Inspired */
 
-:root {
-    --hero-dark-bg: #0a0a0a;
-    --hero-text-light: #e0e0e0;
-    --hero-accent-purple: #7c3aed;
-    --hero-accent-blue: #3b82f6;
-}
-
 /* Hero Section */
 .hero {
     position: relative;
@@ -14,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--hero-dark-bg);
+    background: var(--bg);
     overflow: hidden;
     padding: 80px 20px;
 }
@@ -42,13 +35,13 @@
 /* Hero Title */
 .hero-title {
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 4rem;
+    font-size: var(--font-size-h1);
     font-weight: 400;
-    color: #ffffff;
-    line-height: 1.2;
+    color: var(--text);
+    line-height: var(--line-height-h1);
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 20px rgba(124, 58, 237, 0.3);
+    text-shadow: 0 2px 20px rgba(37, 99, 235, 0.3);
 }
 
 .hero-title br {
@@ -58,9 +51,9 @@
 /* Hero Subtitle */
 .hero-subtitle {
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
-    font-size: 1.25rem;
-    color: var(--hero-text-light);
-    line-height: 1.6;
+    font-size: var(--font-size-h3);
+    color: var(--text);
+    line-height: var(--line-height-body);
     margin-bottom: 2.5rem;
     max-width: 700px;
     margin-left: auto;
@@ -77,10 +70,10 @@
 }
 
 .hero-cta .btn-hero-primary {
-    background: linear-gradient(135deg, var(--hero-accent-purple), var(--hero-accent-blue));
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: var(--yc-white);
     padding: 0.875rem 2rem;
-    font-size: 1rem;
+    font-size: var(--font-size-body);
     font-weight: 600;
     border: none;
     border-radius: 8px;
@@ -106,9 +99,9 @@
 
 .hero-cta .btn-hero-secondary {
     background: transparent;
-    color: #ffffff;
+    color: var(--yc-white);
     padding: 0.875rem 2rem;
-    font-size: 1rem;
+    font-size: var(--font-size-body);
     font-weight: 600;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
@@ -189,14 +182,6 @@
         padding: 60px 20px;
     }
     
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
     .hero-cta {
         flex-direction: column;
         align-items: stretch;
@@ -211,13 +196,13 @@
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .hero-title {
-        font-size: 3rem;
+        font-size: var(--font-size-h1);
     }
 }
 
 /* Feature Cards Section (below hero) */
 .features-section {
-    background: #ffffff;
+    background: var(--light-bg);
     padding: 80px 20px;
 }
 
@@ -230,8 +215,8 @@
 }
 
 .feature-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 2rem;
     transition: all 0.3s ease;
@@ -242,13 +227,13 @@
 .feature-card:focus-within {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
-    border-color: var(--hero-accent-purple);
+    border-color: var(--secondary-color);
 }
 
 .feature-card-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--hero-accent-purple), var(--hero-accent-blue));
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -257,29 +242,29 @@
 .feature-card h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
 }
 
 .feature-card p {
-    color: #6b7280;
-    line-height: 1.6;
+    color: var(--text-secondary);
+    line-height: var(--line-height-body);
     margin-bottom: 1rem;
 }
 
 .feature-card .btn {
-    font-size: 0.875rem;
+    font-size: var(--font-size-small);
     padding: 0.5rem 1.25rem;
 }
 
 /* Info Section */
 .info-section {
-    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    background: linear-gradient(135deg, var(--background-subtle) 0%, var(--hover-bg) 100%);
     padding: 60px 20px;
 }
 
 .info-card {
-    background: #ffffff;
+    background: var(--light-bg);
     border: none;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -287,8 +272,8 @@
 }
 
 .info-card .card-header {
-    background: linear-gradient(135deg, var(--hero-accent-purple), var(--hero-accent-blue));
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: var(--yc-white);
     border: none;
     padding: 1.25rem 1.5rem;
 }
@@ -299,7 +284,7 @@
 
 .info-card .list-unstyled li {
     padding: 0.75rem 0;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--hover-bg);
 }
 
 .info-card .list-unstyled li:last-child {
@@ -308,24 +293,4 @@
 
 .info-card .bi-check-circle-fill {
     margin-right: 0.5rem;
-}
-
-/* Dark mode support for content sections */
-@media (prefers-color-scheme: dark) {
-    .features-section {
-        background: #1f2937;
-    }
-    
-    .feature-card {
-        background: #374151;
-        border-color: #4b5563;
-    }
-    
-    .feature-card h3 {
-        color: #f9fafb;
-    }
-    
-    .feature-card p {
-        color: #d1d5db;
-    }
 }

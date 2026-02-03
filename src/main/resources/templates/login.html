@@ -1,124 +1,215 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Mockup API Server</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link th:href="@{/css/yc-theme.css}" rel="stylesheet">
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
-    <style>
-        body {
-            background: var(--yc-background);
-        }
-        
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .login-card {
-            background: white;
-            border: 1px solid var(--yc-border);
-            border-radius: 3px;
-            padding: 40px 30px;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .login-header h3 {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--yc-black);
-            margin-bottom: 8px;
-        }
-        
-        .login-header p {
-            font-size: 13px;
-            color: var(--yc-gray);
-        }
-        
-        .login-icon {
-            font-size: 48px;
-            color: var(--yc-orange);
-            margin-bottom: 20px;
-        }
-    </style>
+    <th:block data-role="styles">
+        <style>
+            body {
+                background: var(--bg);
+            }
+
+            .login-wrapper {
+                min-height: calc(100vh - 120px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: var(--space-6);
+            }
+
+            .login-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--r-lg);
+                padding: var(--space-8);
+                box-shadow: var(--shadow-md);
+                max-width: 420px;
+                width: 100%;
+            }
+
+            .login-header {
+                text-align: center;
+                margin-bottom: var(--space-8);
+            }
+
+            .login-icon {
+                font-size: 3rem;
+                color: var(--primary);
+                margin-bottom: var(--space-4);
+            }
+
+            .login-header h3 {
+                font-size: var(--text-2xl);
+                font-weight: var(--weight-bold);
+                color: var(--text);
+                margin-bottom: var(--space-2);
+            }
+
+            .login-header p {
+                font-size: var(--text-sm);
+                color: var(--muted);
+                margin: 0;
+            }
+
+            .login-form .form-group {
+                margin-bottom: var(--space-4);
+            }
+
+            .login-form label {
+                display: block;
+                margin-bottom: var(--space-2);
+                font-weight: var(--weight-medium);
+                font-size: var(--text-sm);
+                color: var(--text);
+            }
+
+            .login-form input[type="text"],
+            .login-form input[type="password"] {
+                width: 100%;
+                padding: var(--space-3);
+                font-size: var(--text-base);
+                border: 1px solid var(--border);
+                border-radius: var(--r-md);
+                transition: all 0.2s;
+            }
+
+            .login-form input:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: var(--shadow-focus);
+            }
+
+            .remember-me {
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+                margin-bottom: var(--space-4);
+            }
+
+            .remember-me input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            .remember-me label {
+                font-size: var(--text-sm);
+                color: var(--muted);
+                margin: 0;
+                cursor: pointer;
+            }
+
+            .btn-login {
+                width: 100%;
+                padding: var(--space-3);
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: var(--r-md);
+                font-weight: var(--weight-semibold);
+                font-size: var(--text-base);
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .btn-login:hover {
+                background: var(--primary-hover);
+                transform: translateY(-1px);
+                box-shadow: var(--shadow-md);
+            }
+
+            .btn-login:active {
+                transform: translateY(1px);
+            }
+
+            .login-footer {
+                text-align: center;
+                margin-top: var(--space-6);
+                padding-top: var(--space-6);
+                border-top: 1px solid var(--border);
+            }
+
+            .login-footer a {
+                color: var(--muted);
+                text-decoration: none;
+                font-size: var(--text-sm);
+                transition: color 0.2s;
+            }
+
+            .login-footer a:hover {
+                color: var(--primary);
+            }
+
+            .login-hint {
+                text-align: center;
+                margin-top: var(--space-4);
+                padding: var(--space-3);
+                background: var(--surface-2);
+                border-radius: var(--r-md);
+                font-size: var(--text-xs);
+                color: var(--muted-2);
+            }
+        </style>
+    </th:block>
+    <th:block data-role="scripts"></th:block>
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
-            <div class="col-12">
-                <div class="login-container">
-                    <div class="login-card">
-                        <div class="login-header">
-                            <div class="login-icon">
-                                <i class="bi bi-server"></i>
-                            </div>
-                            <h3>Mockup API Server</h3>
-                            <p>Sign in to your account</p>
-                        </div>
-                        
-                        <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill"></i> Invalid username or password
-                        </div>
-                        
-                        <div th:if="${param.logout}" class="alert alert-success" role="alert">
-                            <i class="bi bi-check-circle-fill"></i> You have been logged out successfully
-                        </div>
-                        
-                        <form th:action="@{/login}" method="post">
-                            <div class="mb-3">
-                                <label for="username" class="form-label" style="font-weight: bold; font-size: 13px;">
-                                    Username
-                                </label>
-                                <input type="text" class="form-control" id="username" name="username" 
-                                       placeholder="Enter username" required autofocus>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="password" class="form-label" style="font-weight: bold; font-size: 13px;">
-                                    Password
-                                </label>
-                                <input type="password" class="form-control" id="password" name="password" 
-                                       placeholder="Enter password" required>
-                            </div>
-                            
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                                <label class="form-check-label" for="remember-me" style="font-size: 13px;">
-                                    Remember me
-                                </label>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100 mb-3">
-                                Sign In
-                            </button>
-                        </form>
-                        
-                        <div class="text-center">
-                            <a th:href="@{/}" class="text-decoration-none" style="font-size: 13px; color: var(--yc-gray);">
-                                ← Back to Home
-                            </a>
-                        </div>
+    <div data-role="content">
+        <div class="login-wrapper">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon">
+                        <i class="bi bi-server"></i>
                     </div>
-                    
-                    <div class="text-center mt-3">
-                        <small style="font-size: 11px; color: var(--yc-gray);">
-                            Default credentials: admin / admin
-                        </small>
+                    <h3>Welcome Back</h3>
+                    <p>Sign in to your account to continue</p>
+                </div>
+
+                <div th:if="${param.error}" class="alert-clean alert-danger mb-4" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>Invalid username or password. Please try again.</span>
+                </div>
+
+                <div th:if="${param.logout}" class="alert-clean alert-success mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>You have been logged out successfully.</span>
+                </div>
+
+                <form th:action="@{/login}" method="post" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control-clean" id="username" name="username"
+                               placeholder="Enter your username" required autofocus>
                     </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control-clean" id="password" name="password"
+                               placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me" name="remember-me">
+                        <label for="remember-me">Remember me for 30 days</label>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <a th:href="@{/}">
+                        <i class="bi bi-arrow-left me-1"></i>Back to Home
+                    </a>
+                </div>
+
+                <div class="login-hint">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Default credentials: <strong>admin</strong> / <strong>admin</strong>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

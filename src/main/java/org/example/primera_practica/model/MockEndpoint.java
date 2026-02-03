@@ -53,6 +53,9 @@ public class MockEndpoint {
     
     @Column(name = "requires_jwt")
     private Boolean requiresJwt = false;
+
+    @Column(name = "generated_jwt", length = 1000)
+    private String generatedJwt;
     
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
