@@ -5,6 +5,7 @@ import org.example.primera_practica.service.JwtService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,13 +29,24 @@ public class DevTokenController {
     }
 
     @GetMapping("/token")
+    @Deprecated
     public ResponseEntity<Map<String, String>> getDevToken() {
         return buildDevTokenResponse();
     }
 
     @GetMapping("/jwt")
-    public ResponseEntity<Map<String, String>> getDevJwt() {
-        return buildDevTokenResponse();
+    public ResponseEntity<Map<String, String>> getDevJwt(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getName() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String username = authentication.getName();
+        String token = jwtService.generateToken(username, LocalDateTime.now().plusDays(1));
+
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "bearer", "Bearer " + token
+        ));
     }
 
     private ResponseEntity<Map<String, String>> buildDevTokenResponse() {
