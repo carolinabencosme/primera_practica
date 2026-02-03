@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.example.primera_practica.service.JwtService;
+import org.example.primera_practica.service.logging.JwtTokenLogger;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,12 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    private final ObjectProvider<JwtTokenLogger> jwtTokenLoggerProvider;
+
+    public JwtServiceImpl(ObjectProvider<JwtTokenLogger> jwtTokenLoggerProvider) {
+        this.jwtTokenLoggerProvider = jwtTokenLoggerProvider;
+    }
+
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
@@ -28,13 +36,20 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateToken(String username, LocalDateTime expirationDate) {
         Date expiry = Date.from(expirationDate.atZone(ZoneId.systemDefault()).toInstant());
-        
-        return Jwts.builder()
+
+        String token = Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(expiry)
                 .signWith(getSigningKey())
                 .compact();
+
+        JwtTokenLogger logger = jwtTokenLoggerProvider.getIfAvailable();
+        if (logger != null) {
+            logger.logGeneratedToken(username, token);
+        }
+
+        return token;
     }
 
     @Override
