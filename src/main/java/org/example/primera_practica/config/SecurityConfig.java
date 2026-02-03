@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .frameOptions(frameOptions -> frameOptions.sameOrigin())
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/tech-stack", "/api/mock/**", "/api/users", "/api/dev/**", "/h2-console/**", 
+                .requestMatchers("/", "/login", "/tech-stack", "/api/mock/**", "/api/users", "/h2-console/**",
                                 "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/admin/**", "/users/**").hasRole("ADMIN")
                 .requestMatchers("/projects/**", "/mocks/**").authenticated()
