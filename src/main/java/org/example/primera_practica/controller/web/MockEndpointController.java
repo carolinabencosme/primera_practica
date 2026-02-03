@@ -5,6 +5,7 @@ import org.example.primera_practica.dto.MockEndpointDTO;
 import org.example.primera_practica.model.HttpMethod;
 import org.example.primera_practica.service.MockEndpointService;
 import org.example.primera_practica.service.ProjectService;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +13,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping("/mocks")
 public class MockEndpointController {
 
     private final MockEndpointService mockEndpointService;
     private final ProjectService projectService;
+    private final Environment environment;
 
-    public MockEndpointController(MockEndpointService mockEndpointService, ProjectService projectService) {
+    public MockEndpointController(MockEndpointService mockEndpointService, ProjectService projectService, Environment environment) {
         this.mockEndpointService = mockEndpointService;
         this.projectService = projectService;
+        this.environment = environment;
     }
 
     @GetMapping
@@ -77,6 +82,7 @@ public class MockEndpointController {
     public String viewMock(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("mock", mockEndpointService.getMockEndpointById(id));
+            model.addAttribute("isDevOrTest", isDevOrTest());
             return "mocks/view";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Mock endpoint not found");
@@ -132,5 +138,10 @@ public class MockEndpointController {
             redirectAttributes.addFlashAttribute("errorMessage", "Error deleting mock: " + e.getMessage());
         }
         return "redirect:/mocks";
+    }
+
+    private boolean isDevOrTest() {
+        return Arrays.stream(environment.getActiveProfiles())
+            .anyMatch(profile -> profile.equalsIgnoreCase("dev") || profile.equalsIgnoreCase("test"));
     }
 }

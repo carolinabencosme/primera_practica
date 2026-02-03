@@ -29,6 +29,15 @@ public class DevTokenController {
 
     @GetMapping("/token")
     public ResponseEntity<Map<String, String>> getDevToken() {
+        return buildDevTokenResponse();
+    }
+
+    @GetMapping("/jwt")
+    public ResponseEntity<Map<String, String>> getDevJwt() {
+        return buildDevTokenResponse();
+    }
+
+    private ResponseEntity<Map<String, String>> buildDevTokenResponse() {
         return userRepository.findByUsername(DEFAULT_USERNAME)
             .map(user -> {
                 String username = user.getUsername();

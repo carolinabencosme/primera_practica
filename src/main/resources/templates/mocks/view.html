@@ -123,7 +123,54 @@
             }
         </style>
     </th:block>
-    <th:block data-role="scripts"></th:block>
+    <th:block data-role="scripts">
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const getTokenButton = document.getElementById('get-jwt-token');
+                if (!getTokenButton) {
+                    return;
+                }
+
+                const tokenBlock = document.getElementById('jwt-details');
+                const tokenField = document.getElementById('jwt-token');
+                const headerField = document.getElementById('jwt-header');
+                const copyButtons = document.querySelectorAll('[data-copy-target]');
+
+                getTokenButton.addEventListener('click', async () => {
+                    const originalText = getTokenButton.textContent;
+                    getTokenButton.disabled = true;
+                    getTokenButton.textContent = 'Loading...';
+
+                    try {
+                        const response = await fetch('/api/dev/jwt');
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch token');
+                        }
+                        const data = await response.json();
+                        tokenField.value = data.token || '';
+                        headerField.value = `Authorization: Bearer ${data.token || ''}`;
+                        tokenBlock.hidden = false;
+                    } catch (error) {
+                        alert('Unable to fetch a dev JWT token right now.');
+                    } finally {
+                        getTokenButton.disabled = false;
+                        getTokenButton.textContent = originalText;
+                    }
+                });
+
+                copyButtons.forEach((button) => {
+                    button.addEventListener('click', async () => {
+                        const targetId = button.getAttribute('data-copy-target');
+                        const target = targetId ? document.getElementById(targetId) : null;
+                        if (!target) {
+                            return;
+                        }
+                        await navigator.clipboard.writeText(target.value);
+                    });
+                });
+            });
+        </script>
+    </th:block>
 </head>
 <body>
     <div data-role="content">
@@ -191,26 +238,28 @@
         </div>
 
         <!-- JWT Section -->
-        <div th:if="${mock.requiresJwt and #strings.isNotEmpty(mock.generatedJwt)}" class="detail-card">
+        <div th:if="${mock.requiresJwt and isDevOrTest}" class="detail-card">
             <h3><i class="bi bi-shield-lock text-warning"></i> JWT Authorization</h3>
-            <p class="text-sm text-muted mb-4">Use this token to authorize requests to this endpoint</p>
-            
-            <div class="jwt-block">
+            <p class="text-sm text-muted mb-4">Generate a dev/test token to authorize requests to this endpoint.</p>
+
+            <button id="get-jwt-token" type="button" class="btn-clean btn-soft btn-sm">
+                <i class="bi bi-shield-plus"></i> Get JWT Token
+            </button>
+
+            <div id="jwt-details" class="jwt-block mt-3" hidden>
                 <div class="mb-3">
-                    <label class="detail-label mb-2">JWT Token:</label>
-                    <div class="jwt-code" th:text="${mock.generatedJwt}">token</div>
-                    <button class="btn-clean btn-soft btn-sm mt-2"
-                            th:attr="data-copy=${mock.generatedJwt}, data-copy-message='JWT token copied!'">
-                        <i class="bi bi-clipboard"></i> Copy Token
+                    <label class="detail-label mb-2" for="jwt-token">JWT Token:</label>
+                    <textarea id="jwt-token" class="form-control-clean font-monospace" rows="3" readonly></textarea>
+                    <button class="btn-clean btn-soft btn-sm mt-2" type="button" data-copy-target="jwt-token">
+                        <i class="bi bi-clipboard"></i> Copy
                     </button>
                 </div>
-                
+
                 <div>
-                    <label class="detail-label mb-2">Authorization Header:</label>
-                    <div class="jwt-code" th:text="'Authorization: Bearer ' + ${mock.generatedJwt}">Authorization</div>
-                    <button class="btn-clean btn-soft btn-sm mt-2"
-                            th:attr="data-copy='Authorization: Bearer ' + ${mock.generatedJwt}, data-copy-message='Header copied!'">
-                        <i class="bi bi-clipboard"></i> Copy Header
+                    <label class="detail-label mb-2" for="jwt-header">Authorization Header:</label>
+                    <input id="jwt-header" class="form-control-clean font-monospace" type="text" readonly>
+                    <button class="btn-clean btn-soft btn-sm mt-2" type="button" data-copy-target="jwt-header">
+                        <i class="bi bi-clipboard"></i> Copy
                     </button>
                 </div>
             </div>
