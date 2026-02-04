@@ -252,7 +252,7 @@
         </div>
 
         <!-- JWT Section -->
-        <div th:if="${mock.requiresJwt and isDevOrTest}" class="detail-card">
+        <div th:if="${mock.requiresJwt}" class="detail-card">
             <h3><i class="bi bi-shield-lock text-warning"></i> JWT Authorization</h3>
             <p class="text-sm text-muted mb-4">Generate a dev/test token to authorize requests to this endpoint.</p>
 
