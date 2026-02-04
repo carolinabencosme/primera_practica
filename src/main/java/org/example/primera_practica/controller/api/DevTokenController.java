@@ -1,7 +1,6 @@
 package org.example.primera_practica.controller.api;
 
 import org.example.primera_practica.service.JwtService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Profile({"dev", "test"})
 @RestController
 @RequestMapping("/api/dev")
 public class DevTokenController {
