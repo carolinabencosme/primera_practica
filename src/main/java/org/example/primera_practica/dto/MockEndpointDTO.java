@@ -40,8 +40,12 @@ public class MockEndpointDTO {
     private String responseBody;
     
     private List<MockHeaderDTO> headers = new ArrayList<>();
-    
-    @NotNull(message = "{mock.validation.expirationDate.required}")
+
+    @Pattern(
+            regexp = "^(ONE_YEAR|ONE_MONTH|ONE_WEEK|ONE_DAY|ONE_HOUR)?$",
+            message = "{mock.validation.expirationOption.invalid}")
+    private String expirationOption;
+
     private LocalDateTime expirationDate;
     
     @Min(value = 0, message = "{mock.validation.delaySeconds.min}")

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <title th:text="${mock.id != null ? #{mock.form.title.edit} : #{mock.form.title.create}} + ' - ' + #{app.title}">Mock Form</title>
+    <title th:text="${(mock.id != null ? #messages.msg('mock.form.title.edit') : #messages.msg('mock.form.title.create')) + ' - ' + #messages.msg('app.title')}">Mock Form</title>
     <th:block data-role="styles"></th:block>
     <th:block data-role="scripts">
         <script th:inline="javascript">
@@ -26,7 +26,7 @@
             <div>
                 <h2 class="page-header__title">
                     <i class="bi bi-hdd-network-fill text-success"></i>
-                    <span th:text="${mock.id != null ? #{mock.form.title.edit} : #{mock.form.title.create}}">Mock Form</span>
+                    <span th:text="${mock.id != null ? #messages.msg('mock.form.title.edit') : #messages.msg('mock.form.title.create')}">Mock Form</span>
                 </h2>
                 <p class="page-header__subtitle" th:text="#{mock.form.subtitle}">Configure your mock API endpoint with custom responses and behavior.</p>
             </div>
@@ -162,13 +162,19 @@
                                         </div>
 
                                         <div class="col-md-3 mb-3">
-                                            <label for="expirationDate" class="form-label-clean">
+                                            <label for="expirationOption" class="form-label-clean">
                                                 <span th:text="#{mock.form.label.expirationDate}">Expires</span> <span class="text-danger">*</span>
                                             </label>
-                                            <input type="datetime-local" class="form-control-clean" th:classappend="${#fields.hasErrors('expirationDate')} ? 'is-invalid'"
-                                                   id="expirationDate" th:field="*{expirationDate}" required>
-                                            <div class="error-text" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
-                                                Expiration date error
+                                            <select class="form-select-clean" th:classappend="${#fields.hasErrors('expirationOption')} ? 'is-invalid'"
+                                                    id="expirationOption" th:field="*{expirationOption}">
+                                                <option value="" hidden>Default (1 year)</option>
+                                                <option value="ONE_MONTH">1 month</option>
+                                                <option value="ONE_WEEK">1 week</option>
+                                                <option value="ONE_DAY">1 day</option>
+                                                <option value="ONE_HOUR">1 hour</option>
+                                            </select>
+                                            <div class="error-text" th:if="${#fields.hasErrors('expirationOption')}" th:errors="*{expirationOption}">
+                                                Expiration option error
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +219,7 @@
                                     </a>
                                     <button type="submit" class="btn-clean btn-brand">
                                         <i class="bi bi-save"></i>
-                                        <span th:text="${mock.id != null ? #{mock.form.button.update} : #{mock.form.button.create}}">Save</span>
+                                        <span th:text="${mock.id != null ? #messages.msg('mock.form.button.update') : #messages.msg('mock.form.button.create')}">Save</span>
                                     </button>
                                 </div>
                         </form>

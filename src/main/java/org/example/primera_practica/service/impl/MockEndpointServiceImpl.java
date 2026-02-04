@@ -13,6 +13,7 @@ import org.example.primera_practica.util.PathNormalizer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,14 +52,16 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         mockEndpoint.setHttpStatusCode(mockEndpointDTO.getHttpStatusCode());
         mockEndpoint.setContentType(mockEndpointDTO.getContentType());
         mockEndpoint.setResponseBody(mockEndpointDTO.getResponseBody());
-        mockEndpoint.setExpirationDate(mockEndpointDTO.getExpirationDate());
+        MockExpirationOption expirationOption = resolveExpirationOptionOrDefault(mockEndpointDTO.getExpirationOption());
+        LocalDateTime expirationDate = LocalDateTime.now().plus(expirationOption.getDuration());
+        mockEndpoint.setExpirationDate(expirationDate);
         mockEndpoint.setDelaySeconds(mockEndpointDTO.getDelaySeconds());
         mockEndpoint.setRequiresJwt(mockEndpointDTO.getRequiresJwt());
         mockEndpoint.setCreatedBy(user);
         mockEndpoint.setProject(project);
 
         if (Boolean.TRUE.equals(mockEndpointDTO.getRequiresJwt())) {
-            mockEndpoint.setGeneratedJwt(jwtService.generateToken(user.getUsername(), mockEndpointDTO.getExpirationDate()));
+            mockEndpoint.setGeneratedJwt(jwtService.generateToken(user.getUsername(), expirationDate));
         }
 
         if (mockEndpointDTO.getHeaders() != null && !mockEndpointDTO.getHeaders().isEmpty()) {
@@ -125,11 +128,13 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         if (mockEndpointDTO.getResponseBody() != null) {
             mockEndpoint.setResponseBody(mockEndpointDTO.getResponseBody());
         }
-        if (mockEndpointDTO.getExpirationDate() != null) {
-            if (!mockEndpointDTO.getExpirationDate().equals(mockEndpoint.getExpirationDate())) {
+        MockExpirationOption expirationOption = resolveExpirationOption(mockEndpointDTO.getExpirationOption());
+        if (expirationOption != null) {
+            LocalDateTime expirationDate = LocalDateTime.now().plus(expirationOption.getDuration());
+            if (!expirationDate.equals(mockEndpoint.getExpirationDate())) {
                 shouldRegenerateToken = true;
             }
-            mockEndpoint.setExpirationDate(mockEndpointDTO.getExpirationDate());
+            mockEndpoint.setExpirationDate(expirationDate);
         }
         if (mockEndpointDTO.getDelaySeconds() != null) {
             mockEndpoint.setDelaySeconds(mockEndpointDTO.getDelaySeconds());
@@ -219,5 +224,23 @@ public class MockEndpointServiceImpl implements MockEndpointService {
         }
 
         return dto;
+    }
+
+    private MockExpirationOption resolveExpirationOptionOrDefault(String expirationOption) {
+        if (expirationOption == null || expirationOption.isBlank()) {
+            return MockExpirationOption.ONE_YEAR;
+        }
+        return MockExpirationOption.fromValue(expirationOption)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Unsupported expiration option: " + expirationOption));
+    }
+
+    private MockExpirationOption resolveExpirationOption(String expirationOption) {
+        if (expirationOption == null || expirationOption.isBlank()) {
+            return null;
+        }
+        return MockExpirationOption.fromValue(expirationOption)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Unsupported expiration option: " + expirationOption));
     }
 }
