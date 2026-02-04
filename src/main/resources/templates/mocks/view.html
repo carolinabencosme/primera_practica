@@ -143,6 +143,7 @@
                     return;
                 }
 
+                const mockId = getTokenButton.getAttribute('data-mock-id');
                 const tokenBlock = document.getElementById('jwt-details');
                 const tokenField = document.getElementById('jwt-token');
                 const headerField = document.getElementById('jwt-header');
@@ -156,16 +157,19 @@
                     getTokenButton.textContent = 'Loading...';
 
                     try {
-                        const response = await fetch('/api/dev/jwt');
-                        if (!response.ok) {
-                            throw new Error('Failed to fetch token');
+                        if (!mockId) {
+                            throw new Error('Mock id is missing');
                         }
+                        const response = await fetch(`/api/mocks/${mockId}/jwt`);
                         const data = await response.json();
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Failed to fetch token');
+                        }
                         tokenField.value = data.token || '';
                         headerField.value = data.bearer || `Authorization: Bearer ${data.token || ''}`;
                         tokenBlock.hidden = false;
                     } catch (error) {
-                        errorMessage.textContent = 'Unable to fetch a dev JWT token right now.';
+                        errorMessage.textContent = error.message || 'Unable to fetch a JWT token right now.';
                     } finally {
                         getTokenButton.disabled = false;
                         getTokenButton.textContent = originalText;
@@ -254,10 +258,11 @@
         <!-- JWT Section -->
         <div th:if="${mock.requiresJwt}" class="detail-card">
             <h3><i class="bi bi-shield-lock text-warning"></i> JWT Authorization</h3>
-            <p class="text-sm text-muted mb-4">Generate a dev/test token to authorize requests to this endpoint.</p>
+            <p class="text-sm text-muted mb-4">Generate a token scoped to this mock endpoint.</p>
 
             <div class="jwt-actions">
-                <button id="get-jwt-token" type="button" class="btn-clean btn-soft btn-sm">
+                <button id="get-jwt-token" type="button" class="btn-clean btn-soft btn-sm"
+                        th:attr="data-mock-id=${mock.id}">
                     <i class="bi bi-shield-plus"></i> Get JWT Token
                 </button>
                 <span class="jwt-error" id="jwt-error"></span>
