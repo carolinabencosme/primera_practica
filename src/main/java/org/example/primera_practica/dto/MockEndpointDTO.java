@@ -16,35 +16,39 @@ import java.util.List;
 public class MockEndpointDTO {
     private Long id;
     
-    @NotBlank(message = "Endpoint name is required")
-    @Size(max = 255, message = "Endpoint name must not exceed 255 characters")
+    @NotBlank(message = "{mock.validation.name.required}")
+    @Size(max = 255, message = "{mock.validation.name.max}")
     private String name;
     
-    @Size(max = 1000, message = "Description must not exceed 1000 characters")
+    @Size(max = 1000, message = "{mock.validation.description.max}")
     private String description;
     
-    @NotBlank(message = "Path is required")
+    @NotBlank(message = "{mock.validation.path.required}")
     private String path;
     
-    @NotNull(message = "HTTP method is required")
+    @NotNull(message = "{mock.validation.method.required}")
     private HttpMethod method;
     
-    @NotNull(message = "HTTP status code is required")
-    @Min(value = 100, message = "HTTP status code must be at least 100")
-    @Max(value = 599, message = "HTTP status code must not exceed 599")
+    @NotNull(message = "{mock.validation.statusCode.required}")
+    @Min(value = 100, message = "{mock.validation.statusCode.min}")
+    @Max(value = 599, message = "{mock.validation.statusCode.max}")
     private Integer httpStatusCode;
     
-    @NotBlank(message = "Content type is required")
+    @NotBlank(message = "{mock.validation.contentType.required}")
     private String contentType;
     
     private String responseBody;
     
     private List<MockHeaderDTO> headers = new ArrayList<>();
-    
-    @NotNull(message = "Expiration date is required")
+
+    @Pattern(
+            regexp = "^(ONE_YEAR|ONE_MONTH|ONE_WEEK|ONE_DAY|ONE_HOUR)?$",
+            message = "{mock.validation.expirationOption.invalid}")
+    private String expirationOption;
+
     private LocalDateTime expirationDate;
     
-    @Min(value = 0, message = "Delay seconds must be non-negative")
+    @Min(value = 0, message = "{mock.validation.delaySeconds.min}")
     private Integer delaySeconds;
     
     private Boolean requiresJwt = false;
@@ -53,7 +57,7 @@ public class MockEndpointDTO {
     
     private String createdBy;
     
-    @NotNull(message = "Project ID is required")
+    @NotNull(message = "{mock.validation.project.required}")
     private Long projectId;
     
     private String projectName;

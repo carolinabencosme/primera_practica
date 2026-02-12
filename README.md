@@ -38,6 +38,10 @@ cd primera_practica
 # Login: admin / admin
 ```
 
+**Dev/Test token endpoint**
+
+Enable the development-only JWT helper by starting the app with the `dev` or `test` profile (for example `SPRING_PROFILES_ACTIVE=dev ./gradlew bootRun`). It exposes `GET /api/dev/jwt` to return a JWT for the currently authenticated user and is only active under those profiles. The UI only reveals the token on `/mocks/{id}` when the mock requires JWT and you press **Get JWT Token**.
+
 ## 🔑 Key Features
 
 - ✅ **Mock API Management** - Create and manage mock endpoints with custom responses

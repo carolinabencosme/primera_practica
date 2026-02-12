@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{layout/base :: layout(~{::title}, ~{::th:block[@data-role='styles']}, ~{::div[@data-role='content']}, ~{::th:block[@data-role='scripts']})}">
 <head>
-    <title th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'} + ' - Mockup API Server'">Mock Form</title>
+    <title th:text="${(mock.id != null ? #messages.msg('mock.form.title.edit') : #messages.msg('mock.form.title.create')) + ' - ' + #messages.msg('app.title')}">Mock Form</title>
     <th:block data-role="styles"></th:block>
     <th:block data-role="scripts">
         <script th:inline="javascript">
@@ -22,13 +22,26 @@
 </head>
 <body>
     <div data-role="content">
-        <div class="page-header">
+        <div class="page-header d-flex flex-wrap justify-content-between gap-3"
+             th:with="currentRequestPath=${#httpServletRequest != null ? #httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '') : '/mocks'}">
             <div>
                 <h2 class="page-header__title">
                     <i class="bi bi-hdd-network-fill text-success"></i>
-                    <span th:text="${mock.id != null ? 'Edit Mock Endpoint' : 'New Mock Endpoint'}">Mock Form</span>
+                    <span th:text="${mock.id != null ? #messages.msg('mock.form.title.edit') : #messages.msg('mock.form.title.create')}">Mock Form</span>
                 </h2>
-                <p class="page-header__subtitle">Configure your mock API endpoint with custom responses and behavior.</p>
+                <p class="page-header__subtitle" th:text="#{mock.form.subtitle}">Configure your mock API endpoint with custom responses and behavior.</p>
+            </div>
+            <div class="d-flex align-items-start gap-2">
+                <form th:action="@{/i18n/change}" method="post" class="d-inline">
+                    <input type="hidden" name="lang" value="en">
+                    <input type="hidden" name="redirect" th:value="${currentRequestPath}">
+                    <button type="submit" class="btn-clean btn-soft btn-sm">English</button>
+                </form>
+                <form th:action="@{/i18n/change}" method="post" class="d-inline">
+                    <input type="hidden" name="lang" value="es">
+                    <input type="hidden" name="redirect" th:value="${currentRequestPath}">
+                    <button type="submit" class="btn-clean btn-soft btn-sm">Español</button>
+                </form>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -41,22 +54,26 @@
 
                                 <!-- Section 1: Basic Info -->
                                 <div class="mock-form-section">
-                                    <h5><i class="bi bi-info-circle"></i> Basic Information</h5>
+                                    <h5><i class="bi bi-info-circle"></i> <span th:text="#{mock.form.section.basic}">Basic Information</span></h5>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="name" class="form-label-clean">Name <span class="text-danger">*</span></label>
+                                            <label for="name" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.name}">Name</span> <span class="text-danger">*</span>
+                                            </label>
                                             <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
-                                                   id="name" th:field="*{name}" placeholder="e.g., Get Users List" required>
+                                                   id="name" th:field="*{name}" th:placeholder="#{mock.form.placeholder.name}" required>
                                             <div class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                                 Name error
                                             </div>
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label for="projectId" class="form-label-clean">Project <span class="text-danger">*</span></label>
+                                            <label for="projectId" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.project}">Project</span> <span class="text-danger">*</span>
+                                            </label>
                                             <select class="form-select-clean" th:classappend="${#fields.hasErrors('projectId')} ? 'is-invalid'"
                                                     id="projectId" th:field="*{projectId}" required>
-                                                <option value="">Select a project</option>
+                                                <option value="" th:text="#{mock.form.placeholder.project}">Select a project</option>
                                                 <option th:each="project : ${projects}"
                                                         th:value="${project.id}"
                                                         th:text="${project.name}">Project</option>
@@ -68,10 +85,10 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="description" class="form-label-clean">Description</label>
+                                        <label for="description" class="form-label-clean" th:text="#{mock.form.label.description}">Description</label>
                                         <textarea class="form-control-clean" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
                                                   id="description" th:field="*{description}" rows="2"
-                                                  placeholder="Brief description of what this endpoint does"></textarea>
+                                                  th:placeholder="#{mock.form.placeholder.description}"></textarea>
                                         <div class="error-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                                             Description error
                                         </div>
@@ -80,24 +97,28 @@
 
                                 <!-- Section 2: Request Configuration -->
                                 <div class="mock-form-section">
-                                    <h5><i class="bi bi-arrow-right-circle"></i> Request Configuration</h5>
+                                    <h5><i class="bi bi-arrow-right-circle"></i> <span th:text="#{mock.form.section.request}">Request Configuration</span></h5>
 
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="path" class="form-label-clean">Path <span class="text-danger">*</span></label>
+                                            <label for="path" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.path}">Path</span> <span class="text-danger">*</span>
+                                            </label>
                                             <input type="text" class="form-control-clean" th:classappend="${#fields.hasErrors('path')} ? 'is-invalid'"
-                                                   id="path" th:field="*{path}" placeholder="/api/v1/users" required>
+                                                   id="path" th:field="*{path}" th:placeholder="#{mock.form.placeholder.path}" required>
                                             <div class="error-text" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">
                                                 Path error
                                             </div>
-                                            <small class="help-text">Example: /users, /users/:id, /products/*</small>
+                                            <small class="help-text" th:text="#{mock.form.hint.path}">Example: /users, /users/:id, /products/*</small>
                                         </div>
 
                                         <div class="col-md-3 mb-3">
-                                            <label for="method" class="form-label-clean">HTTP Method <span class="text-danger">*</span></label>
+                                            <label for="method" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.method}">HTTP Method</span> <span class="text-danger">*</span>
+                                            </label>
                                             <select class="form-select-clean" th:classappend="${#fields.hasErrors('method')} ? 'is-invalid'"
                                                     id="method" th:field="*{method}" required>
-                                                <option value="">Select</option>
+                                                <option value="" th:text="#{mock.form.placeholder.method}">Select</option>
                                                 <option th:each="httpMethod : ${httpMethods}"
                                                         th:value="${httpMethod}"
                                                         th:text="${httpMethod}">Method</option>
@@ -108,9 +129,12 @@
                                         </div>
 
                                         <div class="col-md-3 mb-3">
-                                            <label for="httpStatusCode" class="form-label-clean">Status Code <span class="text-danger">*</span></label>
+                                            <label for="httpStatusCode" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.statusCode}">Status Code</span> <span class="text-danger">*</span>
+                                            </label>
                                             <input type="number" class="form-control-clean" th:classappend="${#fields.hasErrors('httpStatusCode')} ? 'is-invalid'"
-                                                   id="httpStatusCode" th:field="*{httpStatusCode}" min="100" max="599" placeholder="200" required>
+                                                   id="httpStatusCode" th:field="*{httpStatusCode}" min="100" max="599"
+                                                   th:placeholder="#{mock.form.placeholder.statusCode}" required>
                                             <div class="error-text" th:if="${#fields.hasErrors('httpStatusCode')}" th:errors="*{httpStatusCode}">
                                                 Status code error
                                             </div>
@@ -120,18 +144,20 @@
 
                                 <!-- Section 3: Response Configuration -->
                                 <div class="mock-form-section">
-                                    <h5><i class="bi bi-arrow-left-circle"></i> Response Configuration</h5>
+                                    <h5><i class="bi bi-arrow-left-circle"></i> <span th:text="#{mock.form.section.response}">Response Configuration</span></h5>
 
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="contentType" class="form-label-clean">Content Type <span class="text-danger">*</span></label>
+                                            <label for="contentType" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.contentType}">Content Type</span> <span class="text-danger">*</span>
+                                            </label>
                                             <select class="form-select-clean" th:classappend="${#fields.hasErrors('contentType')} ? 'is-invalid'"
                                                     id="contentType" th:field="*{contentType}" required>
-                                                <option value="application/json">application/json</option>
-                                                <option value="application/xml">application/xml</option>
-                                                <option value="text/plain">text/plain</option>
-                                                <option value="text/html">text/html</option>
-                                                <option value="text/csv">text/csv</option>
+                                                <option value="application/json" th:text="#{mock.form.option.contentType.json}">application/json</option>
+                                                <option value="application/xml" th:text="#{mock.form.option.contentType.xml}">application/xml</option>
+                                                <option value="text/plain" th:text="#{mock.form.option.contentType.plain}">text/plain</option>
+                                                <option value="text/html" th:text="#{mock.form.option.contentType.html}">text/html</option>
+                                                <option value="text/csv" th:text="#{mock.form.option.contentType.csv}">text/csv</option>
                                             </select>
                                             <div class="error-text" th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}">
                                                 Content type error
@@ -139,87 +165,74 @@
                                         </div>
 
                                         <div class="col-md-3 mb-3">
-                                            <label for="delaySeconds" class="form-label-clean">Delay (seconds)</label>
+                                            <label for="delaySeconds" class="form-label-clean" th:text="#{mock.form.label.delaySeconds}">Delay (seconds)</label>
                                             <input type="number" class="form-control-clean" th:classappend="${#fields.hasErrors('delaySeconds')} ? 'is-invalid'"
-                                                   id="delaySeconds" th:field="*{delaySeconds}" min="0" placeholder="0">
+                                                   id="delaySeconds" th:field="*{delaySeconds}" min="0" th:placeholder="#{mock.form.placeholder.delaySeconds}">
                                             <div class="error-text" th:if="${#fields.hasErrors('delaySeconds')}" th:errors="*{delaySeconds}">
                                                 Delay error
                                             </div>
-                                            <small class="help-text">Simulate network latency</small>
+                                            <small class="help-text" th:text="#{mock.form.hint.delaySeconds}">Simulate network latency</small>
                                         </div>
 
                                         <div class="col-md-3 mb-3">
-                                            <label for="expirationDate" class="form-label-clean">Expires <span class="text-danger">*</span></label>
-                                            <input type="datetime-local" class="form-control-clean" th:classappend="${#fields.hasErrors('expirationDate')} ? 'is-invalid'"
-                                                   id="expirationDate" th:field="*{expirationDate}" required>
-                                            <div class="error-text" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
-                                                Expiration date error
+                                            <label for="expirationOption" class="form-label-clean">
+                                                <span th:text="#{mock.form.label.expirationDate}">Expires</span> <span class="text-danger">*</span>
+                                            </label>
+                                            <select class="form-select-clean" th:classappend="${#fields.hasErrors('expirationOption')} ? 'is-invalid'"
+                                                    id="expirationOption" th:field="*{expirationOption}">
+                                                <option value="" hidden>Default (1 year)</option>
+                                                <option value="ONE_MONTH">1 month</option>
+                                                <option value="ONE_WEEK">1 week</option>
+                                                <option value="ONE_DAY">1 day</option>
+                                                <option value="ONE_HOUR">1 hour</option>
+                                            </select>
+                                            <div class="error-text" th:if="${#fields.hasErrors('expirationOption')}" th:errors="*{expirationOption}">
+                                                Expiration option error
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="responseBody" class="form-label-clean">Response Body</label>
+                                        <label for="responseBody" class="form-label-clean" th:text="#{mock.form.label.responseBody}">Response Body</label>
                                         <textarea class="form-control-clean font-monospace" id="responseBody" th:field="*{responseBody}"
-                                                  rows="10" placeholder='{"message": "Success", "data": []}'></textarea>
-                                        <small class="help-text">JSON, XML, or plain text response</small>
+                                                  rows="10" th:placeholder="#{mock.form.placeholder.responseBody}"></textarea>
+                                        <small class="help-text" th:text="#{mock.form.hint.responseBody}">JSON, XML, or plain text response</small>
                                     </div>
                                 </div>
 
                                 <!-- Section 4: Custom Headers -->
                                 <div class="mock-form-section">
-                                    <h5><i class="bi bi-list-ul"></i> Custom Headers (Optional)</h5>
+                                    <h5><i class="bi bi-list-ul"></i> <span th:text="#{mock.form.section.headers}">Custom Headers (Optional)</span></h5>
                                     <div id="headers-container" class="mb-3">
                                         <!-- Headers will be added dynamically -->
                                     </div>
                                     <button type="button" class="btn-clean btn-soft btn-sm add-header-btn" onclick="addHeader()">
-                                        <i class="bi bi-plus-circle"></i> Add Header
+                                        <i class="bi bi-plus-circle"></i> <span th:text="#{mock.form.button.addHeader}">Add Header</span>
                                     </button>
                                 </div>
 
                                 <!-- Section 5: Security -->
                                 <div class="mock-form-section">
-                                    <h5><i class="bi bi-shield-lock"></i> Security</h5>
+                                    <h5><i class="bi bi-shield-lock"></i> <span th:text="#{mock.form.section.security}">Security</span></h5>
                                     <div class="mb-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="requiresJwt" th:field="*{requiresJwt}">
                                             <label class="form-check-label" for="requiresJwt">
-                                                <i class="bi bi-shield-lock text-warning"></i> Requires JWT Authentication
+                                                <i class="bi bi-shield-lock text-warning"></i> <span th:text="#{mock.form.label.requiresJwt}">Requires JWT Authentication</span>
                                             </label>
                                         </div>
-                                        <small class="help-text">When enabled, requests must include a valid JWT token</small>
-                                    </div>
-                                    <div th:if="${mock.requiresJwt and #strings.isNotEmpty(mock.generatedJwt)}" class="jwt-block">
-                                        <div class="mb-3">
-                                            <label class="detail-label mb-2">JWT Token:</label>
-                                            <div class="jwt-code" th:text="${mock.generatedJwt}">token</div>
-                                            <button class="btn-clean btn-soft btn-sm mt-2"
-                                                    th:attr="data-copy=${mock.generatedJwt}, data-copy-message='JWT token copied!'"
-                                                    type="button">
-                                                <i class="bi bi-clipboard"></i> Copy Token
-                                            </button>
-                                        </div>
-
-                                        <div>
-                                            <label class="detail-label mb-2">Authorization Header:</label>
-                                            <div class="jwt-code" th:text="'Authorization: Bearer ' + ${mock.generatedJwt}">Authorization</div>
-                                            <button class="btn-clean btn-soft btn-sm mt-2"
-                                                    th:attr="data-copy='Authorization: Bearer ' + ${mock.generatedJwt}, data-copy-message='Header copied!'"
-                                                    type="button">
-                                                <i class="bi bi-clipboard"></i> Copy Header
-                                            </button>
-                                        </div>
+                                        <small class="help-text" th:text="#{mock.form.hint.requiresJwt}">When enabled, requests must include a valid JWT token</small>
                                     </div>
                                 </div>
 
                                 <!-- Form Actions -->
                                 <div class="d-flex justify-content-between pt-4 border-top">
                                     <a th:href="@{/mocks}" class="btn-clean btn-soft">
-                                        <i class="bi bi-arrow-left"></i> Cancel
+                                        <i class="bi bi-arrow-left"></i> <span th:text="#{button.cancel}">Cancel</span>
                                     </a>
                                     <button type="submit" class="btn-clean btn-brand">
                                         <i class="bi bi-save"></i>
-                                        <span th:text="${mock.id != null ? 'Update Endpoint' : 'Create Endpoint'}">Save</span>
+                                        <span th:text="${mock.id != null ? #messages.msg('mock.form.button.update') : #messages.msg('mock.form.button.create')}">Save</span>
                                     </button>
                                 </div>
                         </form>
