@@ -50,7 +50,7 @@ class MockTokenControllerTest {
         LocalDateTime expirationDate = LocalDateTime.now().plusHours(2);
         MockEndpointDTO mockEndpoint = new MockEndpointDTO();
         mockEndpoint.setExpirationDate(expirationDate);
-        when(mockEndpointService.getMockEndpointById(1L)).thenReturn(mockEndpoint);
+        when(mockEndpointService.getMockEndpointByIdForUser(1L, "tester")).thenReturn(mockEndpoint);
 
         MvcResult result = mockMvc.perform(get("/api/mocks/1/jwt"))
             .andExpect(status().isOk())
@@ -76,7 +76,7 @@ class MockTokenControllerTest {
         LocalDateTime expirationDate = LocalDateTime.now().minusMinutes(5);
         MockEndpointDTO mockEndpoint = new MockEndpointDTO();
         mockEndpoint.setExpirationDate(expirationDate);
-        when(mockEndpointService.getMockEndpointById(2L)).thenReturn(mockEndpoint);
+        when(mockEndpointService.getMockEndpointByIdForUser(2L, "tester")).thenReturn(mockEndpoint);
 
         mockMvc.perform(get("/api/mocks/2/jwt"))
             .andExpect(status().isConflict())
