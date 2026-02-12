@@ -8,6 +8,7 @@ import org.example.primera_practica.repository.MockEndpointRepository;
 import org.example.primera_practica.repository.ProjectRepository;
 import org.example.primera_practica.repository.UserRepository;
 import org.example.primera_practica.service.JwtService;
+import org.springframework.security.access.AccessDeniedException;
 import org.example.primera_practica.service.MockEndpointService;
 import org.example.primera_practica.util.PathNormalizer;
 import org.springframework.stereotype.Service;
@@ -84,16 +85,22 @@ public class MockEndpointServiceImpl implements MockEndpointService {
     @Override
     @Transactional(readOnly = true)
     public MockEndpointDTO getMockEndpointById(Long id) {
-        MockEndpoint mockEndpoint = mockEndpointRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("MockEndpoint not found with id: " + id));
+        MockEndpoint mockEndpoint = findMockEndpointById(id);
+        return convertToDTO(mockEndpoint);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MockEndpointDTO getMockEndpointByIdForUser(Long id, String username) {
+        MockEndpoint mockEndpoint = findMockEndpointById(id);
+        validateProjectAccess(mockEndpoint.getProject(), username);
         return convertToDTO(mockEndpoint);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<MockEndpointDTO> getAllMockEndpointsByProject(Long projectId) {
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + projectId));
+        Project project = findProjectById(projectId);
 
         return mockEndpointRepository.findByProject(project).stream()
                 .map(this::convertToDTO)
@@ -101,9 +108,18 @@ public class MockEndpointServiceImpl implements MockEndpointService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<MockEndpointDTO> getAllMockEndpointsByProjectForUser(Long projectId, String username) {
+        Project project = findProjectById(projectId);
+        validateProjectAccess(project, username);
+        return mockEndpointRepository.findByProject(project).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public MockEndpointDTO updateMockEndpoint(Long id, MockEndpointDTO mockEndpointDTO) {
-        MockEndpoint mockEndpoint = mockEndpointRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("MockEndpoint not found with id: " + id));
+        MockEndpoint mockEndpoint = findMockEndpointById(id);
 
         boolean shouldRegenerateToken = false;
 
@@ -175,9 +191,22 @@ public class MockEndpointServiceImpl implements MockEndpointService {
     }
 
     @Override
+    public MockEndpointDTO updateMockEndpointForUser(Long id, MockEndpointDTO mockEndpointDTO, String username) {
+        MockEndpoint mockEndpoint = findMockEndpointById(id);
+        validateProjectAccess(mockEndpoint.getProject(), username);
+        return updateMockEndpoint(id, mockEndpointDTO);
+    }
+
+    @Override
     public void deleteMockEndpoint(Long id) {
-        MockEndpoint mockEndpoint = mockEndpointRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("MockEndpoint not found with id: " + id));
+        MockEndpoint mockEndpoint = findMockEndpointById(id);
+        mockEndpointRepository.delete(mockEndpoint);
+    }
+
+    @Override
+    public void deleteMockEndpointForUser(Long id, String username) {
+        MockEndpoint mockEndpoint = findMockEndpointById(id);
+        validateProjectAccess(mockEndpoint.getProject(), username);
         mockEndpointRepository.delete(mockEndpoint);
     }
 
@@ -189,6 +218,38 @@ public class MockEndpointServiceImpl implements MockEndpointService {
                         String.format("MockEndpoint not found with projectName: %s, path: %s, method: %s", 
                                 projectName, path, method)));
         return convertToDTO(mockEndpoint);
+    }
+
+    private User findUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+
+    private Project findProjectById(Long projectId) {
+        return projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + projectId));
+    }
+
+    private MockEndpoint findMockEndpointById(Long id) {
+        return mockEndpointRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("MockEndpoint not found with id: " + id));
+    }
+
+    private void validateProjectAccess(Project project, String username) {
+        User user = findUserByUsername(username);
+        if (isAdmin(user)) {
+            return;
+        }
+
+        if (!project.getCreatedBy().getUsername().equals(username)) {
+            throw new AccessDeniedException(
+                    String.format("User %s is not authorized to access project %d", username, project.getId()));
+        }
+    }
+
+    private boolean isAdmin(User user) {
+        return user.getRoles().stream()
+                .anyMatch(role -> role.getName() == RoleType.ROLE_ADMIN);
     }
 
     private MockEndpointDTO convertToDTO(MockEndpoint mockEndpoint) {

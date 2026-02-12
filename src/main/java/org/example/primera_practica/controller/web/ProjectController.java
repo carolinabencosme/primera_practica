@@ -3,6 +3,7 @@ package org.example.primera_practica.controller.web;
 import jakarta.validation.Valid;
 import org.example.primera_practica.dto.ProjectDTO;
 import org.example.primera_practica.service.ProjectService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +35,13 @@ public class ProjectController {
 
     @PostMapping
     public String createProject(@Valid @ModelAttribute("project") ProjectDTO projectDTO,
-                               BindingResult result,
-                               Authentication authentication,
-                               RedirectAttributes redirectAttributes) {
+                                BindingResult result,
+                                Authentication authentication,
+                                RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "projects/form";
         }
-        
+
         try {
             ProjectDTO created = projectService.createProject(projectDTO, authentication.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Project created successfully!");
@@ -52,10 +53,16 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public String viewProject(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String viewProject(@PathVariable Long id,
+                              Model model,
+                              Authentication authentication,
+                              RedirectAttributes redirectAttributes) {
         try {
-            model.addAttribute("project", projectService.getProjectById(id));
+            model.addAttribute("project", projectService.getProjectByIdForUser(id, authentication.getName()));
             return "projects/view";
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot access this project.");
+            return "redirect:/projects";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Project not found");
             return "redirect:/projects";
@@ -63,10 +70,16 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String showEditForm(@PathVariable Long id,
+                               Model model,
+                               Authentication authentication,
+                               RedirectAttributes redirectAttributes) {
         try {
-            model.addAttribute("project", projectService.getProjectById(id));
+            model.addAttribute("project", projectService.getProjectByIdForUser(id, authentication.getName()));
             return "projects/form";
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot edit this project.");
+            return "redirect:/projects";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Project not found");
             return "redirect:/projects";
@@ -75,17 +88,21 @@ public class ProjectController {
 
     @PostMapping("/{id}")
     public String updateProject(@PathVariable Long id,
-                               @Valid @ModelAttribute("project") ProjectDTO projectDTO,
-                               BindingResult result,
-                               RedirectAttributes redirectAttributes) {
+                                @Valid @ModelAttribute("project") ProjectDTO projectDTO,
+                                BindingResult result,
+                                Authentication authentication,
+                                RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "projects/form";
         }
-        
+
         try {
-            projectService.updateProject(id, projectDTO);
+            projectService.updateProjectForUser(id, projectDTO, authentication.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Project updated successfully!");
             return "redirect:/projects/" + id;
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot update this project.");
+            return "redirect:/projects";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error updating project: " + e.getMessage());
             return "redirect:/projects/" + id;
@@ -93,10 +110,14 @@ public class ProjectController {
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteProject(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String deleteProject(@PathVariable Long id,
+                                Authentication authentication,
+                                RedirectAttributes redirectAttributes) {
         try {
-            projectService.deleteProject(id);
+            projectService.deleteProjectForUser(id, authentication.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Project deleted successfully!");
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot delete this project.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error deleting project: " + e.getMessage());
         }

@@ -5,6 +5,7 @@ import org.example.primera_practica.dto.MockEndpointDTO;
 import org.example.primera_practica.model.HttpMethod;
 import org.example.primera_practica.service.MockEndpointService;
 import org.example.primera_practica.service.ProjectService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,15 +27,21 @@ public class MockEndpointController {
 
     @GetMapping
     public String listMocks(@RequestParam(required = false) Long projectId,
-                           Model model,
-                           Authentication authentication) {
-        if (projectId != null) {
-            model.addAttribute("mocks", mockEndpointService.getAllMockEndpointsByProject(projectId));
-            model.addAttribute("projectId", projectId);
-        } else {
+                            Model model,
+                            Authentication authentication) {
+        try {
+            if (projectId != null) {
+                model.addAttribute("mocks", mockEndpointService.getAllMockEndpointsByProjectForUser(projectId, authentication.getName()));
+                model.addAttribute("projectId", projectId);
+            } else {
+                model.addAttribute("projects", projectService.getAllProjectsByUser(authentication.getName()));
+            }
+            return "mocks/list";
+        } catch (AccessDeniedException e) {
             model.addAttribute("projects", projectService.getAllProjectsByUser(authentication.getName()));
+            model.addAttribute("errorMessage", "Access denied: you cannot list mocks for this project.");
+            return "mocks/list";
         }
-        return "mocks/list";
     }
 
     @GetMapping("/new")
@@ -53,16 +60,16 @@ public class MockEndpointController {
 
     @PostMapping
     public String createMock(@Valid @ModelAttribute("mock") MockEndpointDTO mockEndpointDTO,
-                            BindingResult result,
-                            Authentication authentication,
-                            Model model,
-                            RedirectAttributes redirectAttributes) {
+                             BindingResult result,
+                             Authentication authentication,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("projects", projectService.getAllProjectsByUser(authentication.getName()));
             model.addAttribute("httpMethods", HttpMethod.values());
             return "mocks/form";
         }
-        
+
         try {
             MockEndpointDTO created = mockEndpointService.createMockEndpoint(mockEndpointDTO, authentication.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Mock endpoint created successfully!");
@@ -74,10 +81,16 @@ public class MockEndpointController {
     }
 
     @GetMapping("/{id}")
-    public String viewMock(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String viewMock(@PathVariable Long id,
+                           Model model,
+                           Authentication authentication,
+                           RedirectAttributes redirectAttributes) {
         try {
-            model.addAttribute("mock", mockEndpointService.getMockEndpointById(id));
+            model.addAttribute("mock", mockEndpointService.getMockEndpointByIdForUser(id, authentication.getName()));
             return "mocks/view";
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot access this mock endpoint.");
+            return "redirect:/mocks";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Mock endpoint not found");
             return "redirect:/mocks";
@@ -86,14 +99,17 @@ public class MockEndpointController {
 
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id,
-                              Model model,
-                              Authentication authentication,
-                              RedirectAttributes redirectAttributes) {
+                               Model model,
+                               Authentication authentication,
+                               RedirectAttributes redirectAttributes) {
         try {
-            model.addAttribute("mock", mockEndpointService.getMockEndpointById(id));
+            model.addAttribute("mock", mockEndpointService.getMockEndpointByIdForUser(id, authentication.getName()));
             model.addAttribute("projects", projectService.getAllProjectsByUser(authentication.getName()));
             model.addAttribute("httpMethods", HttpMethod.values());
             return "mocks/form";
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot edit this mock endpoint.");
+            return "redirect:/mocks";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Mock endpoint not found");
             return "redirect:/mocks";
@@ -102,21 +118,24 @@ public class MockEndpointController {
 
     @PostMapping("/{id}")
     public String updateMock(@PathVariable Long id,
-                            @Valid @ModelAttribute("mock") MockEndpointDTO mockEndpointDTO,
-                            BindingResult result,
-                            Authentication authentication,
-                            Model model,
-                            RedirectAttributes redirectAttributes) {
+                             @Valid @ModelAttribute("mock") MockEndpointDTO mockEndpointDTO,
+                             BindingResult result,
+                             Authentication authentication,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("projects", projectService.getAllProjectsByUser(authentication.getName()));
             model.addAttribute("httpMethods", HttpMethod.values());
             return "mocks/form";
         }
-        
+
         try {
-            mockEndpointService.updateMockEndpoint(id, mockEndpointDTO);
+            mockEndpointService.updateMockEndpointForUser(id, mockEndpointDTO, authentication.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Mock endpoint updated successfully!");
             return "redirect:/mocks/" + id;
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot update this mock endpoint.");
+            return "redirect:/mocks";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error updating mock: " + e.getMessage());
             return "redirect:/mocks/" + id;
@@ -124,10 +143,14 @@ public class MockEndpointController {
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteMock(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String deleteMock(@PathVariable Long id,
+                             Authentication authentication,
+                             RedirectAttributes redirectAttributes) {
         try {
-            mockEndpointService.deleteMockEndpoint(id);
+            mockEndpointService.deleteMockEndpointForUser(id, authentication.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Mock endpoint deleted successfully!");
+        } catch (AccessDeniedException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: you cannot delete this mock endpoint.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error deleting mock: " + e.getMessage());
         }

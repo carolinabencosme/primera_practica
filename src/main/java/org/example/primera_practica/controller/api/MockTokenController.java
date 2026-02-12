@@ -4,6 +4,7 @@ import org.example.primera_practica.dto.MockEndpointDTO;
 import org.example.primera_practica.exception.ResourceNotFoundException;
 import org.example.primera_practica.service.JwtService;
 import org.example.primera_practica.service.MockEndpointService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -38,9 +39,12 @@ public class MockTokenController {
 
         MockEndpointDTO mockEndpoint;
         try {
-            mockEndpoint = mockEndpointService.getMockEndpointById(id);
+            mockEndpoint = mockEndpointService.getMockEndpointByIdForUser(id, authentication.getName());
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", ex.getMessage()));
+        } catch (AccessDeniedException ex) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(Map.of("error", ex.getMessage()));
         }
 
