@@ -22,8 +22,7 @@
 </head>
 <body>
     <div data-role="content">
-        <div class="page-header d-flex flex-wrap justify-content-between gap-3"
-             th:with="currentRequestPath=${#httpServletRequest != null ? #httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '') : '/mocks'}">
+        <div class="page-header d-flex flex-wrap justify-content-between gap-3">
             <div>
                 <h2 class="page-header__title">
                     <i class="bi bi-hdd-network-fill text-success"></i>
@@ -34,12 +33,12 @@
             <div class="d-flex align-items-start gap-2">
                 <form th:action="@{/i18n/change}" method="post" class="d-inline">
                     <input type="hidden" name="lang" value="en">
-                    <input type="hidden" name="redirect" th:value="${currentRequestPath}">
+                    <input type="hidden" name="redirect" th:value="${#httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '')}">
                     <button type="submit" class="btn-clean btn-soft btn-sm">English</button>
                 </form>
                 <form th:action="@{/i18n/change}" method="post" class="d-inline">
                     <input type="hidden" name="lang" value="es">
-                    <input type="hidden" name="redirect" th:value="${currentRequestPath}">
+                    <input type="hidden" name="redirect" th:value="${#httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '')}">
                     <button type="submit" class="btn-clean btn-soft btn-sm">Español</button>
                 </form>
             </div>
