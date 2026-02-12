@@ -23,7 +23,7 @@
 <body>
     <div data-role="content">
         <div class="page-header d-flex flex-wrap justify-content-between gap-3"
-             th:with="currentRequestPath=${#httpServletRequest != null ? #httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '') : '/mocks'}">
+             th:with="currentRequestPath=${#httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '')}">
             <div>
                 <h2 class="page-header__title">
                     <i class="bi bi-hdd-network-fill text-success"></i>
