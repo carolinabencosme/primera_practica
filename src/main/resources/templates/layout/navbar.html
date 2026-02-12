@@ -43,22 +43,6 @@
                 </ul>
                 
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <div th:with="currentPath=${#httpServletRequest != null ? #httpServletRequest.requestURI : '/'}">
-                            <a class="nav-link dropdown-toggle navlink" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-translate me-1"></i>
-                                <span th:text="#{nav.language}">Language</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                                <li>
-                                    <a class="dropdown-item" th:href="@{${currentPath}(lang='en')}">English</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" th:href="@{${currentPath}(lang='es')}">Español</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
                         <span class="navbar-text me-3 text-sm">
                             <i class="bi bi-person-circle me-1"></i>
