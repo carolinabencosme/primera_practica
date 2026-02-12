@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,10 +64,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
-
-        Role userRole = roleRepository.findByName(RoleType.ROLE_USER)
-                .orElseThrow(() -> new ResourceNotFoundException("Default user role not found"));
-        user.getRoles().add(userRole);
+        user.setRoles(resolveRolesForCreate(userDTO.getRoles()));
 
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
@@ -114,6 +113,10 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userDTO.getEmail());
         }
 
+        if (userDTO.getRoles() != null) {
+            user.setRoles(resolveRoles(userDTO.getRoles()));
+        }
+
         User updatedUser = userRepository.save(user);
         return convertToDTO(updatedUser);
     }
@@ -146,5 +149,33 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toSet()));
         dto.setCreatedAt(user.getCreatedAt());
         return dto;
+    }
+
+    private Set<Role> resolveRolesForCreate(Set<RoleType> requestedRoles) {
+        if (requestedRoles == null || requestedRoles.isEmpty()) {
+            return resolveRoles(Set.of(RoleType.ROLE_USER));
+        }
+        return resolveRoles(requestedRoles);
+    }
+
+    private Set<Role> resolveRoles(Set<RoleType> requestedRoles) {
+        Set<RoleType> sanitizedRoles = requestedRoles.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        if (sanitizedRoles.isEmpty()) {
+            throw new IllegalArgumentException("At least one valid role is required");
+        }
+
+        Set<Role> roles = sanitizedRoles.stream()
+                .map(roleType -> roleRepository.findByName(roleType)
+                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleType)))
+                .collect(Collectors.toSet());
+
+        if (roles.isEmpty()) {
+            throw new IllegalArgumentException("At least one valid role is required");
+        }
+
+        return roles;
     }
 }
